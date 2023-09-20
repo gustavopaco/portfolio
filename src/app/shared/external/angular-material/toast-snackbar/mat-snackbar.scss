@@ -1,0 +1,29 @@
+// SnackBar Colors
+$successSnakeBarColor: #4caf50;
+$errorSnakeBarColor: #f44336;
+$warningSnakeBarColor: #ff9800;
+$buttonTextSnakeBarColor: #fff;
+mat-snack-bar-container.success {
+  .mdc-snackbar__surface {
+    background-color: $successSnakeBarColor !important;
+    .mdc-button__label {
+      color: $buttonTextSnakeBarColor !important;
+    }
+  }
+}
+mat-snack-bar-container.error {
+  .mdc-snackbar__surface {
+    background-color: $errorSnakeBarColor !important;
+    .mdc-button__label {
+      color: $buttonTextSnakeBarColor !important;
+    }
+  }
+}
+mat-snack-bar-container.warning {
+  .mdc-snackbar__surface {
+    background-color: $warningSnakeBarColor !important;
+    .mdc-button__label {
+      color: $buttonTextSnakeBarColor !important;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+  <mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onConfirm(true)">{{ data.btnConfirmLabel ? data.btnConfirmLabel : 'Sim' }}</button>
+    <button mat-raised-button color="warn" (click)="onConfirm(false)">{{ data.btnCancelLabel ? data.btnCancelLabel : 'Não' }}</button>
+  </mat-dialog-actions>

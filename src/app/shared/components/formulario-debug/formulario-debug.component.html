@@ -1,0 +1,14 @@
+<section class="form-debug" *ngIf="formularioForDebug || formularioReativoDebug">
+  <h2 class="py-2">Formulário de Debug</h2>
+  <div>
+    <pre>
+      Form válido: {{ formularioForDebug ? formularioForDebug.valid : formularioReativoDebug?.valid }}
+    </pre>
+    <pre *ngIf="formularioForDebug">
+      Form submetido: {{ formularioForDebug.submitted }}
+    </pre>
+    <pre>
+      Valores: <br>{{ formularioForDebug ? (formularioForDebug.value | json) : (formularioReativoDebug?.value | json) }}
+    </pre>
+  </div>
+</section>

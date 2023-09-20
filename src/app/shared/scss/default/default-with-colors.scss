@@ -1,0 +1,131 @@
+@import "color-variables";
+@import "color-classes";
+@import "animation";
+
+
+/*Reset Documento*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Roboto, "Helvetica Neue", sans-serif;  // Angular Material font
+  //font-family: Roboto, "Segoe UI", sans-serif;  // Bootstrap font
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,body {
+  height: 100%;
+}
+
+.cursor-pointer {
+  cursor:pointer
+}
+
+.invalid-text {
+  color: #dc3545;
+}
+
+.toast-container {
+  position: fixed;
+  .ngx-toastr {
+    margin-top: 6px;
+  }
+}
+
+/*Note: Evento de FadeIn ao mudar de rota*/
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+router-outlet + * {
+  display: block;  /* Change display inline to block */
+  animation: fade 1s;
+  height: 100%;
+}
+
+
+/*Note: Fix NgxBootstrap Tooltip*/
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0 #{"/* rtl:ignore */"};
+}
+
+.popover-arrow {
+  position: absolute;
+}
+
+.tooltip {
+  position: absolute;
+}
+
+.tooltip-arrow {
+  position: absolute;
+}
+
+
+// *******************************************************************************
+// Classe de Width
+.w-sm-25, .w-sm-33, .w-sm-50, .w-sm-66, .w-sm-75 .w-sm-100,
+.w-md-25, .w-md-33, .w-md-50, .w-md-66, .w-md-75 .w-md-100,
+.w-lg-25, .w-lg-33, .w-lg-50, .w-lg-66, .w-lg-75 .w-lg-100,
+.w-xl-25, .w-xl-33, .w-xl-50, .w-xl-66, .w-xl-75 .w-xl-100,
+.w-xxl-25, .w-xxl-33, .w-xxl-50, .w-xxl-66 .w-xxl-75 .w-xxl-100 {
+  width: 100%;
+  @media (min-width: 576px) {
+    .w-sm-25, {width: 25%;}
+    .w-sm-33, {width: 33%;}
+    .w-sm-50 {width: 50%;}
+    .w-sm-66 {width: 66%;}
+    .w-sm-75 {width: 75%;}
+    .w-sm-100 {width: 100%;}
+    .w-md-25, .w-md-33, .w-md-50, .w-md-66, .w-md-75, .w-md-100 {width: 100%;}
+  }
+  @media screen and (min-width: 768px) {
+    .w-md-25 {width: 25%;}
+    .w-md-33 {width: 33%;}
+    .w-md-50 {width: 50%;}
+    .w-md-66 {width: 66%;}
+    .w-md-75 {width: 75%;}
+    .w-md-100 {width: 100%;}
+    .w-lg-25, .w-lg-33, .w-lg-50, .w-lg-66, .w-lg-75 .w-lg-100, .w-lg-100 {width: 100%;}
+  }
+  @media screen and (min-width: 992px) {
+    .w-lg-25 {width: 25%;}
+    .w-lg-33 {width: 33%;}
+    .w-lg-50 {width: 50%;}
+    .w-lg-66 {width: 66%;}
+    .w-lg-75 {width: 75%;}
+    .w-lg-100 {width: 100%;}
+    .w-xl-25, .w-xl-33, .w-xl-50, .w-xl-66, .w-xl-75 .w-xl-100, .w-xl-100 {width: 100%;}
+  }
+  @media screen and (min-width: 1200px) {
+    .w-xl-25 {width: 25%;}
+    .w-xl-33 {width: 33%;}
+    .w-xl-50 {width: 50%;}
+    .w-xl-66 {width: 66%;}
+    .w-xl-75 {width: 75%;}
+    .w-xl-100 {width: 100%;}
+    .w-xxl-25, .w-xxl-33, .w-xxl-50, .w-xxl-66, .w-xxl-75 .w-xxl-100, .w-xxl-100 {width: 100%;}
+  }
+  @media screen and (min-width: 1400px) {
+    .w-xxl-25 {width: 25%;}
+    .w-xxl-33 {width: 33%;}
+    .w-xxl-50 {width: 50%;}
+    .w-xxl-66 {width: 66%;}
+    .w-xxl-75 {width: 75%;}
+    .w-xxl-100 {width: 100%;}
+  }
+}
+
+
+
+

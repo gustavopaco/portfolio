@@ -1,2 +1,17 @@
+@use "@angular/material" as mat;
 @import "bootstrap/dist/css/bootstrap.css";
 @import "src/app/shared/scss/default/default-with-colors";
+@include mat.core();
+
+/*Configurações de input Angular Material*/
+//.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+//  background-color: white !important;
+//}
+//
+//.mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay {
+//  opacity: 0 !important;
+//}
+//
+//.mat-mdc-form-field:hover .mat-mdc-form-field-focus-overlay {
+//  opacity: 0 !important;
+//}

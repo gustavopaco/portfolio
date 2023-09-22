@@ -1,0 +1,22 @@
+// Import: @import 'custom-scrollbar';
+::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+// Fundo da barra de rolagem
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.2);
+}
+
+// Ponteiro da barra de rolagem
+::-webkit-scrollbar-thumb {
+  background: #8e8c89;
+  border-radius: 5px;
+}
+
+// Fundo da barra de rolagem quando o ponteiro passa por cima
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+

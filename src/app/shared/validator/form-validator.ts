@@ -1,5 +1,6 @@
 import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 export class FormValidator {
   static validateAllFormFields(formGroup: FormGroup | FormArray) {
@@ -244,5 +245,25 @@ export class FormValidator {
     const validPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+~<>,.?/[\]{}|])[A-Za-z\d!@#$%^&*()_+~<>?,.:;"{}\\[\]/|]{8,}/;
 
     return validPassword.test(password) ? null : {passwordInvalid: true}
+  }
+
+  static validateSmallI18nGenericInterpolation(translate: TranslateService, formControl: FormControl, fieldName: string, fieldNameEqualsTo?: string): string {
+    if (formControl?.errors) {
+      const errorMessages: Record<string, string> = {
+        required: translate.instant(`required`, {fieldName}),
+        mask: translate.instant(`mask`, {fieldName}),
+        minlength: translate.instant(`minlength`, {fieldName, requiredLength: formControl.errors['minlength']?.requiredLength,}),
+        maxlength: translate.instant(`maxlength`, {fieldName, requiredLength: formControl.errors['maxlength']?.requiredLength,}),
+        email: translate.instant(`email`),
+        emailInUse: translate.instant(`emailInUse`),
+        cepInvalido: translate.instant(`cepInvalido`),
+        bsDate: translate.instant(`bsDate`),
+        equalsTo: translate.instant(`equalsTo`, {fieldName, fieldNameEqualsTo,}),
+        min: translate.instant(`min`, {fieldName, min: formControl.errors['min']?.min,}),
+        max: translate.instant(`max`, {fieldName, max: formControl.errors['max']?.max,}),
+      };
+      return FormValidator.loopIntoSmallInterpolationInputErrors(formControl, fieldName, errorMessages);
+    }
+    return `${fieldName} is valid`;
   }
 }

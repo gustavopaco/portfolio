@@ -1,0 +1,13 @@
+{
+  "required": "*{{fieldName}} is required.",
+  "mask": "*Invalid {{fieldName}}.",
+  "minlength": "*Minimum {{fieldName}} characters: {{requiredLength}}.",
+  "maxlength": "*Maximum {{fieldName}} characters: {{requiredLength}}.",
+  "email": "*Invalid email.",
+  "emailInUse": "*Email already in use.",
+  "cepInvalido": "*Invalid Zipcode.",
+  "bsDate": "*Invalid date format.",
+  "equalsTo": "*{{fieldName}} and {{fieldNameEqualsTo}} must be equal.",
+  "min": "*{{fieldName}} must be greater or equal to {{min}}.",
+  "max": "*{{fieldName}} must be less or equal to {{max}}."
+}

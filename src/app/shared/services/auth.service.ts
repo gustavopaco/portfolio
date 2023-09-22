@@ -13,7 +13,7 @@ export class AuthService {
   }
 
   authenticate(form: any) {
-    return this.httpClient.post(API_AUTH, form)
+    return this.httpClient.post(API_AUTH, form, {observe: 'response'})
   }
 
   sendMailToResetPassword(form: any, params: HttpParams) {
@@ -30,6 +30,10 @@ export class AuthService {
 
   isUserLogged(): boolean {
     return localStorage.getItem("KEY_USER_LOGGED") != undefined;
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem("t", token);
   }
 
   savePermissions(response: any): void {
@@ -115,7 +119,7 @@ export class AuthService {
   }
 
   getFullToken(): string {
-    return <string>localStorage.getItem("KEY_TOKEN");
+    return <string>localStorage.getItem("t");
   }
 
   getUserId(): string {

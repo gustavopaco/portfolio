@@ -8,23 +8,33 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 import {FormValidator} from "../../shared/validator/form-validator";
+import {AuthService} from "../../shared/services/auth.service";
+import {take} from "rxjs";
+import {FormularioDebugComponent} from "../../shared/components/formulario-debug/formulario-debug.component";
+import {AUTHORIZATION_HEADER} from "../../shared/constants/constants";
+import {MatSnakebarService} from "../../shared/external/angular-material/toast-snackbar/mat-snakebar.service";
+import {HttpValidator} from "../../shared/validator/http-validator";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, FormularioDebugComponent],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
   form: FormGroup = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(3)]]
   })
 
   constructor(private uiService: UiService,
               private fb: FormBuilder,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private authService: AuthService,
+              private matSnakeBarService: MatSnakebarService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -40,7 +50,15 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value)
+      this.authService.authenticate(this.form.value)
+        .pipe(take(1))
+        .subscribe({
+          next: (response: any) => {
+            this.authService.saveToken(response.headers.get(AUTHORIZATION_HEADER));
+            this.router.navigate(['/profile'])
+          },
+          error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed to authenticate', 5000, 'center', 'top')
+        })
     }
   }
 

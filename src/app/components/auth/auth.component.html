@@ -8,12 +8,12 @@
       <mat-card-content class="d-flex flex-column">
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput placeholder="usuario@email.com" formControlName="email">
-          <mat-error class="yellow-text">{{ validatorMessages('email', 'Email') }}</mat-error>
+          <input matInput placeholder="usuario@email.com" formControlName="username" autocomplete="email">
+          <mat-error class="yellow-text">{{ validatorMessages('username', 'Email') }}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Password" formControlName="password">
+          <input matInput type="password" placeholder="Password" formControlName="password" autocomplete="current-password">
           <mat-error class="yellow-text">{{ validatorMessages('password', 'Password') }}</mat-error>
         </mat-form-field>
       </mat-card-content>

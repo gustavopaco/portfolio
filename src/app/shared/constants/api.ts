@@ -1,4 +1,6 @@
-export const API_AUTH = "";
+import {environment} from "../../../environments/environment";
+
+export const API_AUTH = `${environment.API}/auth`;
 export const API_RESET_PASSWORD_LINK = "";
 export const API_VALIDATE_TOKEN = "";
 export const API_RESET_PASSWORD = "";

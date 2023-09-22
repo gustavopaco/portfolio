@@ -14,29 +14,29 @@ export class MatSnakebarService {
   constructor(private snakeBar: MatSnackBar) {
   }
 
-  success(message: string, action?: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition) {
+  success(message: string, action?: string, duration?: number, horizontalPosition?: string, verticalPosition?: string) {
     this.panelClass = ['success'];
     this.configureSnakeBar(action, duration, horizontalPosition, verticalPosition);
     this.openSnackBar(message);
   }
 
-  error(message: string, action?: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition) {
+  error(message: string, action?: string, duration?: number, horizontalPosition?: string, verticalPosition?: string) {
     this.panelClass = ['error'];
     this.configureSnakeBar(action, duration, horizontalPosition, verticalPosition);
     this.openSnackBar(message);
   }
 
-  warning(message: string, action?: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition) {
+  warning(message: string, action?: string, duration?: number, horizontalPosition?: string, verticalPosition?: string) {
     this.panelClass = ['warning'];
     this.configureSnakeBar(action, duration, horizontalPosition, verticalPosition);
     this.openSnackBar(message);
   }
 
-  configureSnakeBar(action?: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition) {
+  configureSnakeBar(action?: string, duration?: number, horizontalPosition?: string, verticalPosition?: string) {
     this.action = action ? action : this.action;
     this.durationInSeconds = duration ? duration : this.durationInSeconds;
-    this.horizontalPosition = horizontalPosition ? horizontalPosition : this.horizontalPosition;
-    this.verticalPosition = verticalPosition ? verticalPosition : this.verticalPosition;
+    this.horizontalPosition = horizontalPosition ? horizontalPosition as MatSnackBarHorizontalPosition : this.horizontalPosition;
+    this.verticalPosition = verticalPosition ? verticalPosition as MatSnackBarVerticalPosition : this.verticalPosition;
   }
 
   openSnackBar(message: string) {

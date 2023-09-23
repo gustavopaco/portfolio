@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {API_AUTH, API_RESET_PASSWORD, API_RESET_PASSWORD_LINK, API_VALIDATE_TOKEN} from "../constants/api";
+import {API_AUTH, API_RESET_PASSWORD, API_RESET_PASSWORD_LINK, API_VALIDATE_TOKEN} from "../../constants/api";
 import {Router} from "@angular/router";
 import {take} from "rxjs";
 
@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   sendMailToResetPassword(form: any, params: HttpParams) {
-    return this.httpClient.post(API_RESET_PASSWORD_LINK,null, {params});
+    return this.httpClient.post(API_RESET_PASSWORD_LINK, null, {params});
   }
 
   validateTokenBeforeResetPassword(params: HttpParams) {
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   isUserLogged(): boolean {
-    return localStorage.getItem("KEY_USER_LOGGED") != undefined;
+    return localStorage.getItem("t") != undefined;
   }
 
   saveToken(token: string): void {
@@ -106,7 +106,7 @@ export class AuthService {
     return true;
   }
 
-  isAdmin() : boolean {
+  isAdmin(): boolean {
     return this.getPermissions("ROLE_ADMIN");
   }
 
@@ -146,6 +146,14 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/'])
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['/auth'])
+  }
+
+  redirectToHome() {
+    this.router.navigate(['/profile'])
   }
 
   adicionarTempExternalApiRequest() {

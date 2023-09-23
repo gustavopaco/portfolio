@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {RouterOutlet} from "@angular/router";
 import {FooterComponent} from "../footer/footer.component";
-import {UiService} from "../../shared/services/ui.service";
+import {UiService} from "../../shared/services/default/ui.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({

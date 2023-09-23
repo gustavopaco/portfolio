@@ -1,4 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, RouterStateSnapshot} from "@angular/router";
+import {inject} from "@angular/core";
+import {AuthService} from "../services/default/auth.service";
 
 /*Note: Guarda responsavel por verificar se usuario tem permissao/ou/Logado para poder abrir a pagina*/
 export const CAN_ACTIVATE_USER_AUTH: CanActivateFn = (route, state) => {
@@ -31,12 +33,22 @@ export const CAN_ACTIVATE_CHILD_EMPRESA_NO_OWNER: CanActivateFn = (route: Activa
 export const AUTH_VERIFY_ACCESS_USER = (): boolean => {
   // todo: Situation: User trying to access a page that requires authentication
   //  Inject service and verify if user is logged, case logged return true, else redirect to login page and return false
+  const authService = inject(AuthService);
+  if (authService.isUserLogged()) {
+    return true;
+  }
+  authService.redirectToLogin();
   return false;
 }
 
 export const NO_AUTH_VERIFY_ACCESS_USER = (): boolean => {
   // todo: Situation: User logged trying to access a page that does not require authentication like login page
   //  Inject service and verify if user is logged, case logged redirect to home page and return false, else return true
+  const authService = inject(AuthService);
+  if (authService.isUserLogged()) {
+    authService.redirectToHome();
+    return false;
+  }
   return true;
 }
 

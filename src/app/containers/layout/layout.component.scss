@@ -1,3 +1,15 @@
 header, footer {
   height: 80px;
 }
+
+main.complete {
+  height: calc(100vh - 160px);
+}
+
+main.parcial-complete {
+  height: calc(100vh - 80px);
+}
+
+main.incomplete {
+  height: 100vh;
+}

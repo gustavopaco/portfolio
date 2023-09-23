@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {UiService} from "../../shared/services/ui.service";
+import {UiService} from "../../shared/services/default/ui.service";
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -8,7 +8,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 import {FormValidator} from "../../shared/validator/form-validator";
-import {AuthService} from "../../shared/services/auth.service";
+import {AuthService} from "../../shared/services/default/auth.service";
 import {take} from "rxjs";
 import {FormularioDebugComponent} from "../../shared/components/formulario-debug/formulario-debug.component";
 import {AUTHORIZATION_HEADER} from "../../shared/constants/constants";

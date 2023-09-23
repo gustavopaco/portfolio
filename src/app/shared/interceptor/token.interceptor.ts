@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, of, throwError} from 'rxjs';
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../services/default/auth.service";
 import {EXPIRED_JWT_EXCEPTION, INVALID_SESSION_EXCEPTION} from "../constants/constants";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authService.isUserLogged() && !this.authService.isTempExternalApiRequest()) {
       const authenticatedRequest = request.clone(
-        {setHeaders: {AUTHORIZATION_HEADER: this.authService.getFullToken()}}
+        {setHeaders: {[this.AUTHORIZATION_HEADER] : this.authService.getFullToken()}}
       );
       return next.handle(authenticatedRequest)
         .pipe(catchError((error: HttpErrorResponse) => this.interceptInvalidToken(error)));

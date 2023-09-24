@@ -1,1 +1,30 @@
-<p>profile works!</p>
+<section class="container">
+  <mat-card>
+    <mat-card-title class="text-center my-2">Profile data</mat-card-title>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-4">
+          Foto de Perfil
+        </div><!--col-->
+        <div class="col-md-8">
+          <mat-tab-group>
+            <mat-tab label="Skills">
+              <div class="row my-4 mx-0">
+                <div class="col-lg-6">
+                  <button class="w-100" mat-raised-button color="primary"><mat-icon>add</mat-icon>Add Skill</button>
+                </div>
+                <div class="col-lg-6" *ngIf="isEditable">
+                  <button class="w-100" mat-raised-button color="primary"><mat-icon>edit</mat-icon>Edit Skill</button>
+                </div>
+              </div>
+              <app-skill [skills]="user?.skills" [editable]="true" (edit)="onEditSkill($event)" (delete)="onDeleteSkill($event)"></app-skill>
+            </mat-tab> <!--Content-Skills-->
+            <mat-tab label="Projects">
+
+            </mat-tab> <!--Content-Projects-->
+          </mat-tab-group>
+        </div><!--col-->
+      </div><!--row-->
+    </mat-card-content>
+  </mat-card>
+</section>

@@ -4,14 +4,14 @@ import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDividerModule} from "@angular/material/divider";
-import {Skill} from "../../shared/interface/skill";
+import {Skill} from "../../../../shared/interface/skill";
 
 @Component({
   selector: 'app-skill',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatDividerModule],
-  templateUrl: './skill.component.html',
-  styleUrls: ['./skill.component.scss']
+  templateUrl: './skills-list.component.html',
+  styleUrls: ['./skills-list.component.scss']
 })
 export class SkillComponent implements OnInit {
   skillSelected = -1;

@@ -11,7 +11,7 @@
             <mat-tab label="Skills">
               <div class="row my-4 mx-0">
                 <div class="col-lg-6">
-                  <button class="w-100" mat-raised-button color="primary"><mat-icon>add</mat-icon>Add Skill</button>
+                  <button class="w-100" mat-raised-button color="primary" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
                 </div>
                 <div class="col-lg-6" *ngIf="isEditable">
                   <button class="w-100" mat-raised-button color="primary"><mat-icon>edit</mat-icon>Edit Skill</button>

@@ -24,6 +24,10 @@ html,body {
   cursor:pointer
 }
 
+.resize-none {
+  resize: none !important;
+}
+
 .invalid-text {
   color: #dc3545;
 }

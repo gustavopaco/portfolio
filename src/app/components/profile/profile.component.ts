@@ -6,15 +6,17 @@ import {MatSnakebarService} from "../../shared/external/angular-material/toast-s
 import {HttpValidator} from "../../shared/validator/http-validator";
 import {MatCardModule} from "@angular/material/card";
 import {MatTabsModule} from "@angular/material/tabs";
-import {SkillComponent} from "../skill/skill.component";
+import {SkillComponent} from "../skills/components/skill-list/skills-list.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {User} from "../../shared/interface/user";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {SkillsFormComponent} from "../skills/containers/skills-form/skills-form.component";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTabsModule, SkillComponent, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatTabsModule, SkillComponent, MatIconModule, MatButtonModule, MatDialogModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -23,7 +25,8 @@ export class ProfileComponent implements OnInit {
   user?: User;
 
   constructor(private userService: UserService,
-              private matSnackBarService: MatSnakebarService) {}
+              private matSnackBarService: MatSnakebarService,
+              private matDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getUserRecords();
@@ -49,5 +52,16 @@ export class ProfileComponent implements OnInit {
 
   onDeleteSkill(skillId: number) {
 
+  }
+
+  onAddSkill() {
+    this.matDialog.open(SkillsFormComponent, {
+      width: '100%',
+      height: 'auto',
+      maxWidth: '600px',
+      maxHeight: '500px',
+      enterAnimationDuration: 200,
+      disableClose: false,
+    })
   }
 }

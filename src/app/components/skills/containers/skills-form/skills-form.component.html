@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{ newSkill ? 'New Skill' : 'Edit Skill' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Skill Name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" class="resize-none" placeholder="Skill description"></textarea>
+    </mat-form-field>
+      <button mat-raised-button color="primary" type="button">
+        <input type="file" class="d-none" (change)="onFileInputChange($event)">
+        Select Image
+      </button>
+
+    <image-cropper [imageChangedEvent]="imageChangedEvent"
+    ></image-cropper>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="submit">Save</button>
+  <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

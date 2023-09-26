@@ -1,16 +1,20 @@
 import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {ImageCropperModule} from "ngx-image-cropper";
+import {MatIconModule} from "@angular/material/icon";
+import {
+  ImageCropperDialogComponent
+} from "../../../../shared/external/angular-material/image-cropper-dialog/image-cropper-dialog.component";
 
 @Component({
   selector: 'app-skills-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule],
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss']
 })
@@ -25,10 +29,8 @@ export class SkillsFormComponent {
 
   @Input() newSkill = false;
 
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private matDialog: MatDialog) {
   }
 
   onSubmit() {
@@ -36,6 +38,14 @@ export class SkillsFormComponent {
   }
 
   onFileInputChange($event: Event) {
-    this.imageChangedEvent = $event;
+    this.matDialog.open(ImageCropperDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      maxWidth: '600px',
+      maxHeight: '600px',
+      data: {
+        imageChangedEvent: $event,
+      }
+    })
   }
 }

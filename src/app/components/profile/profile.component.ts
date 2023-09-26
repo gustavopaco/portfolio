@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
       width: '100%',
       height: 'auto',
       maxWidth: '600px',
-      maxHeight: '500px',
+      maxHeight: '600px',
       enterAnimationDuration: 200,
       disableClose: false,
     })

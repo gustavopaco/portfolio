@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <image-cropper [imageChangedEvent]="imageChangedEvent"
+                 [resizeToWidth]="data.resizeToWidth"
+                 [resizeToHeight]="data.resizeToHeight"
+                 [roundCropper]="data.roundCropper"
+                 [imageQuality]="data.imageQuality"
+                 [maintainAspectRatio]="data.maintainAspectRatio"
+                 [imageAltText]="data.imageAltText"
+                 [autoCrop]="data.autoCrop"
+                 (imageCropped)="imageCropped($event)"
+                 (cropperReady)="cropperReady($event)"
+                 (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" type="button" (click)="onConfirm()">{{ data.btnConfirmLabel }}</button>
+  <button mat-raised-button color="primary" mat-dialog-close>{{ data.btnCancelLabel }}</button>
+</mat-dialog-actions>
+

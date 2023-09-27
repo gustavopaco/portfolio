@@ -13,11 +13,11 @@
                 <div class="col-lg-6">
                   <button class="w-100" mat-raised-button color="primary" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
                 </div>
-                <div class="col-lg-6" *ngIf="isEditable">
+                <div class="col-lg-6" *ngIf="isSkillSelected">
                   <button class="w-100" mat-raised-button color="primary"><mat-icon>edit</mat-icon>Edit Skill</button>
                 </div>
               </div>
-              <app-skill [skills]="user?.skills" [editable]="true" (edit)="onEditSkill($event)" (delete)="onDeleteSkill($event)"></app-skill>
+              <app-skills-list [skills]="user?.skills" [editable]="true" (edit)="onEditSkill($event)" (delete)="onDeleteSkill($event)"></app-skills-list>
             </mat-tab> <!--Content-Skills-->
             <mat-tab label="Projects">
 

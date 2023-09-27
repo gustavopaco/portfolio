@@ -10,6 +10,7 @@ export class ImageCroppedData {
   imageAltText?: string;
   base64?: string;
   file?: File;
+  objectUrl?: string;
   width?: number;
   height?: number;
   maintainAspectRatio: boolean = true;
@@ -68,11 +69,7 @@ export class ImageCropperDialogComponent implements OnInit {
 
   onConfirm(): void {
     this.imageCropper.crop();
-    if (this.data.returnImageType === 'blob') {
-      this.matDialogRef.close(this.data.file);
-      return;
-    }
-    this.matDialogRef.close(this.data.base64);
+    this.matDialogRef.close(this.data);
   }
 
   imageLoaded() {
@@ -82,6 +79,7 @@ export class ImageCropperDialogComponent implements OnInit {
   imageCropped($event: ImageCroppedEvent) {
     if (this.data.returnImageType === 'blob') {
       this.data.file = new File([$event.blob!!], this.imageChangedEvent.target.files[0]?.name, {type: $event.blob?.type})
+      this.data.objectUrl = $event.objectUrl!!;
     }
     if (this.data.returnImageType === 'base64') {
       this.data.base64 = $event.base64!!;
@@ -95,6 +93,4 @@ export class ImageCropperDialogComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
-
-
 }

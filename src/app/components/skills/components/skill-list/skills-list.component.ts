@@ -1,44 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDividerModule} from "@angular/material/divider";
 import {Skill} from "../../../../shared/interface/skill";
+import {StarRatingComponent} from "../../../../shared/external/angular-material/star-rating/star-rating.component";
 
 @Component({
-  selector: 'app-skill',
+  selector: 'app-skills-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatDividerModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatDividerModule, StarRatingComponent],
   templateUrl: './skills-list.component.html',
   styleUrls: ['./skills-list.component.scss']
 })
-export class SkillComponent implements OnInit {
+export class SkillsListComponent {
   skillSelected = -1;
   @Input() skills?: Skill[];
   @Input() editable = false;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
-  starCount = 5;
-  starArr: number[] = [];
-
-  ngOnInit(): void {
-    this.createStarArray();
-  }
-
-  private createStarArray() {
-    for (let i = 0; i < this.starCount; i++) {
-      this.starArr.push(i);
-    }
-  }
-
-  showStarIcon(i: number, j: number) {
-    if (this.skills && this.skills[j].rating >= i + 1) {
-      return 'star';
-    } else {
-      return 'star_border';
-    }
-  }
 
   onSkillSelected(j: number) {
     if (this.skills && this.editable) {

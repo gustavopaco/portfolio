@@ -1,27 +1,37 @@
-<h2 mat-dialog-title>{{ newSkill ? 'New Skill' : 'Edit Skill' }}</h2>
+<h2 mat-dialog-title>{{ data.newSkill ? 'New Skill' : 'Edit Skill' }}</h2>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3">
-      <label for="skillPicture" class="position-relative skillPictureLabel cursor-pointer">
-        <span class="overlay">
+      <label for="skillPicture" class="position-relative skillPictureLabel">
+        <span class="overlay cursor-pointer" [ngClass]="overlayClass()">
         <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
         </span>
-        <img class="d-none" src="assets/icons/skills-96.png" alt="Skill Image">
+        <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage" [src]="tempImage"
+             alt="Skill Image">
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>
       <small>Skill Image</small>
-    </div>
+      <mat-error *ngIf="isFormSubmitted && isUploadFailed">{{ matErrorMessage('url', 'Skill Image') }}</mat-error>
+    </div><!--Picture-->
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Skill Name">
+      <mat-error>{{ matErrorMessage('name', 'Name') }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Description</mat-label>
+      <mat-label>Description(Optional)</mat-label>
       <textarea matInput formControlName="description" class="resize-none" placeholder="Skill description"></textarea>
     </mat-form-field>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <span>Rating*</span>
+      <app-star-rating [editable]="true" (ratingChange)="onRatingChange($event)"></app-star-rating>
+      <mat-error *ngIf="isFormSubmitted">{{ matErrorMessage('rating', 'Rating') }}</mat-error>
+    </div><!--Rating-->
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" class="mx-3">
   <button mat-raised-button color="primary" type="submit">Save</button>
   <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
+
+<app-formulario-debug [formularioReativoDebug]="form"></app-formulario-debug>

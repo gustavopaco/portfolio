@@ -1,0 +1,6 @@
+<button [color]="starColor" mat-icon-button type="button"
+        [matTooltip]="tooltip(i)" matTooltipPosition="below"
+        (click)="onClick(i)" [disabled]="!editable"
+        *ngFor="let starId of starArray; index as i" [id]="'star'+i">
+  <mat-icon [color]="starColor">{{ starIcon(i) }}</mat-icon>
+</button>

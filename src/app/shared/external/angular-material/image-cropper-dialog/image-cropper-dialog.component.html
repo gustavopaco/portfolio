@@ -8,6 +8,7 @@
                  [maintainAspectRatio]="data.maintainAspectRatio"
                  [imageAltText]="data.imageAltText"
                  [autoCrop]="data.autoCrop"
+                 (imageLoaded)="imageLoaded()"
                  (imageCropped)="imageCropped($event)"
                  (cropperReady)="cropperReady($event)"
                  (loadImageFailed)="loadImageFailed()"

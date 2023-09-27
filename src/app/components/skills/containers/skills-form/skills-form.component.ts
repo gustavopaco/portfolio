@@ -45,7 +45,9 @@ export class SkillsFormComponent {
       maxHeight: '600px',
       data: {
         imageChangedEvent: $event,
+        btnConfirmLabel: 'Load image',
+        btnCancelLabel: 'Cancel'
       }
-    })
+    });
   }
 }

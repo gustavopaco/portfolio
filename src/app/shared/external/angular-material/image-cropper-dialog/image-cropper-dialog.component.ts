@@ -41,7 +41,7 @@ export class ImageCroppedData {
     x2: number;
     y2: number;
   };
-  returnImageType?: 'base64' | 'file';
+  returnImageType?: 'base64' | 'blob' = 'blob';
   btnConfirmLabel: string = 'Load';
   btnCancelLabel: string = 'Cancel';
 }
@@ -68,15 +68,24 @@ export class ImageCropperDialogComponent implements OnInit {
 
   onConfirm(): void {
     this.imageCropper.crop();
-    if (this.data.returnImageType === 'file') {
+    if (this.data.returnImageType === 'blob') {
       this.matDialogRef.close(this.data.file);
       return;
     }
     this.matDialogRef.close(this.data.base64);
   }
 
+  imageLoaded() {
+    // show cropper
+  }
+
   imageCropped($event: ImageCroppedEvent) {
-    this.croppedImage = $event.base64;
+    if (this.data.returnImageType === 'blob') {
+      this.data.file = new File([$event.blob!!], this.imageChangedEvent.target.files[0]?.name, {type: $event.blob?.type})
+    }
+    if (this.data.returnImageType === 'base64') {
+      this.data.base64 = $event.base64!!;
+    }
   }
 
   cropperReady($event: Dimensions) {
@@ -86,4 +95,6 @@ export class ImageCropperDialogComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
+
+
 }

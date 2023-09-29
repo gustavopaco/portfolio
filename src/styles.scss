@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 @import "bootstrap/dist/css/bootstrap.css";
 @import "src/app/shared/scss/default/default-with-colors";
+@import "src/app/shared/scss/default/custom-scrollbar";
 @import "src/app/shared/external/angular-material/toast-snackbar/mat-snackbar";
 @include mat.core();
 

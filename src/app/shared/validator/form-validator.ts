@@ -266,4 +266,8 @@ export class FormValidator {
     }
     return `${fieldName} is valid`;
   }
+
+  static validateExistError(formControl: FormControl, formSubmitted: boolean) {
+    return formControl.errors != null && formSubmitted;
+  }
 }

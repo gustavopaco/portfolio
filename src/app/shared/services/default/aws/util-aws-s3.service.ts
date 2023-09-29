@@ -1,21 +1,21 @@
 import {Injectable} from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {DeleteObjectCommand, PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UtilAwsS3FileUploadService {
+export class UtilAwsS3Service {
 
   private s3Client: S3Client | undefined;
 
-  loadS3Client(S3_REGION: string, S3_CREDENTIALS_ACCESS_KEY_ID: string, S3_CREDENTIALS_SECRET_ACCESS_KEY: string): void {
+  loadS3Client(S3_REGION: string, S3_CREDENTIALS_ACCESS_KEY: string, S3_CREDENTIALS_SECRET_KEY: string): void {
     if (this.s3Client === undefined) {
       this.s3Client = new S3Client({
         region: S3_REGION,
         credentials: {
-          accessKeyId: S3_CREDENTIALS_ACCESS_KEY_ID,
-          secretAccessKey: S3_CREDENTIALS_SECRET_ACCESS_KEY,
+          accessKeyId: S3_CREDENTIALS_ACCESS_KEY,
+          secretAccessKey: S3_CREDENTIALS_SECRET_KEY,
         },
       });
     }
@@ -39,6 +39,7 @@ export class UtilAwsS3FileUploadService {
         imageUrls.push(imageUrl);
       } catch (error: any) {
         //todo: Show error message
+        throw error;
       }
     }
     return imageUrls;
@@ -47,10 +48,9 @@ export class UtilAwsS3FileUploadService {
   async uploadSingleImageToAwsS3Bucket(S3_BUCKET_NAME: string, file: File, folder: string) {
     const command = new PutObjectCommand(this.s3BucketConfigCommandObject(S3_BUCKET_NAME, file, folder));
     try {
-      this.s3Client?.send(command);
+      await this.s3Client?.send(command);
       return `https://${command.input.Bucket}.s3.amazonaws.com/${command.input.Key}`;
     } catch (error: any) {
-      //todo: Show error message
       throw error;
     }
   }

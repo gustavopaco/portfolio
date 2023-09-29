@@ -49,7 +49,16 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "node_modules/hammerjs/hammer.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "fast-xml-parser",
+              "@aws-crypto/sha1-browser",
+              "@aws-crypto/sha256-browser",
+              "@aws-crypto/crc32",
+              "@aws-crypto/crc32c",
+              "bowser"
             ]
           },
           "configurations": {

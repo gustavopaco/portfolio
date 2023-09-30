@@ -11,8 +11,8 @@
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>
       <small>Skill Image</small>
-      <mat-error *ngIf="showMatErrorMessage('tempImage') || isUploadFailed">
-        {{ matErrorMessage('tempImage', 'Skill Image') }}
+      <mat-error>
+        {{ matErrorImageMessage('tempImage', 'Skill Image') }}
       </mat-error>
     </div><!--Picture-->
     <mat-form-field>
@@ -37,3 +37,4 @@
     <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </form>
+<app-formulario-debug [formularioReativoDebug]="form"></app-formulario-debug>

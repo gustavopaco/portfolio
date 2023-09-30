@@ -6,6 +6,7 @@
   "email": "*E-mail inválido.",
   "emailInUse": "*E-mail já existe.",
   "cepInvalido": "*CEP inválido.",
+  "upload": "*Erro ao fazer upload.",
   "bsDate": "*Formato de data inválido.",
   "equalsTo": "*{{fieldName}} e {{fieldNameEqualsTo}}, devem ser iguais.",
   "min": "*{{fieldName}} deve ser maior ou igual a {{min}}.",

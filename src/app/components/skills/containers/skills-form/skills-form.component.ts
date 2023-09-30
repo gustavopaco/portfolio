@@ -19,11 +19,19 @@ import {TranslateService} from "@ngx-translate/core";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {S3_FOLDER} from "../../../../shared/constants/api";
 import {MatSnakebarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snakebar.service";
+import {S3_SKILLS_FOLDER} from "../../../../shared/constants/api";
+import {UserService} from "../../../../shared/services/user.service";
+import {
+  ACTION_CLOSE,
+  FAILED_TO_SAVE_SKILL,
+  FAILED_TO_UPLOAD_IMAGE,
+  SKILL_SAVED_SUCCESSFULLY
+} from "../../../../shared/constants/constants";
 
 export interface SkillData {
   newSkill?: boolean;
+  isFailedToUploadImage: boolean;
 }
 
 @Component({
@@ -44,7 +52,8 @@ export class SkillsFormComponent {
   });
 
   isFormSubmitted = false;
-  isUploadFailed = false;
+  disabledForm = false;
+
 
   skillFile?: File;
 
@@ -54,7 +63,8 @@ export class SkillsFormComponent {
               private translateService: TranslateService,
               private credentialsService: CredentialsService,
               private utilAwsS3Service: UtilAwsS3Service,
-              private matSnackBarService: MatSnakebarService) {
+              private matSnackBarService: MatSnakebarService,
+              private userService: UserService) {
   }
 
   onFileInputChange($event: Event) {
@@ -98,25 +108,52 @@ export class SkillsFormComponent {
   onSubmit() {
     this.isFormSubmitted = true;
     if (this.form.valid) {
-      this.credentialsService.getAwsCredentials()
-        .pipe(take(1))
-        .subscribe({
-          next: (awsCredentials: AwsConfiguration) => {
-            this.utilAwsS3Service.loadS3Client(awsCredentials.region, awsCredentials.accessKey, awsCredentials.secretKey);
-            this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(awsCredentials.bucketName, this.skillFile!, S3_FOLDER)
-              .then((imageUrl: string) => {
-                this.form.patchValue({url: imageUrl});
-                this.isUploadFailed = false;
-              })
-              .catch(() => {
-                this.isUploadFailed = true;
-                this.matSnackBarService.error('Upload image error', 'Close');
-              });
-          }
-        });
+      if (this.form.get('tempImage')?.value) {
+        this.loadCredentials();
+        return;
+      }
+      this.saveSkill();
     }
   }
 
+  private loadCredentials() {
+    this.credentialsService.getAwsCredentials()
+      .pipe(take(1))
+      .subscribe({
+        next: (awsCredentials: AwsConfiguration) => {
+          this.uploadToAwsS3Bucket(awsCredentials);
+        }
+      });
+  }
+
+  private uploadToAwsS3Bucket(awsCredentials: AwsConfiguration) {
+    this.utilAwsS3Service.loadS3Client(awsCredentials.region, awsCredentials.accessKey, awsCredentials.secretKey);
+    this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(awsCredentials.bucketName, this.skillFile!, S3_SKILLS_FOLDER)
+      .then((imageUrl: string) => {
+        this.form.patchValue({url: imageUrl});
+        this.saveSkill();
+      })
+      .catch(() => {
+        this.onFailedToUploadImage();
+        this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE);
+      });
+  }
+
+  private saveSkill() {
+    this.userService.saveSKillRecord(this.form.value)
+      .pipe(
+        take(1),
+        finalize(() => this.disabledForm = false)
+      )
+      .subscribe({
+        next: () => this.matSnackBarService.success(SKILL_SAVED_SUCCESSFULLY, ACTION_CLOSE),
+        error: () => this.matSnackBarService.error(FAILED_TO_SAVE_SKILL, ACTION_CLOSE)
+      })
+  }
+
+  onFailedToUploadImage() {
+    this.data.isFailedToUploadImage = true;
+  }
 
   onRatingChange(value: number) {
     this.form.patchValue({rating: value});
@@ -132,6 +169,12 @@ export class SkillsFormComponent {
 
   matErrorMessage(formControlName: string, fieldName: string) {
     return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl> this.form.get(formControlName), fieldName)
+  }
+
+  matErrorImageMessage(formControlName: string, fieldName: string) {
+    if (this.showMatErrorMessage(formControlName)) return this.matErrorMessage(formControlName, fieldName);
+    if (this.data.isFailedToUploadImage) return this.translateService.instant('upload');
+    return '';
   }
 
   showMatErrorMessage(formControlName: string) {

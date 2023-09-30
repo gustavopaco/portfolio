@@ -16,4 +16,9 @@ export class UserService extends CrudService<User> {
   getUserRecords() {
     return this.httpClient.get<User>(`${API_USER}/owner`)
   }
+
+  saveSKillRecord(form: any) {
+    if (form.id) return this.httpClient.put(`${API_USER}/owner/skill`, form);
+    return this.httpClient.post(`${API_USER}/owner/skill`, form)
+  }
 }

@@ -6,6 +6,7 @@
   "email": "*Invalid email.",
   "emailInUse": "*Email already in use.",
   "cepInvalido": "*Invalid Zipcode.",
+  "upload": "*Failed to upload file.",
   "bsDate": "*Invalid date format.",
   "equalsTo": "*{{fieldName}} and {{fieldNameEqualsTo}} must be equal.",
   "min": "*{{fieldName}} must be greater or equal to {{min}}.",

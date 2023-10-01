@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -25,13 +25,15 @@ import {UserService} from "../../../../shared/services/user.service";
 import {
   ACTION_CLOSE,
   FAILED_TO_SAVE_SKILL,
-  FAILED_TO_UPLOAD_IMAGE,
+  FAILED_TO_UPLOAD_IMAGE, NO_CHANGES_WERE_MADE,
   SKILL_SAVED_SUCCESSFULLY
 } from "../../../../shared/constants/constants";
+import {Skill} from "../../../../shared/interface/skill";
 
 export interface SkillData {
   newSkill?: boolean;
   isFailedToUploadImage: boolean;
+  skillToEdit?: Skill;
 }
 
 @Component({
@@ -41,9 +43,9 @@ export interface SkillData {
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss']
 })
-export class SkillsFormComponent {
+export class SkillsFormComponent implements OnInit {
   form = this.fb.group({
-    id: [null],
+    id: new FormControl<number | null>(null),
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     description: ['', [Validators.maxLength(100)]],
     rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -53,7 +55,6 @@ export class SkillsFormComponent {
 
   isFormSubmitted = false;
   disabledForm = false;
-
 
   skillFile?: File;
 
@@ -66,6 +67,16 @@ export class SkillsFormComponent {
               private utilAwsS3Service: UtilAwsS3Service,
               private matSnackBarService: MatSnakebarService,
               private userService: UserService) {
+  }
+
+  ngOnInit(): void {
+    this.loadSkillToEdit();
+  }
+
+  private loadSkillToEdit() {
+    if (!this.data.newSkill && this.data.skillToEdit) {
+      this.form.patchValue(this.data.skillToEdit);
+    }
   }
 
   onFileInputChange($event: Event) {
@@ -110,13 +121,34 @@ export class SkillsFormComponent {
 
   onSubmit() {
     this.isFormSubmitted = true;
+    this.verifyEditSkillFormSubmittedWithoutNewImage();
     if (this.form.valid) {
       if (this.form.get('tempImage')?.value) {
         this.loadCredentials();
         return;
       }
-      this.saveSkill();
+      if (this.existChangesOnSkillFromFormData()) {
+        this.saveSkill();
+        return;
+      }
+      this.matSnackBarService.warning(NO_CHANGES_WERE_MADE, ACTION_CLOSE,3000, 'center', 'top');
+      this.matDialogRef.close(false);
     }
+  }
+
+  private verifyEditSkillFormSubmittedWithoutNewImage() {
+    if (!this.data.newSkill && this.data.skillToEdit && this.tempImage === '' && this.url !== '') {
+      this.form.get('tempImage')?.removeValidators([Validators.required]);
+      this.form.get('tempImage')?.updateValueAndValidity();
+    }
+  }
+
+  private existChangesOnSkillFromFormData() {
+    const skill = this.data.skillToEdit;
+    return skill?.name !== this.form.get('name')?.value ||
+      skill?.description !== this.form.get('description')?.value ||
+      skill?.rating !== this.form.get('rating')?.value ||
+      skill?.url !== this.form.get('url')?.value;
   }
 
   private loadCredentials() {
@@ -143,7 +175,8 @@ export class SkillsFormComponent {
   }
 
   private saveSkill() {
-    this.userService.saveSKillRecord(this.form.value)
+    this.disabledForm = true;
+    this.userService.saveSkillRecord(this.form.value)
       .pipe(
         take(1),
         finalize(() => this.disabledForm = false)
@@ -169,8 +202,12 @@ export class SkillsFormComponent {
     return this.form.get('tempImage')?.value;
   }
 
+  get url() {
+    return this.form.get('url')?.value;
+  }
+
   overlayClass() {
-    return this.tempImage ? 'overlay-close' : 'overlay-open';
+    return this.tempImage || this.url ? 'overlay-close' : 'overlay-open';
   }
 
   matErrorMessage(formControlName: string, fieldName: string) {

@@ -10,3 +10,4 @@ export const SKILL_SAVED_SUCCESSFULLY = "Skill saved successfully.";
 export const ACTION_CLOSE = "Close";
 export const ACTION_OK = "Ok";
 export const ACTION_SUCCESS = "Success";
+export const NO_CHANGES_WERE_MADE = "No changes were made.";

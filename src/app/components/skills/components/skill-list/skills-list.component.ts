@@ -15,27 +15,27 @@ import {StarRatingComponent} from "../../../../shared/external/angular-material/
   styleUrls: ['./skills-list.component.scss']
 })
 export class SkillsListComponent {
-  skillSelected = -1;
+  skillIdSelected = -1;
   @Input() skills?: Skill[];
   @Input() editable = false;
-  @Output() edit = new EventEmitter();
-  @Output() delete = new EventEmitter();
+  @Input() set isSkillSelected(value: boolean) {if (!value) this.skillIdSelected = -1;};
+  @Output() selected = new EventEmitter();
 
   onSkillSelected(j: number) {
     if (this.skills && this.editable) {
-      if (j === this.skillSelected) {
-        this.skillSelected = -1;
-        this.edit.emit(-1);
+      if (j === this.skillIdSelected) {
+        this.skillIdSelected = -1;
+        this.selected.emit(-1);
         return;
       }
-      this.skillSelected = j;
-      this.edit.emit(this.skills[j].id);
+      this.skillIdSelected = j;
+      this.selected.emit(this.skills[j].id);
     }
   }
 
   onDelete(j: number) {
-    if (this.skills) {
-      this.delete.emit(this.skills[j].id);
+    if (this.skills && this.editable) {
+      this.selected.emit(this.skills[j].id);
     }
   }
 }

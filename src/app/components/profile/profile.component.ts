@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {User} from "../../shared/interface/user";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {SkillsFormComponent} from "../skills/containers/skills-form/skills-form.component";
+import {Skill} from "../../shared/interface/skill";
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ import {SkillsFormComponent} from "../skills/containers/skills-form/skills-form.
 })
 export class ProfileComponent implements OnInit {
   isSkillSelected = false;
+  skillIdSelected = -1;
   user?: User;
 
   constructor(private userService: UserService,
@@ -50,16 +52,36 @@ export class ProfileComponent implements OnInit {
       })
   }
 
-  onEditSkill(skillId: any) {
-    this.validateSkillSelected(skillId);
-    // todo: implementar a edição de skill
+  onSelectedSkill(skillId: any) {
+    this.validateSkillIdSelected(skillId);
   }
 
   onDeleteSkill(skillId: number) {
-    this.validateSkillSelected(skillId);
+    this.validateSkillIdSelected(skillId);
   }
 
   onAddSkill() {
+    this.openSkillFormDialog(true);
+  }
+
+  onEditSkill() {
+    const skill = this.filterSkillById(this.skillIdSelected);
+    this.openSkillFormDialog(false, skill);
+  }
+
+  private validateSkillIdSelected(skillId: number) {
+    if (skillId === -1) {
+      this.resetSkillSelected();
+      return;
+    }
+    this.setSkillSelected(skillId);
+  }
+
+  private filterSkillById(skillId: number) {
+    return this.user!!.skills.filter(skill => skill.id === skillId)[0];
+  }
+
+  private openSkillFormDialog(newSkillResult: boolean, skillOnEdit?: Skill) {
     const dialogRef = this.matDialog.open(SkillsFormComponent, {
       width: '100%',
       height: 'auto',
@@ -68,7 +90,8 @@ export class ProfileComponent implements OnInit {
       enterAnimationDuration: 200,
       disableClose: false,
       data: {
-        newSkill: true
+        newSkill: newSkillResult,
+        skillToEdit: skillOnEdit
       }
     });
 
@@ -76,14 +99,17 @@ export class ProfileComponent implements OnInit {
       .pipe(take(1))
       .subscribe((result : boolean) => {
         if (result) this.getSkillRecords();
+        this.resetSkillSelected();
       });
   }
 
-  private validateSkillSelected(skillId: number) {
-    if (skillId === -1) {
+  private resetSkillSelected() {
       this.isSkillSelected = false;
-      return;
-    }
+      this.skillIdSelected = -1;
+  }
+
+  private setSkillSelected(skillId: number) {
     this.isSkillSelected = true;
+    this.skillIdSelected = skillId;
   }
 }

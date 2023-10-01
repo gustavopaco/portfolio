@@ -6,7 +6,7 @@
         <span class="overlay cursor-pointer" [ngClass]="overlayClass()">
         <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
         </span>
-        <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage" [src]="tempImage"
+        <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage || url" [src]="data.newSkill ? tempImage : url"
              alt="Skill Image">
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>
@@ -26,14 +26,14 @@
     </mat-form-field>
     <div class="d-flex flex-column justify-content-center align-items-center">
       <span>Rating*</span>
-      <app-star-rating [editable]="true" (ratingChange)="onRatingChange($event)"></app-star-rating>
+      <app-star-rating [editable]="true" (ratingChange)="onRatingChange($event)" [rating]="data.skillToEdit ? data.skillToEdit.rating : 0"></app-star-rating>
       <mat-error *ngIf="showMatErrorMessage('rating')">
         {{ matErrorMessage('rating', 'Rating') }}
       </mat-error>
     </div><!--Rating-->
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">
-    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="disabledForm">Save</button>
     <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </form>

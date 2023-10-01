@@ -41,21 +41,26 @@ export class ProfileComponent implements OnInit {
       })
   }
 
+  private getSkillRecords() {
+    this.userService.getSkillRecords()
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => this.user!!.skills = response,
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed', 5000)
+      })
+  }
+
   onEditSkill(skillId: any) {
-    if (skillId === -1) {
-      this.isSkillSelected = false;
-      return;
-    }
-    this.isSkillSelected = true;
+    this.validateSkillSelected(skillId);
     // todo: implementar a edição de skill
   }
 
   onDeleteSkill(skillId: number) {
-
+    this.validateSkillSelected(skillId);
   }
 
   onAddSkill() {
-    this.matDialog.open(SkillsFormComponent, {
+    const dialogRef = this.matDialog.open(SkillsFormComponent, {
       width: '100%',
       height: 'auto',
       maxWidth: '600px',
@@ -65,6 +70,20 @@ export class ProfileComponent implements OnInit {
       data: {
         newSkill: true
       }
-    })
+    });
+
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result : boolean) => {
+        if (result) this.getSkillRecords();
+      });
+  }
+
+  private validateSkillSelected(skillId: number) {
+    if (skillId === -1) {
+      this.isSkillSelected = false;
+      return;
+    }
+    this.isSkillSelected = true;
   }
 }

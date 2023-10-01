@@ -3,6 +3,7 @@ import {CrudService} from "./default/crud.service";
 import {User} from "../interface/user";
 import {HttpClient} from "@angular/common/http";
 import {API_USER} from "../constants/api";
+import {Skill} from "../interface/skill";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,15 @@ export class UserService extends CrudService<User> {
   }
 
   getUserRecords() {
-    return this.httpClient.get<User>(`${API_USER}/owner`)
+    return this.httpClient.get<User>(`${API_USER}/owner`);
+  }
+
+  getSkillRecords() {
+    return this.httpClient.get<Skill[]>(`${API_USER}/owner/skill`);
   }
 
   saveSKillRecord(form: any) {
     if (form.id) return this.httpClient.put(`${API_USER}/owner/skill`, form);
-    return this.httpClient.post(`${API_USER}/owner/skill`, form)
+    return this.httpClient.post(`${API_USER}/owner/skill`, form);
   }
 }

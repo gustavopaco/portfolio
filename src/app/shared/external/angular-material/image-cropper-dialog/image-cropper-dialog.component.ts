@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageCropperModule} from "ngx-image-cropper";
 import {MatButtonModule} from "@angular/material/button";
+import {MatSnakebarService} from "../toast-snackbar/mat-snakebar.service";
+import {ACTION_CLOSE, FAILED_LOADING_IMAGE} from "../../../constants/constants";
 
 export class ImageCroppedData {
   imageChangedEvent?: any;
@@ -56,11 +58,11 @@ export class ImageCroppedData {
 })
 export class ImageCropperDialogComponent implements OnInit {
   imageChangedEvent: any = '';
-  croppedImage: any = '';
   @ViewChild(ImageCropperComponent) imageCropper!: ImageCropperComponent
 
   constructor(public matDialogRef: MatDialogRef<ImageCropperDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ImageCroppedData) {
+              @Inject(MAT_DIALOG_DATA) public data: ImageCroppedData,
+              private matSnackBarService: MatSnakebarService) {
   }
 
   ngOnInit(): void {
@@ -91,6 +93,8 @@ export class ImageCropperDialogComponent implements OnInit {
   }
 
   loadImageFailed() {
-    // show message
+    // show message and close dialog
+    this.matSnackBarService.error(FAILED_LOADING_IMAGE, ACTION_CLOSE);
+    this.matDialogRef.close();
   }
 }

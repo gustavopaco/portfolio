@@ -59,6 +59,7 @@ export class SkillsFormComponent {
 
   constructor(private fb: FormBuilder,
               private matDialog: MatDialog,
+              private matDialogRef: MatDialogRef<SkillsFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: SkillData,
               private translateService: TranslateService,
               private credentialsService: CredentialsService,
@@ -95,13 +96,15 @@ export class SkillsFormComponent {
         take(1),
         finalize(() => ($event.target as HTMLInputElement).value = '')
       )
-      .subscribe((data: ImageCroppedData) => {
-        if (data.returnImageType === 'blob' && data.objectUrl) {
+      .subscribe((data: ImageCroppedData | undefined) => {
+        if (data?.returnImageType === 'blob' && data.objectUrl) {
           this.form.patchValue({tempImage: data.objectUrl});
           this.skillFile = data.file;
           return;
         }
-        this.form.patchValue({tempImage: data.base64});
+        if (data?.returnImageType === 'base64' && data.base64) {
+          this.form.patchValue({tempImage: data.base64});
+        }
       })
   }
 
@@ -146,7 +149,10 @@ export class SkillsFormComponent {
         finalize(() => this.disabledForm = false)
       )
       .subscribe({
-        next: () => this.matSnackBarService.success(SKILL_SAVED_SUCCESSFULLY, ACTION_CLOSE),
+        next: () => {
+          this.matSnackBarService.success(SKILL_SAVED_SUCCESSFULLY, ACTION_CLOSE);
+          this.matDialogRef.close(true);
+        },
         error: () => this.matSnackBarService.error(FAILED_TO_SAVE_SKILL, ACTION_CLOSE)
       })
   }
@@ -168,7 +174,7 @@ export class SkillsFormComponent {
   }
 
   matErrorMessage(formControlName: string, fieldName: string) {
-    return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl> this.form.get(formControlName), fieldName)
+    return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl>this.form.get(formControlName), fieldName)
   }
 
   matErrorImageMessage(formControlName: string, fieldName: string) {

@@ -26,6 +26,7 @@ export class SkillsListComponent {
       if (j === this.skillSelected) {
         this.skillSelected = -1;
         this.edit.emit(-1);
+        return;
       }
       this.skillSelected = j;
       this.edit.emit(this.skills[j].id);

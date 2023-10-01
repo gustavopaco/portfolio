@@ -3,6 +3,7 @@ export const EXPIRED_JWT_EXCEPTION_MESSAGE = "Sessão expirada, por favor faça 
 export const INVALID_SESSION_EXCEPTION = "InvalidSessionException";
 export const INVALID_SESSION_EXCEPTION_MESSAGE = "Sessão inválida, por favor faça o login novamente.";
 export const AUTHORIZATION_HEADER = "Authorization";
+export const FAILED_LOADING_IMAGE = "Failed loading image, formats allowed: png, jpg, gif.";
 export const FAILED_TO_UPLOAD_IMAGE = "Failed to upload image.";
 export const FAILED_TO_SAVE_SKILL = "Failed to save skill.";
 export const SKILL_SAVED_SUCCESSFULLY = "Skill saved successfully.";

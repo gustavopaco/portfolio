@@ -19,7 +19,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {MatSnakebarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snakebar.service";
+import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {S3_SKILLS_FOLDER} from "../../../../shared/constants/api";
 import {UserService} from "../../../../shared/services/user.service";
 import {
@@ -65,7 +65,7 @@ export class SkillsFormComponent implements OnInit {
               private translateService: TranslateService,
               private credentialsService: CredentialsService,
               private utilAwsS3Service: UtilAwsS3Service,
-              private matSnackBarService: MatSnakebarService,
+              private matSnackBarService: MatSnackbarService,
               private userService: UserService) {
   }
 

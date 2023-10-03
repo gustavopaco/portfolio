@@ -12,7 +12,7 @@ import {AuthService} from "../../shared/services/default/auth.service";
 import {take} from "rxjs";
 import {FormularioDebugComponent} from "../../shared/components/formulario-debug/formulario-debug.component";
 import {AUTHORIZATION_HEADER} from "../../shared/constants/constants";
-import {MatSnakebarService} from "../../shared/external/angular-material/toast-snackbar/mat-snakebar.service";
+import {MatSnackbarService} from "../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../shared/validator/http-validator";
 import {Router} from "@angular/router";
 
@@ -33,7 +33,7 @@ export class AuthComponent implements OnInit {
               private fb: FormBuilder,
               private translate: TranslateService,
               private authService: AuthService,
-              private matSnakeBarService: MatSnakebarService,
+              private matSnakeBarService: MatSnackbarService,
               private router: Router) {
   }
 

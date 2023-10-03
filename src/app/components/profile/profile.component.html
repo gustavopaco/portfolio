@@ -7,22 +7,11 @@
           Foto de Perfil
         </div><!--col-->
         <div class="col-md-8">
-          <mat-tab-group>
-            <mat-tab label="Skills">
-              <div class="row my-4 mx-0">
-                <div class="col-lg-6">
-                  <button class="w-100" mat-raised-button color="primary" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
-                </div>
-                <div class="col-lg-6" *ngIf="isSkillSelected">
-                  <button class="w-100" mat-raised-button color="primary" (click)="onEditSkill()"><mat-icon>edit</mat-icon>Edit Skill</button>
-                </div>
-              </div>
-              <app-skills-list [skills]="user?.skills" [editable]="true" [isSkillSelected]="isSkillSelected" (selected)="onSelectedSkill($event)"></app-skills-list>
-            </mat-tab> <!--Content-Skills-->
-            <mat-tab label="Projects">
-
-            </mat-tab> <!--Content-Projects-->
-          </mat-tab-group>
+            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+              <a mat-tab-link *ngFor="let link of links" [active]="activeLink == link" (click)="goToRoute(link)">{{ link | camelCase }}</a>
+            </nav>
+          <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+          <router-outlet></router-outlet>
         </div><!--col-->
       </div><!--row-->
     </mat-card-content>

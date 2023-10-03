@@ -1,0 +1,19 @@
+<mat-spinner class="mx-auto my-5" *ngIf="isSkillsLoading; else loadedUser"></mat-spinner>
+<ng-template #loadedUser>
+  <ng-container *ngIf="!isSkillsError">
+    <div class="row my-4 mx-0">
+      <div class="col-lg-6">
+        <button mat-raised-button color="primary" class="w-100" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
+      </div><!--col-->
+      <div class="col-lg-6" *ngIf="isSkillSelected">
+        <button mat-raised-button color="primary" class="w-100"  (click)="onEditSkill()"><mat-icon>edit</mat-icon>Edit Skill</button>
+      </div><!--col-->
+    </div><!--row-->
+    <app-skills-list [skills]="skills" [editable]="true" [isSkillSelected]="isSkillSelected" (selected)="onSelectedSkill($event)" (delete)="onDeleteSkill($event)"></app-skills-list>
+  </ng-container>
+  <ng-container *ngIf="isSkillsError">
+    <div class="alert alert-light my-5 text-center" role="alert">
+      <strong>Error while loading user skills. Please try again later!</strong>
+    </div>
+  </ng-container>
+</ng-template>

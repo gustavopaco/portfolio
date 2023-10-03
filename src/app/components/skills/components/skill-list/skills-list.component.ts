@@ -20,14 +20,17 @@ export class SkillsListComponent {
   @Input() editable = false;
   @Input() set isSkillSelected(value: boolean) {if (!value) this.skillIdSelected = -1;};
   @Output() selected = new EventEmitter();
+  @Output() delete = new EventEmitter();
+  isDeleteEvent = false;
 
   onSkillSelected(j: number) {
     if (this.skills && this.editable) {
-      if (j === this.skillIdSelected) {
+      if (j === this.skillIdSelected && !this.isDeleteEvent) {
         this.skillIdSelected = -1;
         this.selected.emit(-1);
         return;
       }
+      this.isDeleteEvent = false;
       this.skillIdSelected = j;
       this.selected.emit(this.skills[j].id);
     }
@@ -35,7 +38,8 @@ export class SkillsListComponent {
 
   onDelete(j: number) {
     if (this.skills && this.editable) {
-      this.selected.emit(this.skills[j].id);
+      this.isDeleteEvent = true;
+      this.delete.emit(this.skills[j].id);
     }
   }
 }

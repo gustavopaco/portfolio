@@ -4,7 +4,7 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
 @Injectable({
   providedIn: 'root'
 })
-export class MatSnakebarService {
+export class MatSnackbarService {
   private panelClass: string[] = ['toast-success'];
   private action = 'Fechar';
   private durationInSeconds = 3000;

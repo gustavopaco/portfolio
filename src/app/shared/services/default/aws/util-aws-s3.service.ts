@@ -38,7 +38,6 @@ export class UtilAwsS3Service {
         const imageUrl = `https://${command.input.Bucket}.s3.amazonaws.com/${command.input.Key}`;
         imageUrls.push(imageUrl);
       } catch (error: any) {
-        //todo: Show error message
         throw error;
       }
     }
@@ -55,7 +54,7 @@ export class UtilAwsS3Service {
     }
   }
 
-  async deleteImageFromAwsS3Bucket(S3_BUCKET_NAME: string, imageUrl: string, folder: string) {
+  async deleteImageFromAwsS3Bucket(S3_BUCKET_NAME: string, imageUrl: string) {
     const command = new DeleteObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: imageUrl.split('.com/')[1],
@@ -63,7 +62,7 @@ export class UtilAwsS3Service {
     try {
       await this.s3Client?.send(command);
     } catch (error: any) {
-      //todo: Show error message
+      throw error;
     }
   }
 }

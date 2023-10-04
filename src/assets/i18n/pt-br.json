@@ -10,5 +10,12 @@
   "bsDate": "*Formato de data inválido.",
   "equalsTo": "*{{fieldName}} e {{fieldNameEqualsTo}}, devem ser iguais.",
   "min": "*{{fieldName}} deve ser maior ou igual a {{min}}.",
-  "max": "*{{fieldName}} deve ser menor ou igual a {{max}}."
+  "max": "*{{fieldName}} deve ser menor ou igual a {{max}}.",
+  "deleteSkillTitle": "Deletar habilidade",
+  "deleteSkillMessage": "Deseja realmente deletar \"{{skillName}}\"?",
+  "confirmButton": "Confirmar",
+  "cancelButton": "Cancelar",
+  "deleteButton": "Deletar",
+  "editButton": "Editar",
+  "saveButton": "Salvar"
 }

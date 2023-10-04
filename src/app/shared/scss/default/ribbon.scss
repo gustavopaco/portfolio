@@ -1,0 +1,264 @@
+.ribbon-wrapper {
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  z-index: 1;
+
+  &:hover + .overlay {
+    opacity: 0;
+  }
+}
+
+.ribbon {
+  font-size: 12px;
+  color: #FFF;
+  text-transform: uppercase;
+  font-family: 'Montserrat Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: .05em;
+  line-height: 15px;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -24px;
+  top: 10px;
+  width: 100px;
+  height: 28px;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  background-color: #dedede;
+  background-image: -webkit-linear-gradient(top, #ffffff 45%, #dedede 100%);
+  background-image: -o-linear-gradient(top, #ffffff 45%, #dedede 100%);
+  background-image: linear-gradient(to bottom, #ffffff 45%, #dedede 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon:before,
+.ribbon:after {
+  content: "";
+  border-top: 3px solid #9e9e9e;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  position: absolute;
+  bottom: -3px
+}
+
+.ribbon:before {
+  left: 0
+}
+
+.ribbon:after {
+  right: 0
+}
+
+/* Status Launched - Used for projects that have already been publicly launched.*/
+.ribbon.launched,
+.ribbon-lg.launched {
+  background-color: #2da285;
+  background-image: -webkit-linear-gradient(top, #2da285 45%, #227a64 100%);
+  background-image: -o-linear-gradient(top, #2da285 45%, #227a64 100%);
+  background-image: linear-gradient(to bottom, #2da285 45%, #227a64 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.launched:before,
+.ribbon-lg.launched::before,
+.ribbon.launched:after,
+.ribbon-lg.launched::after {
+  border-top: 3px solid #113e33
+}
+
+/* Status In Progress - For projects that are currently in progress and not yet completed. */
+.ribbon.in-progress,
+.ribbon-lg.in-progress {
+  background-color: #03a9f4; /* Azul Claro */
+  background-image: -webkit-linear-gradient(top, #03a9f4 45%, #2196f3 100%);
+  background-image: -o-linear-gradient(top, #03a9f4 45%, #2196f3 100%);
+  background-image: linear-gradient(to bottom, #03a9f4 45%, #2196f3 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.in-progress:before,
+.ribbon-lg.in-progress::before,
+.ribbon.in-progress:after,
+.ribbon-lg.in-progress::after {
+  border-top: 3px solid #0277bd; /* Cor da borda superior em um tom mais escuro de azul */
+}
+
+/* Status Emergency - For projects requiring immediate attention or addressing urgent issues. */
+.ribbon.emergency,
+.ribbon-lg.emergency {
+  background-color: #bc1a3a;
+  background-image: -webkit-linear-gradient(top, #a61733 45%, #bc1a3a 100%);
+  background-image: -o-linear-gradient(top, #a61733 45%, #bc1a3a 100%);
+  background-image: linear-gradient(to bottom, #f44336 45%, #bc1a3a 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.emergency:before,
+.ribbon-lg.emergency::before,
+.ribbon.emergency:after,
+.ribbon-lg.emergency::after {
+  border-top: 3px solid #8f142c
+}
+
+/* Status Maintenance - Indicates that the project is in the maintenance phase after completion. */
+.ribbon.maintenance,
+.ribbon-lg.maintenance {
+  background-color: #1a8bbc;
+  background-image: -webkit-linear-gradient(top, #177aa6 45%, #1a8bbc 100%);
+  background-image: -o-linear-gradient(top, #177aa6 45%, #1a8bbc 100%);
+  background-image: linear-gradient(to bottom, #177aa6 45%, #1a8bbc 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.maintenance:before,
+.ribbon-lg.maintenance::before,
+.ribbon.maintenance:after,
+.ribbon-lg.maintenance::after {
+  border-top: 3px solid #115979
+}
+
+/* Status Future - Indicates that the project is planned for the future but hasn't started yet. */
+.ribbon.future,
+.ribbon-lg.future {
+  background-color: #9e9e9e;
+  background-image: -webkit-linear-gradient(top, #9e9e9e 45%, #607d8b 100%);
+  background-image: -o-linear-gradient(top, #9e9e9e 45%, #607d8b 100%);
+  background-image: linear-gradient(to bottom, #9e9e9e 45%, #607d8b 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.future:before,
+.ribbon-lg.future::before,
+.ribbon.future:after,
+.ribbon-lg.future::after {
+  border-top: 3px solid #46515f; /* Cor da borda superior em um tom mais escuro de cinza */
+}
+
+/* Status Paused - Can be used for projects that are temporarily halted but not completed. */
+.ribbon.paused,
+.ribbon-lg.paused {
+  background-color: #ffeb3b;
+  background-image: -webkit-linear-gradient(top, #ffeb3b 45%, #ffc107 100%);
+  background-image: -o-linear-gradient(top, #ffeb3b 45%, #ffc107 100%);
+  background-image: linear-gradient(to bottom, #ffeb3b 45%, #ffc107 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.paused:before,
+.ribbon-lg.paused::before,
+.ribbon.paused:after,
+.ribbon-lg.paused::after {
+  border-top: 3px solid #d3a900; /* Cor da borda superior em um tom mais escuro de amarelo */
+}
+
+/* Status Under Review - Used for projects undergoing a review or evaluation. */
+.ribbon.under-review,
+.ribbon-lg.under-review {
+  background-color: #9c27b0; /* Roxo do Material Design */
+  background-image: -webkit-linear-gradient(top, #9c27b0 45%, #3f51b5 100%);
+  background-image: -o-linear-gradient(top, #9c27b0 45%, #3f51b5 100%);
+  background-image: linear-gradient(to bottom, #9c27b0 45%, #3f51b5 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.under-review:before,
+.ribbon-lg.under-review::before,
+.ribbon.under-review:after,
+.ribbon-lg.under-review::after {
+  border-top: 3px solid #2a3d49; /* Cor da borda superior em um tom mais escuro de índigo */
+}
+
+/* Status Highlight - Used for projects that will be highlighted  */
+.ribbon.highlight,
+.ribbon-lg.highlight {
+  background-color: #ff9800; /* Laranja Brilhante */
+  background-image: -webkit-linear-gradient(top, #ff9800 45%, #f44336 100%);
+  background-image: -o-linear-gradient(top, #ff9800 45%, #f44336 100%);
+  background-image: linear-gradient(to bottom, #ff9800 45%, #f44336 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.highlight:before,
+.ribbon-lg.highlight::before,
+.ribbon.highlight:after,
+.ribbon-lg.highlight::after {
+  border-top: 3px solid #e64a19; /* Cor da borda superior em um tom mais escuro de laranja */
+}
+
+/* Status Old - Used for old projects */
+.ribbon.old,
+.ribbon-lg.old {
+  background-color: #8d6e63; /* Marrom */
+  background-image: -webkit-linear-gradient(top, #8d6e63 45%, #5d4037 100%);
+  background-image: -o-linear-gradient(top, #8d6e63 45%, #5d4037 100%);
+  background-image: linear-gradient(to bottom, #8d6e63 45%, #5d4037 100%);
+  background-repeat: repeat-x;
+}
+
+.ribbon.old:before,
+.ribbon-lg.old::before,
+.ribbon.old:after,
+.ribbon-lg.old::after {
+  border-top: 3px solid #4e342e; /* Cor da borda superior em um tom mais escuro de marrom */
+}
+
+.ribbon-lg-wrapper {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  //background-color: #ff5722;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+
+  .ribbon-lg {
+    position: absolute;
+    width: 213px;
+    height: 40px;
+    background-color: #f44336;
+    transform: rotate(-45deg) translateY(-20px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: #f44336;
+      z-index: 1;
+      bottom: -3px;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+  }
+
+  &:hover + .overlay {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="row mt-5 mb-2 mx-0 ">
+  <div class="col-lg-6 mb-3" *ngFor="let project of projects; index as i">
+    <mat-card class="cursor-pointer">
+      <img mat-card-image [src]="setImageCardSrc(project)" alt="Project Image">
+      <mat-card-content class="d-flex justify-content-center align-items-center">
+        <div class="ribbon-lg-wrapper">
+          <div class="ribbon-lg" [ngClass]="setRibbonColor(project)">{{ project.status }}</div>
+        </div>
+        <h2 class="text-white">{{ project.name }}</h2>
+        <div class="overlay"></div>
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-progress-bar mode="determinate" value="100" color="warn"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div><!--col-->
+</div><!--row-->

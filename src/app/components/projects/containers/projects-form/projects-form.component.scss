@@ -1,0 +1,28 @@
+.img-wrapper {
+  width: 80px;
+  height: 80px;
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    color: #fff;
+  }
+
+  &:hover .overlay, &:hover mat-icon {
+    cursor: pointer;
+  }
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transition: all 0.3s ease-out;
+}

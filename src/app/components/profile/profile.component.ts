@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   }
 
   goToRoute(link: string) {
+    this.activeLink = link;
     this.router.navigate([link], {relativeTo: this.activatedRoute, onSameUrlNavigation: undefined})
   }
 }

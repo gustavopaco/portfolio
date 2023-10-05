@@ -4,6 +4,7 @@ import {User} from "../interface/user";
 import {HttpClient} from "@angular/common/http";
 import {API_USER} from "../constants/api";
 import {Skill} from "../interface/skill";
+import {Project} from "../interface/project";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class UserService extends CrudService<User> {
 
   getSkillRecords() {
     return this.httpClient.get<Skill[]>(`${API_USER}/owner/skill`);
+  }
+
+  getProjectStatus() {
+    return this.httpClient.get<string[]>(`${API_USER}/owner/project/status`);
+  }
+
+  getProjectRecords() {
+    return this.httpClient.get<Project[]>(`${API_USER}/owner/project`);
   }
 
   saveSkillRecord(form: any) {

@@ -30,7 +30,7 @@ import {ACTION_CLOSE, FAILED_TO_DELETE_SKILL, SKILL_DELETED_SUCCESSFULLY} from "
 export class SkillsComponent implements OnInit {
 
   isSkillsLoading = true;
-  isSkillsError = false;
+  isFailedToLoadSkills = false;
   isSkillSelected = false;
 
   skillIdSelected = -1;
@@ -50,13 +50,14 @@ export class SkillsComponent implements OnInit {
   }
 
   private getSkillRecords() {
+    this.onRequestLoadingSkills();
     this.userService.getSkillRecords()
       .pipe(take(1), finalize(() => this.isSkillsLoading = false))
       .subscribe({
         next: (response) => this.skills = response,
         error: (error) => {
           this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed', 5000);
-          this.isSkillsError = true;
+          this.isFailedToLoadSkills = true;
         }
       })
   }
@@ -150,6 +151,7 @@ export class SkillsComponent implements OnInit {
       maxHeight: '700px',
       enterAnimationDuration: 200,
       disableClose: false,
+      autoFocus: false,
       data: {
         newSkill: newSkillResult,
         skillToEdit: skillOnEdit
@@ -178,5 +180,10 @@ export class SkillsComponent implements OnInit {
   private setSkillSelected(skillId: number) {
     this.isSkillSelected = true;
     this.skillIdSelected = skillId;
+  }
+
+  private onRequestLoadingSkills() {
+    this.isSkillsLoading = true;
+    this.isFailedToLoadSkills = false;
   }
 }

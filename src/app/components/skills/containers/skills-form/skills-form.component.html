@@ -2,16 +2,16 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content  class="d-flex flex-column">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3">
-      <label for="skillPicture" class="position-relative skillPictureLabel">
+      <label for="skillPicture" class="position-relative skillPictureLabel mb-2">
         <span class="overlay cursor-pointer" [ngClass]="overlayClass()">
-        <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
+        <mat-icon class="position-absolute top-50 start-50 translate-middle cursor-pointer">camera_alt</mat-icon>
         </span>
         <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage || url" [src]="data.newSkill ? tempImage : url"
              alt="Skill Image">
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>
-      <small>Skill Image</small>
-      <mat-error>
+      <mat-hint>Click on the image to change it</mat-hint>
+      <mat-error *ngIf="showMatErrorMessage('tempImage')">
         {{ matErrorImageMessage('tempImage', 'Skill Image') }}
       </mat-error>
     </div><!--Picture-->

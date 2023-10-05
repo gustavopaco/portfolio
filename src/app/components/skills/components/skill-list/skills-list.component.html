@@ -1,4 +1,4 @@
-<div class="row my-2 mx-0">
+<div class="row my-2">
   <div class="col-lg-6 mb-3" *ngFor="let skill of skills; index as j">
     <mat-card [ngClass]="{'blue': skillIdSelected === j, 'cursor-pointer': editable}" (click)="onSkillSelected(j)">
       <button mat-icon-button color="warn" class="position-absolute end-0 top-0" *ngIf="editable && skillIdSelected === j" (click)="onDelete(j)">

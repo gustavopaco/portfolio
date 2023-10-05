@@ -1,1 +1,31 @@
-<app-projects-list></app-projects-list>
+<mat-spinner *ngIf="isLoadingProjects; else loadedProjects"></mat-spinner>
+<ng-template #loadedProjects>
+  <ng-container *ngIf="!isFailedToLoadProjects; else failedToLoadProjects">
+    <div class="row my-4">
+      <div class="col-12">
+        <button mat-raised-button color="primary" class="w-100" (click)="onAddProject()"><mat-icon>add</mat-icon>New Project</button>
+      </div><!--col-->
+    </div><!--row-->
+    <ng-container *ngIf="projects.length > 0; else noProjects">
+      <app-projects-list [projects]="projects"></app-projects-list>
+    </ng-container><!--projects-content-container-->
+    <ng-template #noProjects>
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-light text-center" role="alert">
+            <strong>No projects found! Click the button above to create a new project.</strong>
+          </div><!--alert-->
+        </div><!--col-->
+      </div><!--row-->
+    </ng-template><!--projects-empty-template-->
+  </ng-container><!--projects-found-container-->
+  <ng-template #failedToLoadProjects>
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>Failed to load projects</strong>
+        </div><!--alert-->
+      </div><!--col-->
+    </div><!--row-->
+  </ng-template><!--projects-failed-template-->
+</ng-template><!--projects-loaded-template-->

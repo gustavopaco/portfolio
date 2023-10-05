@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {Project} from "../../../../shared/interface/project";
+import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-class";
 
 @Component({
   selector: 'app-projects-list',
@@ -14,7 +15,7 @@ import {Project} from "../../../../shared/interface/project";
 })
 export class ProjectsListComponent {
 
-  projects: Project[] = [];
+  @Input() projects: Project[] = [];
 
   setImageCardSrc(project: Project): string {
     if (project.status !== 'In Progress' && project.url) {
@@ -25,28 +26,17 @@ export class ProjectsListComponent {
 
   /** @description This function is used in the template to set the ribbon color based on the project status.
    *
-   * In Progress: in-progress,
-   * Under Review: under-review,
-   * Launched: launched,
-   * Emergency: emergency,
-   * Maintenance: maintenance,
-   * Future: future,
-   * Paused: paused,
-   * Highlight: highlight,
-   * Old: old
+   * IN_PROGRESS: in-progress,
+   * UNDER_REVIEW: under-review,
+   * LAUNCHED: launched,
+   * EMERGENCY: emergency,
+   * MAINTENANCE: maintenance,
+   * FUTURE: future,
+   * PAUSED: paused,
+   * HIGHLIGHT: highlight,
+   * OLD: old
    * */
   setRibbonColor(project: Project) {
-    switch (project.status) {
-      case 'In Progress': return 'in-progress';
-      case 'Under Review': return 'under-review';
-      case 'Launched': return 'launched';
-      case 'Emergency': return 'emergency';
-      case 'Maintenance': return 'maintenance';
-      case 'Future': return 'future';
-      case 'Paused': return 'paused';
-      case 'Highlight': return 'highlight';
-      case 'Old': return 'old';
-      default: return '';
-    }
+    return getRibbonClass(project.status);
   }
 }

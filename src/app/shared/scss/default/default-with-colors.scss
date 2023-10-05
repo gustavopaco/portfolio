@@ -32,6 +32,18 @@ html,body {
   color: #dc3545;
 }
 
+.portrait-image {
+  max-width: 100%;
+  height: auto;
+  transform: rotate(90deg);
+}
+
+.landscape-image {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
 .toast-container {
   position: fixed;
   .ngx-toastr {

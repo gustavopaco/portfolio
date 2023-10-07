@@ -1,21 +1,29 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
-  <image-cropper [imageChangedEvent]="imageChangedEvent"
-                 [resizeToWidth]="data.resizeToWidth"
-                 [resizeToHeight]="data.resizeToHeight"
-                 [roundCropper]="data.roundCropper"
-                 [imageQuality]="data.imageQuality"
-                 [maintainAspectRatio]="data.maintainAspectRatio"
-                 [imageAltText]="data.imageAltText"
-                 [autoCrop]="data.autoCrop"
-                 (imageLoaded)="imageLoaded()"
-                 (imageCropped)="imageCropped($event)"
-                 (cropperReady)="cropperReady($event)"
-                 (loadImageFailed)="loadImageFailed()"
-  ></image-cropper>
+      <image-cropper [imageChangedEvent]="imageChangedEvent"
+                     [resizeToWidth]="data.resizeToWidth ?? 0"
+                     [resizeToHeight]="data.resizeToHeight ?? 0"
+                     [cropperStaticWidth]="data.cropperStaticWidth ?? 0"
+                     [cropperStaticHeight]="data.cropperStaticHeight ?? 0"
+                     [cropperMinWidth]="data.cropperMinWidth ?? 0"
+                     [cropperMinHeight]="data.cropperMinHeight ?? 0"
+                     [cropperMaxWidth]="data.cropperMaxWidth ?? 0"
+                     [cropperMaxHeight]="data.cropperMaxHeight ?? 0"
+                     [roundCropper]="data.roundCropper ?? false"
+                     [imageQuality]="data.imageQuality ?? 92"
+                     [maintainAspectRatio]="data.maintainAspectRatio ?? false"
+                     [aspectRatio]="data.aspectRatio ?? 1"
+                     [imageAltText]="data.imageAltText"
+                     [autoCrop]="data.autoCrop ?? false"
+                     (imageLoaded)="imageLoaded($event)"
+                     (imageCropped)="imageCropped($event)"
+                     (cropperReady)="cropperReady($event)"
+                     (loadImageFailed)="loadImageFailed()"
+
+      ></image-cropper>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button color="primary" type="button" (click)="onConfirm()">{{ data.btnConfirmLabel }}</button>
-  <button mat-raised-button color="primary" mat-dialog-close>{{ data.btnCancelLabel }}</button>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="button" (click)="onConfirm()">{{ data.btnConfirmLabel ?? 'Load Image' }}</button>
+  <button mat-raised-button color="primary" mat-dialog-close>{{ data.btnCancelLabel ?? 'Cancel' }}</button>
 </mat-dialog-actions>
 

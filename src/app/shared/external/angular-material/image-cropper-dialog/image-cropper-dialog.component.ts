@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageCropperModule} from "ngx-image-cropper";
+import {Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageCropperModule, LoadedImage} from "ngx-image-cropper";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackbarService} from "../toast-snackbar/mat-snackbar.service";
 import {ACTION_CLOSE, FAILED_LOADING_IMAGE} from "../../../constants/constants";
 
-export class ImageCroppedData {
+export interface ImageCroppedData {
   imageChangedEvent?: any;
   title?: string;
   imageAltText?: string;
@@ -15,38 +15,38 @@ export class ImageCroppedData {
   objectUrl?: string;
   width?: number;
   height?: number;
-  maintainAspectRatio: boolean = true;
-  containWithinAspectRatio?: boolean = false;
-  aspectRatio?: number = 1;
-  resizeToWidth: number = 0;
-  resizeToHeight: number = 0;
-  cropperStaticWidth?: number = 0;
-  cropperStaticHeight?: number = 0;
-  cropperMinWidth?: number = 0;
-  cropperMinHeight?: number = 0;
-  cropperMaxWidth?: number = 0;
-  cropperMaxHeight?: number = 0;
-  initialStepSize?: number = 3;
-  onlyScaleDown?: boolean = false;
-  roundCropper: boolean = false;
-  imageQuality: number = 92;
-  autoCrop: boolean = false;
-  format?: 'png' | 'jpeg' | 'bmp' = 'png';
-  hideResizeSquares?: boolean = false;
-  canvasRotation?: number = 0;
-  disabled?: boolean = false;
-  backgroundColor?: string = '#fff';
-  allowMoveImage?: boolean = false;
-  hidden?: boolean = false;
+  maintainAspectRatio?: boolean;
+  containWithinAspectRatio?: boolean;
+  aspectRatio?: number;
+  resizeToWidth?: number;
+  resizeToHeight?: number;
+  cropperStaticWidth?: number;
+  cropperStaticHeight?: number;
+  cropperMinWidth?: number;
+  cropperMinHeight?: number;
+  cropperMaxWidth?: number;
+  cropperMaxHeight?: number;
+  initialStepSize?: number;
+  onlyScaleDown?: boolean;
+  roundCropper?: boolean;
+  imageQuality?: number;
+  autoCrop?: boolean;
+  format?: string;
+  hideResizeSquares?: boolean;
+  canvasRotation?: number;
+  disabled?: boolean;
+  backgroundColor?: string;
+  allowMoveImage?: boolean;
+  hidden?: boolean;
   cropperPosition?: {
     x1: number;
     y1: number;
     x2: number;
     y2: number;
   };
-  returnImageType?: 'base64' | 'blob' = 'blob';
-  btnConfirmLabel: string = 'Load';
-  btnCancelLabel: string = 'Cancel';
+  returnImageType?: string;
+  btnConfirmLabel?: string;
+  btnCancelLabel?: string;
 }
 
 @Component({
@@ -67,14 +67,15 @@ export class ImageCropperDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageChangedEvent = this.data.imageChangedEvent;
+    console.log('resizeWidth', this.data.resizeToWidth)
+    console.log('resizeHeight', this.data.resizeToHeight)
   }
 
   onConfirm(): void {
     this.imageCropper.crop();
-    this.matDialogRef.close(this.data);
   }
 
-  imageLoaded() {
+  imageLoaded($event: LoadedImage) {
     // show cropper
   }
 
@@ -86,6 +87,7 @@ export class ImageCropperDialogComponent implements OnInit {
     if (this.data.returnImageType === 'base64') {
       this.data.base64 = $event.base64!!;
     }
+    this.matDialogRef.close(this.data);
   }
 
   cropperReady($event: Dimensions) {

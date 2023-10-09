@@ -3,10 +3,10 @@
     <button mat-icon-button (click)="onSideNav()" *ngIf="!isLgScreen">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1>Profile</h1>
+    <h1>Portfolio</h1>
     <div class="ms-auto" *ngIf="isLgScreen">
-      <a mat-button (click)="onGoTo('/portfolio')"> Portfolio </a>
-      <a mat-button (click)="onGoTo('/logout')"> Logout </a>
+      <a mat-button [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab()"> Profile </a>
+      <a mat-button (click)="onLogout()"> Logout </a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

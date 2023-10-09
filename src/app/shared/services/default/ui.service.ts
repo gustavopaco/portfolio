@@ -12,6 +12,7 @@ export class UiService {
   private isShowBackToTopPageLink: EventEmitter<boolean> = new EventEmitter<boolean>();
   private isProfilePictureUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
   private isCartUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
+  private resetMatTab: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   //Update Carrinho
   public cartUpdatedEventEmitter(bool: boolean) {
@@ -74,6 +75,15 @@ export class UiService {
 
   get isShowNavBarEventEmitter() {
     return this.isShowNavBar;
+  }
+
+  //Reset MatTab
+  public resetMatTabEventEmitter(bool: boolean) {
+    return this.resetMatTab.emit(bool);
+  }
+
+  get isResetMatTabEventEmitter() {
+    return this.resetMatTab;
   }
 
   public scrollToElement(elementId: string): void {

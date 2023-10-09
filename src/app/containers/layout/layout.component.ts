@@ -60,7 +60,11 @@ export class LayoutComponent {
     return 'complete-layout';
   }
 
-  onGoTo($event: any) {
-    console.log('Movendo para: ', $event);
+  onLogout($event: boolean) {
+    console.log('Deslogar? ', $event);
+  }
+
+  resetMatTab($event: boolean) {
+    this.uiService.resetMatTabEventEmitter($event);
   }
 }

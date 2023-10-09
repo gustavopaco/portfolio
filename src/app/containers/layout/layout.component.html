@@ -1,6 +1,6 @@
 <div class="d-flex flex-column min-vh-100">
   <header class="flex-shrink-0 flex-grow-0" *ngIf="isShowNavbar">
-    <app-navbar (sideNav)="toggleSideNav($event)" [lgScreen]="isLgScreen" (goTo)="onGoTo($event)"></app-navbar>
+    <app-navbar (sideNav)="toggleSideNav($event)" [lgScreen]="isLgScreen" (logout)="onLogout($event)" (matTab)="resetMatTab($event)"></app-navbar>
   </header>
   <main class="flex-grow-1" [ngClass]="layoutClassStyle()">
     <mat-sidenav-container [ngClass]="layoutClassStyle()">

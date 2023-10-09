@@ -1,3 +1,8 @@
 mat-toolbar, mat-toolbar-row {
   height: 80px;
 }
+
+.active-link {
+  font-weight: bold;
+  //background-color: rgba(0, 0, 0, 0.1);
+}

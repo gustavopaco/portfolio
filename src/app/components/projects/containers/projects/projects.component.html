@@ -1,4 +1,4 @@
-<mat-spinner *ngIf="isLoadingProjects; else loadedProjects"></mat-spinner>
+<mat-spinner *ngIf="isLoadingProjects; else loadedProjects" class="my-5 mx-auto"></mat-spinner>
 <ng-template #loadedProjects>
   <ng-container *ngIf="!isFailedToLoadProjects; else failedToLoadProjects">
     <div class="row my-4">

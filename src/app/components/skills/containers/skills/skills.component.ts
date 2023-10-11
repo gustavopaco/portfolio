@@ -121,7 +121,7 @@ export class SkillsComponent implements OnInit {
 
   private deleteSkillFromAws(skillId: number, response: AwsConfiguration) {
     this.utilAwsS3Service.loadS3Client(response.region, response.accessKey, response.secretKey);
-    this.utilAwsS3Service.deleteImageFromAwsS3Bucket(response.bucketName, this.filterSkillById(skillId).url)
+    this.utilAwsS3Service.deleteImageFromAwsS3Bucket(response.bucketName, this.filterSkillById(skillId).pictureUrl)
       .then(() => this.deleteSkill(skillId))
       .catch(() => this.matSnackBarService.error(FAILED_TO_DELETE_SKILL, ACTION_CLOSE, 5000))
   }

@@ -3,5 +3,5 @@ export interface Skill {
   name: string;
   description: string;
   rating: number;
-  url: string;
+  pictureUrl: string;
 }

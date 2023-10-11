@@ -6,7 +6,7 @@
         <span class="overlay cursor-pointer" [ngClass]="overlayClass()">
         <mat-icon class="position-absolute top-50 start-50 translate-middle cursor-pointer">camera_alt</mat-icon>
         </span>
-        <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage || url" [src]="data.newSkill ? tempImage : url"
+        <img class="position-relative top-50 start-50 translate-middle" *ngIf="tempImage || pictureUrl" [src]="data.newSkill ? tempImage : pictureUrl"
              alt="Skill Image">
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>

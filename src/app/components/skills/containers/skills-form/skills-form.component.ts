@@ -49,7 +49,7 @@ export class SkillsFormComponent implements OnInit {
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     description: ['', [Validators.maxLength(100)]],
     rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
-    url: [''],
+    pictureUrl: [''],
     tempImage: ['', [Validators.required]]
   });
 
@@ -137,7 +137,7 @@ export class SkillsFormComponent implements OnInit {
   }
 
   private verifyEditSkillFormSubmittedWithoutNewImage() {
-    if (!this.data.newSkill && this.data.skillToEdit && this.tempImage === '' && this.url !== '') {
+    if (!this.data.newSkill && this.data.skillToEdit && this.tempImage === '' && this.pictureUrl !== '') {
       this.form.get('tempImage')?.removeValidators([Validators.required]);
       this.form.get('tempImage')?.updateValueAndValidity();
     }
@@ -148,7 +148,7 @@ export class SkillsFormComponent implements OnInit {
     return skill?.name !== this.form.get('name')?.value ||
       skill?.description !== this.form.get('description')?.value ||
       skill?.rating !== this.form.get('rating')?.value ||
-      skill?.url !== this.form.get('url')?.value;
+      skill?.pictureUrl !== this.form.get('pictureUrl')?.value;
   }
 
   private loadCredentials() {
@@ -165,7 +165,7 @@ export class SkillsFormComponent implements OnInit {
     this.utilAwsS3Service.loadS3Client(awsCredentials.region, awsCredentials.accessKey, awsCredentials.secretKey);
     this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(awsCredentials.bucketName, this.skillFile!, S3_SKILLS_FOLDER)
       .then((imageUrl: string) => {
-        this.form.patchValue({url: imageUrl});
+        this.form.patchValue({pictureUrl: imageUrl});
         this.saveSkill();
       })
       .catch(() => {
@@ -202,12 +202,12 @@ export class SkillsFormComponent implements OnInit {
     return this.form.get('tempImage')?.value;
   }
 
-  get url() {
-    return this.form.get('url')?.value;
+  get pictureUrl() {
+    return this.form.get('pictureUrl')?.value;
   }
 
   overlayClass() {
-    return this.tempImage || this.url ? 'overlay-close' : 'overlay-open';
+    return this.tempImage || this.pictureUrl ? 'overlay-close' : 'overlay-open';
   }
 
   matErrorMessage(formControlName: string, fieldName: string) {

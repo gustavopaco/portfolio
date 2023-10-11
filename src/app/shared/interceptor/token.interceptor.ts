@@ -2,7 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, of, throwError} from 'rxjs';
 import {AuthService} from "../services/default/auth.service";
-import {EXPIRED_JWT_EXCEPTION, INVALID_SESSION_EXCEPTION} from "../constants/constants";
+import {
+  EXPIRED_JWT_EXCEPTION,
+  EXPIRED_JWT_EXCEPTION_MESSAGE,
+  INVALID_SESSION_EXCEPTION_MESSAGE
+} from "../constants/constants";
+import {MatSnackbarService} from "../external/angular-material/toast-snackbar/mat-snackbar.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -10,6 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private readonly AUTHORIZATION_HEADER = "Authorization";
 
   constructor(private authService: AuthService,
+              private matSnackBarService: MatSnackbarService
               // private toastMessageService: ToastMessageService
   ) {
   }
@@ -27,13 +33,15 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   interceptInvalidToken(error: HttpErrorResponse) {
-    if (error.status === 401 && (error.error?.message === EXPIRED_JWT_EXCEPTION || error.error?.message === INVALID_SESSION_EXCEPTION)) {
-      // this.toastMessageService.jwtErrorMessage(EXPIRED_JWT_EXCEPTION_MESSAGE);
+    if (error.status === 401) {
+      if (error.error?.message === EXPIRED_JWT_EXCEPTION) {
+        this.matSnackBarService.error(EXPIRED_JWT_EXCEPTION_MESSAGE);
+      } else {
+        this.matSnackBarService.error(INVALID_SESSION_EXCEPTION_MESSAGE);
+      }
       // Note: Estou utilizando o logout em vez de usar o invalidSession pois ao enviar para a pagina de login existe um guarda de rotas que verifica se usuario ja esta logado, entao nesse caso se enviar para uma pagina com guarda de rotas ele ira enviar uma mensagem duplicada de token invalido
       this.authService.logout();
-      return of()
-    } else {
-      this.interceptErrors(error);
+      return of();
     }
     return throwError(() => error);
   }

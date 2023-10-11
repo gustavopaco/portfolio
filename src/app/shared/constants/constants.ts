@@ -1,7 +1,7 @@
-export const EXPIRED_JWT_EXCEPTION = "ExpiredJwtException";
-export const EXPIRED_JWT_EXCEPTION_MESSAGE = "Sessão expirada, por favor faça o login novamente.";
-export const INVALID_SESSION_EXCEPTION = "InvalidSessionException";
-export const INVALID_SESSION_EXCEPTION_MESSAGE = "Sessão inválida, por favor faça o login novamente.";
+export const EXPIRED_JWT_EXCEPTION = "Token expired";
+export const EXPIRED_JWT_EXCEPTION_MESSAGE = "Session expired, please login again.";
+export const INVALID_SESSION_EXCEPTION = "Invalid token";
+export const INVALID_SESSION_EXCEPTION_MESSAGE = "Invalid session, please login again.";
 export const AUTHORIZATION_HEADER = "Authorization";
 export const FAILED_LOADING_IMAGE = "Failed loading image, formats allowed: png, jpg, gif.";
 export const FAILED_TO_UPLOAD_IMAGE = "Failed to upload image.";

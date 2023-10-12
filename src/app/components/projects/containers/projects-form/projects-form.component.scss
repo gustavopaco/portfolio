@@ -1,4 +1,6 @@
-.img-wrapper {
+@import 'src/app/shared/scss/default/ribbon.scss';
+
+.file-upload-img-wrapper {
   width: 80px;
   height: 80px;
 
@@ -13,6 +15,31 @@
     cursor: pointer;
   }
 }
+
+.cropped-image-wrapper {
+  .cropped-image {
+    img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      transition: all 0.3s ease-out;
+      border-radius: 4px;
+    }
+  }
+
+  .edit-btn-image-wrapper {
+    label {
+      border-radius: 50%;
+
+      mat-icon {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);

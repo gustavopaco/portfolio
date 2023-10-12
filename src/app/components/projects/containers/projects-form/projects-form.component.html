@@ -1,19 +1,41 @@
 <h2 mat-dialog-title>{{ data.newProject ? 'New Project' : 'Edit Project' }}</h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-dialog-content>
-    <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center">
-        <label for="projectImage" class="img-wrapper position-relative mb-2">
-          <span class="overlay"></span>
-          <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
-          <input type="file" id="projectImage" class="d-none" formControlName="tempImage" (change)="onFileInputChange($event)">
-        </label>
+  <mat-dialog-content class="row px-3">
+    <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center"
+         *ngIf="tempImage?.length == 0">
+      <label for="projectImage" class="file-upload-img-wrapper position-relative mb-2">
+        <span class="overlay"></span>
+        <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
+        <input type="file" id="projectImage" class="d-none" (change)="onFileInputChange($event)">
+      </label><!--file-upload-img-wrapper-->
       <mat-hint>Click on the image to change it</mat-hint>
       <mat-error *ngIf="showMatErrorMessage('tempImage')">Error detectado</mat-error>
     </div><!--col-->
-    <mat-form-field class="col-12">
+    <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center cropped-image-wrapper"
+         *ngIf="tempImage?.length != 0">
+      <div class="position-relative mb-2 cropped-image">
+        <div class="ribbon-lg-wrapper" *ngIf="status">
+          <div class="ribbon-lg" [ngClass]="setRibbonColor()">{{ status | statusProject }}</div><!--ribbon-->
+        </div><!--ribbon-lg-wrapper-->
+        <img [src]="tempImage" alt="Project Image">
+      </div><!--cropped-image-->
+      <mat-hint class="text-center d-flex flex-wrap justify-content-center align-items-center edit-btn-image-wrapper">
+        <label for="fileInput" matRipple [matRippleCentered]="true" matTooltip="Change image" class="me-2">
+          <mat-icon color="primary" class="d-flex justify-content-center align-items-center">edit</mat-icon>
+          <input type="file" id="fileInput" class="d-none" (change)="onFileInputChange($event)">
+        </label>
+       You can change the image by clicking on the icon
+      </mat-hint><!--edit-btn-image-wrapper-->
+    </div><!--col__cropped-image-wrapper-->
+    <mat-form-field class="col-lg-6">
       <mat-label>Project Name</mat-label>
       <input matInput placeholder="Project Name" formControlName="name">
       <mat-error>{{ matErrorMessage('name', 'Project name') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-lg-6">
+      <mat-label>Website(Optional)</mat-label>
+      <input matInput placeholder="https://www.mywebsite.com" formControlName="url">
+      <mat-error>{{ matErrorMessage('url', 'Website') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
       <mat-label>Project Description</mat-label>

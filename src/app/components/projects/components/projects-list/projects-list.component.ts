@@ -18,7 +18,7 @@ export class ProjectsListComponent {
   @Input() projects: Project[] = [];
 
   setImageCardSrc(project: Project): string {
-    if (project.pictureUrl.length > 0) {
+    if (project?.pictureUrl) {
       return project.pictureUrl;
     }
     return 'assets/backgrounds/under-construction.jpg';

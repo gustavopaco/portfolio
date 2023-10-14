@@ -18,7 +18,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {ACTION_CLOSE, FAILED_TO_DELETE_SKILL, SKILL_DELETED_SUCCESSFULLY} from "../../../../shared/constants/constants";
+import {ACTION_CLOSE, FAILED_TO_DELETE_SKILL_IMAGE, SKILL_DELETED_SUCCESSFULLY} from "../../../../shared/constants/constants";
 
 @Component({
   selector: 'app-skills',
@@ -123,7 +123,7 @@ export class SkillsComponent implements OnInit {
     this.utilAwsS3Service.loadS3Client(response.region, response.accessKey, response.secretKey);
     this.utilAwsS3Service.deleteImageFromAwsS3Bucket(response.bucketName, this.filterSkillById(skillId).pictureUrl)
       .then(() => this.deleteSkill(skillId))
-      .catch(() => this.matSnackBarService.error(FAILED_TO_DELETE_SKILL, ACTION_CLOSE, 5000))
+      .catch(() => this.matSnackBarService.error(FAILED_TO_DELETE_SKILL_IMAGE, ACTION_CLOSE, 5000))
   }
 
   private deleteSkill(skillId: number) {

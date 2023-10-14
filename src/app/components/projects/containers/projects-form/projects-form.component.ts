@@ -9,7 +9,12 @@ import {UserService} from "../../../../shared/services/user.service";
 import {finalize, take} from "rxjs";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
-import {ACTION_CLOSE} from "../../../../shared/constants/constants";
+import {
+  ACTION_CLOSE,
+  FAILED_TO_UPLOAD_IMAGE,
+  NO_CHANGES_WERE_MADE,
+  PROJECT_SAVED_SUCCESSFULLY
+} from "../../../../shared/constants/constants";
 import {MatSelectModule} from "@angular/material/select";
 import {MatIconModule} from "@angular/material/icon";
 import {FormValidator} from "../../../../shared/validator/form-validator";
@@ -24,9 +29,16 @@ import {FormularioDebugComponent} from "../../../../shared/components/formulario
 import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-class";
 import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
+import {CredentialsService} from "../../../../shared/services/credentials.service";
+import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
+import {S3_PROJECTS_FOLDER} from "../../../../shared/constants/api";
+import {Project} from "../../../../shared/interface/project";
 
 export interface ProjectData {
   newProject: boolean;
+  isFailedToUploadImage: boolean;
+  projectToEdit?: Project;
 }
 
 @Component({
@@ -41,18 +53,19 @@ export class ProjectsFormComponent implements OnInit {
   form = this.fb.group({
     id: new FormControl<number | null>(null),
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    description: [''],
-    url: [''],
-    pictureUrl: [''],
-    pictureOrientation: [''],
+    description: ['', [Validators.required]],
+    url: new FormControl<string | null>(null),
+    pictureUrl: new FormControl<string | null>(null),
+    pictureOrientation: new FormControl<string | null>(null),
     status: ['', [Validators.required]],
-    tempImage: ['', [Validators.required]]
+    tempImage: new FormControl<string | null>(null)
   });
 
   projectStatusList: string[] = [];
   filePicture?: File;
 
   isFormSubmitted = false;
+  disabledForm = false;
 
   constructor(private matDialogRef: MatDialogRef<ProjectsFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ProjectData,
@@ -60,11 +73,14 @@ export class ProjectsFormComponent implements OnInit {
               private userService: UserService,
               private matSnackBarService: MatSnackbarService,
               private translateService: TranslateService,
-              private matDialog: MatDialog) {
+              private matDialog: MatDialog,
+              private utilAwsS3Service: UtilAwsS3Service,
+              private credentialsService: CredentialsService) {
   }
 
   ngOnInit(): void {
     this.getProjectStatus();
+    this.loadProjectToEdit();
   }
 
   private getProjectStatus() {
@@ -76,9 +92,10 @@ export class ProjectsFormComponent implements OnInit {
       })
   }
 
-  onSubmit() {
-    this.isFormSubmitted = true;
-    console.log(this.form.value);
+  private loadProjectToEdit() {
+    if (!this.data.newProject && this.data.projectToEdit) {
+      this.form.patchValue(this.data.projectToEdit);
+    }
   }
 
   onFileInputChange(event: Event) {
@@ -105,8 +122,8 @@ export class ProjectsFormComponent implements OnInit {
       .subscribe((result: ImageCroppedData) => {
         if (result.returnImageType === 'blob' && result.objectUrl && result.file) {
           this.form.patchValue({tempImage: result.objectUrl});
-            this.detectImageOrientation(result.file);
-            this.filePicture = result.file;
+          this.detectImageOrientation(result.file);
+          this.filePicture = result.file;
         } else if (result.returnImageType === 'base64' && result.base64) {
           this.form.patchValue({tempImage: result.base64});
         }
@@ -123,6 +140,74 @@ export class ProjectsFormComponent implements OnInit {
       });
   }
 
+  onSubmit() {
+    this.isFormSubmitted = true;
+    if (this.form.valid) {
+      if (this.tempImage) {
+        this.loadCredentials();
+        return;
+      }
+      if (this.verifyIsnewProjectOrExistChangesOnProjectFromFormData()) {
+        this.saveProject();
+        return;
+      }
+      this.matSnackBarService.warning(NO_CHANGES_WERE_MADE, ACTION_CLOSE, 3000, 'center', 'top');
+      this.matDialogRef.close(false);
+    }
+  }
+
+  private loadCredentials() {
+    this.credentialsService.getAwsCredentials()
+      .pipe(take(1))
+      .subscribe({
+        next: (credentials: AwsConfiguration) => this.uploadToS3Bucket(credentials),
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+      });
+  }
+
+  private uploadToS3Bucket(credentials: AwsConfiguration) {
+    this.utilAwsS3Service.loadS3Client(credentials.region, credentials.accessKey, credentials.secretKey);
+    this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(credentials.bucketName, this.filePicture!, S3_PROJECTS_FOLDER)
+      .then((result) => {
+        this.form.patchValue({pictureUrl: result});
+        this.saveProject();
+      })
+      .catch(() => {
+        this.onFailedToUploadImage();
+        this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE, 5000)
+      });
+  }
+
+  private onFailedToUploadImage() {
+    this.data.isFailedToUploadImage = true;
+  }
+
+  private verifyIsnewProjectOrExistChangesOnProjectFromFormData() {
+    if (this.data.newProject) return true;
+    const project = this.data.projectToEdit;
+    return project?.name !== this.form.get('name')?.value ||
+      project?.description !== this.form.get('description')?.value ||
+      project?.url !== this.form.get('url')?.value ||
+      project?.pictureUrl !== this.form.get('pictureUrl')?.value ||
+      project?.status !== this.form.get('status')?.value;
+  }
+
+  private saveProject() {
+    this.disabledForm = true;
+    this.userService.saveProjectRecord(this.form.value)
+      .pipe(
+        take(1),
+        finalize(() => this.disabledForm = false)
+      )
+      .subscribe({
+        next: () => {
+          this.matSnackBarService.success(PROJECT_SAVED_SUCCESSFULLY, ACTION_CLOSE, 5000);
+          this.matDialogRef.close(true);
+        },
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+      })
+  }
+
   private clearEventValue(event: Event) {
     (<HTMLInputElement>event.target).value = '';
   }
@@ -137,6 +222,11 @@ export class ProjectsFormComponent implements OnInit {
 
   matErrorMessage(formControlName: string, fieldName: string) {
     return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl>this.form.get(formControlName), fieldName);
+  }
+
+  matErrorImageMessage() {
+    if (this.data.isFailedToUploadImage) return this.translateService.instant('upload');
+    return '';
   }
 
   showMatErrorMessage(formControlName: string) {

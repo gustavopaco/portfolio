@@ -50,7 +50,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   onAddProject() {
-    this.matDialog.open(ProjectsFormComponent, {
+    const matDialogRef = this.matDialog.open(ProjectsFormComponent, {
       width: '100%',
       maxWidth: '800px',
       data: {
@@ -58,6 +58,14 @@ export class ProjectsComponent implements OnInit {
       },
       autoFocus: false
     });
+
+    matDialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.getProjectRecords();
+        }
+      })
   }
 
   private onRequestLoadingProjects() {

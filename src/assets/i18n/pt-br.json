@@ -13,6 +13,8 @@
   "max": "*{{fieldName}} deve ser menor ou igual a {{max}}.",
   "deleteSkillTitle": "Deletar habilidade",
   "deleteSkillMessage": "Deseja realmente deletar \"{{skillName}}\"?",
+  "deleteProjectTitle": "Deletar projeto",
+  "deleteProjectMessage": "Deseja realmente deletar \"{{projectName}}\"?",
   "confirmButton": "Confirmar",
   "cancelButton": "Cancelar",
   "deleteButton": "Deletar",

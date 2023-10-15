@@ -48,4 +48,8 @@ export class UserService extends CrudService<User> {
   deleteSkillRecord(id: number) {
     return this.httpClient.delete(`${API_USER}/owner/skill/${id}`);
   }
+
+  deleteProjectRecord(id: number) {
+    return this.httpClient.delete(`${API_USER}/owner/project/${id}`);
+  }
 }

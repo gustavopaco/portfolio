@@ -23,12 +23,14 @@ import {MatSnackbarService} from "../../../../shared/external/angular-material/t
 import {S3_SKILLS_FOLDER} from "../../../../shared/constants/api";
 import {UserService} from "../../../../shared/services/user.service";
 import {
-  ACTION_CLOSE,
+  ACTION_CLOSE, FAILED_TO_DELETE_STORED_IMAGE,
   FAILED_TO_SAVE_SKILL,
   FAILED_TO_UPLOAD_IMAGE, NO_CHANGES_WERE_MADE,
   SKILL_SAVED_SUCCESSFULLY
 } from "../../../../shared/constants/constants";
 import {Skill} from "../../../../shared/interface/skill";
+import {HttpValidator} from "../../../../shared/validator/http-validator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 export interface SkillData {
   newSkill?: boolean;
@@ -39,7 +41,7 @@ export interface SkillData {
 @Component({
   selector: 'app-skills-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent, MatProgressSpinnerModule],
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss']
 })
@@ -54,7 +56,7 @@ export class SkillsFormComponent implements OnInit {
   });
 
   isFormSubmitted = false;
-  disabledForm = false;
+  isDisabledForm = false;
 
   skillFile?: File;
 
@@ -122,7 +124,8 @@ export class SkillsFormComponent implements OnInit {
   onSubmit() {
     this.isFormSubmitted = true;
     this.removeValidatorsOnEditSkillFormSubmittedWithoutNewImage();
-    if (this.form.valid) {
+    if (this.form.valid && !this.isDisabledForm) {
+      this.disableForm();
       if (this.form.get('tempImage')?.value) {
         this.loadCredentials();
         return;
@@ -156,13 +159,32 @@ export class SkillsFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (awsCredentials: AwsConfiguration) => {
+          this.utilAwsS3Service.loadS3Client(awsCredentials.region, awsCredentials.accessKey, awsCredentials.secretKey);
+          if (this.existPreviousImage()) {
+            this.deletePreviousImage(awsCredentials, this.pictureUrl!)
+          }
           this.uploadToAwsS3Bucket(awsCredentials);
+        },
+        error: (error) => {
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.enableForm();
         }
       });
   }
 
+  private deletePreviousImage(credentials: AwsConfiguration, previousImage: string) {
+    this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, previousImage)
+      .then(() => {
+        this.form.patchValue({pictureUrl: ''})
+        this.uploadToAwsS3Bucket(credentials);
+      })
+      .catch(() => {
+        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        this.enableForm();
+      });
+  }
+
   private uploadToAwsS3Bucket(awsCredentials: AwsConfiguration) {
-    this.utilAwsS3Service.loadS3Client(awsCredentials.region, awsCredentials.accessKey, awsCredentials.secretKey);
     this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(awsCredentials.bucketName, this.skillFile!, S3_SKILLS_FOLDER)
       .then((imageUrl: string) => {
         this.form.patchValue({pictureUrl: imageUrl});
@@ -171,15 +193,15 @@ export class SkillsFormComponent implements OnInit {
       .catch(() => {
         this.onFailedToUploadImage();
         this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE);
+        this.enableForm();
       });
   }
 
   private saveSkill() {
-    this.disabledForm = true;
     this.userService.saveSkillRecord(this.form.value)
       .pipe(
         take(1),
-        finalize(() => this.disabledForm = false)
+        finalize(() => this.enableForm())
       )
       .subscribe({
         next: () => {
@@ -206,6 +228,10 @@ export class SkillsFormComponent implements OnInit {
     return this.form.get('pictureUrl')?.value;
   }
 
+  private existPreviousImage() {
+    return this.pictureUrl;
+  }
+
   overlayClass() {
     return this.tempImage || this.pictureUrl ? 'overlay-close' : 'overlay-open';
   }
@@ -222,5 +248,13 @@ export class SkillsFormComponent implements OnInit {
 
   showMatErrorMessage(formControlName: string) {
     return FormValidator.validateExistError(<FormControl>this.form.get(formControlName), this.isFormSubmitted);
+  }
+
+  private disableForm() {
+    this.isDisabledForm = true;
+  }
+
+  private enableForm() {
+    this.isDisabledForm = false;
   }
 }

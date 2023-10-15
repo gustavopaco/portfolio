@@ -12,7 +12,8 @@
   </div><!--col-->
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <a mat-raised-button color="primary" href="https://twitter.com/home" target="_blank"><mat-icon>launch</mat-icon>Visit Site</a>
-  <button mat-raised-button color="primary" *ngIf="data.editable" (click)="onEdit()"><mat-icon>edit</mat-icon>Edit</button>
+  <a mat-raised-button color="primary" href="https://twitter.com/home" target="_blank" *ngIf="data.project.url"><mat-icon>launch</mat-icon>Visit Site</a>
+  <button mat-raised-button color="accent" *ngIf="data.editable" (click)="onEdit()"><mat-icon>edit</mat-icon>Edit</button>
+  <button mat-raised-button color="warn" *ngIf="data.editable" (click)="onDelete()"><mat-icon>delete</mat-icon>Delete</button>
   <button mat-raised-button color="primary" mat-dialog-close>Close</button>
 </mat-dialog-actions>

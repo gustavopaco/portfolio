@@ -143,7 +143,7 @@ export class ProjectsFormComponent implements OnInit {
 
   onSubmit() {
     this.isFormSubmitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && !this.isDisabledForm) {
       this.disableForm();
       if (this.tempImage) {
         this.loadCredentials();

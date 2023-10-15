@@ -52,7 +52,7 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">
-    <button mat-raised-button color="primary" type="submit" [disabled]="isDisabledForm">
+    <button mat-raised-button color="primary" type="submit">
       <mat-icon *ngIf="isDisabledForm"><mat-spinner color="accent" diameter="18"></mat-spinner></mat-icon>
       <mat-icon *ngIf="!isDisabledForm">save</mat-icon>
       Save

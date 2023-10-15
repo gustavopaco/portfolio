@@ -6,13 +6,23 @@ import {finalize, take} from "rxjs";
 import {Project} from "../../../../shared/interface/project";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
-import {ACTION_CLOSE} from "../../../../shared/constants/constants";
+import {
+  ACTION_CLOSE, DELETING_PROJECT,
+  FAILED_TO_DELETE_STORED_IMAGE, PLEASE_WAIT_PROJECT_DELETING,
+  PROJECT_DELETED_SUCCESSFULLY
+} from "../../../../shared/constants/constants";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {ProjectsFormComponent} from "../projects-form/projects-form.component";
 import {ProjectsItemComponent} from "../../components/projects-item/projects-item.component";
+import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
+import {CredentialsService} from "../../../../shared/services/credentials.service";
+import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
+import {
+  LoadingDialogComponent
+} from "../../../../shared/external/angular-material/loading-dialog/loading-dialog.component";
 
 @Component({
   selector: 'app-projects',
@@ -30,7 +40,9 @@ export class ProjectsComponent implements OnInit {
 
   constructor(private userService: UserService,
               private matSnackBarService: MatSnackbarService,
-              private matDialog: MatDialog) {
+              private matDialog: MatDialog,
+              private utilAwsS3Service: UtilAwsS3Service,
+              private credentialsService: CredentialsService) {
   }
 
   ngOnInit(): void {
@@ -60,7 +72,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   onAddProject() {
-   this.openProjectFormDialog(true);
+    this.openProjectFormDialog(true);
   }
 
   openProjectFormDialog(newProject: boolean, project?: Project) {
@@ -99,7 +111,49 @@ export class ProjectsComponent implements OnInit {
       .subscribe((result: any) => {
         if (result?.action === 'edit') {
           this.openProjectFormDialog(false, result.project);
+        } else if (result?.action === 'delete') {
+          const project = result.project as Project;
+          const loadingDialogRef = this.openLoadingDialog(DELETING_PROJECT, PLEASE_WAIT_PROJECT_DELETING);
+          if (this.existPreviousImage(project)) {
+            this.loadCredentials(loadingDialogRef, project);
+          } else {
+            this.deleteProjectRecord(loadingDialogRef, project.id);
+          }
         }
+      })
+  }
+
+  private loadCredentials(loadingDialogRef: MatDialogRef<LoadingDialogComponent>, project: Project) {
+    this.credentialsService.getAwsCredentials()
+      .pipe(take(1))
+      .subscribe({
+        next: (credentials: AwsConfiguration) => this.deleteProjectImageFromAwsS3Bucket(loadingDialogRef, credentials, project),
+        error: (error: any) => {
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          loadingDialogRef.close();
+        }
+      })
+  }
+
+  private deleteProjectImageFromAwsS3Bucket(loadingDialogRef: MatDialogRef<LoadingDialogComponent>, credentials: AwsConfiguration, project: Project) {
+    this.utilAwsS3Service.loadS3Client(credentials.region, credentials.accessKey, credentials.secretKey);
+    this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, project.pictureUrl)
+      .then(() => this.deleteProjectRecord(loadingDialogRef, project.id))
+      .catch(() => {
+        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        loadingDialogRef.close();
+      })
+  }
+
+  private deleteProjectRecord(loadingDialogRef: MatDialogRef<LoadingDialogComponent>, id: number) {
+    this.userService.deleteProjectRecord(id)
+      .pipe(take(1), finalize(() => loadingDialogRef.close()))
+      .subscribe({
+        next: () => {
+          this.matSnackBarService.success(PROJECT_DELETED_SUCCESSFULLY, ACTION_CLOSE);
+          this.getProjectRecords();
+        },
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
       })
   }
 
@@ -110,5 +164,23 @@ export class ProjectsComponent implements OnInit {
 
   onProjectClicked(id: number) {
     this.getProjectRecord(id);
+  }
+
+  private existPreviousImage(project: Project) {
+    return project.pictureUrl && project.pictureUrl !== '';
+  }
+
+  openLoadingDialog(title: string, message: string) {
+    return this.matDialog.open(LoadingDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      maxWidth: '600px',
+      autoFocus: false,
+      disableClose: true,
+      data: {
+        title: title,
+        message: message,
+      }
+    });
   }
 }

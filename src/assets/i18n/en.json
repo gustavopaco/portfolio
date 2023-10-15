@@ -13,6 +13,8 @@
   "max": "*{{fieldName}} must be less or equal to {{max}}.",
   "deleteSkillTitle": "Delete Skill",
   "deleteSkillMessage": "Are you sure you want to delete \"{{skillName}}\"?",
+  "deleteProjectTitle": "Delete Project",
+  "deleteProjectMessage": "Are you sure you want to delete \"{{projectName}}\"?",
   "confirmButton": "Confirm",
   "cancelButton": "Cancel",
   "deleteButton": "Delete",

@@ -1,0 +1,18 @@
+<div class="ribbon-lg-wrapper">
+  <div class="ribbon-lg" [ngClass]="setRibbonColor()">{{ data.project.status | statusProject }}</div><!--ribbon-lg-->
+</div><!--ribbon-lg-wrapper-->
+<mat-toolbar color="primary" class="justify-content-center">Details</mat-toolbar>
+<mat-dialog-content class="row">
+  <div class="col-12 mb-2 overflow-hidden d-flex flex-wrap justify-content-center align-items-center">
+      <img [src]="setProjectImage()" alt="">
+  </div><!--col-->
+  <div class="col-12">
+    <h2 class="text-center">{{ data.project.name }}</h2>
+    <p class="text-center">{{ data.project.description }}</p>
+  </div><!--col-->
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <a mat-raised-button color="primary" href="https://twitter.com/home" target="_blank"><mat-icon>launch</mat-icon>Visit Site</a>
+  <button mat-raised-button color="primary" *ngIf="data.editable" (click)="onEdit()"><mat-icon>edit</mat-icon>Edit</button>
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>

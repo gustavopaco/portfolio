@@ -1,0 +1,11 @@
+@import 'src/app/shared/scss/default/ribbon.scss';
+img {
+  max-width: 600px;
+  max-height: 300px;
+  object-fit: contain;
+  transition: all 0.3s ease-in-out;
+  border-radius: 4px;
+  &:hover {
+    scale: (1.2);
+  }
+}

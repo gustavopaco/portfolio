@@ -7,7 +7,7 @@
       </div><!--col-->
     </div><!--row-->
     <ng-container *ngIf="projects.length > 0; else noProjects">
-      <app-projects-list [projects]="projects"></app-projects-list>
+      <app-projects-list [projects]="projects" (projectClicked)="onProjectClicked($event)"></app-projects-list>
     </ng-container><!--projects-content-container-->
     <ng-template #noProjects>
       <div class="row">

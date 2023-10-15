@@ -2,7 +2,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="row px-3">
     <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center"
-         *ngIf="tempImage === null">
+         *ngIf="tempImage === null && pictureUrl === null">
       <label for="projectImage" class="file-upload-img-wrapper position-relative mb-2">
         <span class="overlay"></span>
         <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
@@ -12,12 +12,12 @@
       <mat-error *ngIf="data.isFailedToUploadImage">{{ matErrorImageMessage() }}</mat-error>
     </div><!--col-->
     <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center cropped-image-wrapper"
-         *ngIf="tempImage !== null">
+         *ngIf="tempImage !== null || pictureUrl !== null">
       <div class="position-relative mb-2 cropped-image">
         <div class="ribbon-lg-wrapper" *ngIf="status">
           <div class="ribbon-lg" [ngClass]="setRibbonColor()">{{ status | statusProject }}</div><!--ribbon-->
         </div><!--ribbon-lg-wrapper-->
-        <img [src]="tempImage" alt="Project Image">
+        <img [src]="tempImage ?? pictureUrl" alt="Project Image">
       </div><!--cropped-image-->
       <mat-hint class="text-center d-flex flex-wrap justify-content-center align-items-center edit-btn-image-wrapper">
         <label for="fileInput" matRipple [matRippleCentered]="true" matTooltip="Change image" class="me-2">
@@ -26,6 +26,7 @@
         </label>
        You can change the image by clicking on the icon
       </mat-hint><!--edit-btn-image-wrapper-->
+      <mat-error *ngIf="data.isFailedToUploadImage">{{ matErrorImageMessage() }}</mat-error>
     </div><!--col__cropped-image-wrapper-->
     <mat-form-field class="col-lg-6">
       <mat-label>Name</mat-label>
@@ -51,7 +52,11 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">
-    <button mat-raised-button color="primary" type="submit" [disabled]="disabledForm">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="isDisabledForm">
+      <mat-icon *ngIf="isDisabledForm"><mat-spinner color="accent" diameter="18"></mat-spinner></mat-icon>
+      <mat-icon *ngIf="!isDisabledForm">save</mat-icon>
+      Save
+    </button>
     <button mat-raised-button color="primary" type="button" mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </form>

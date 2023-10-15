@@ -7,6 +7,7 @@ export const FAILED_LOADING_IMAGE = "Failed loading image, formats allowed: png,
 export const FAILED_TO_UPLOAD_IMAGE = "Failed to upload image.";
 export const FAILED_TO_SAVE_SKILL = "Failed to save skill.";
 export const FAILED_TO_DELETE_SKILL_IMAGE = "Failed to delete skill's image. Please try again later.";
+export const FAILED_TO_DELETE_STORED_IMAGE = "Failed to delete stored image. Please try again later.";
 export const SKILL_SAVED_SUCCESSFULLY = "Skill saved successfully.";
 export const SKILL_DELETED_SUCCESSFULLY = "Skill deleted successfully.";
 export const PROJECT_SAVED_SUCCESSFULLY = "Project saved successfully.";

@@ -10,7 +10,7 @@ import {finalize, take} from "rxjs";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {
-  ACTION_CLOSE,
+  ACTION_CLOSE, FAILED_TO_DELETE_STORED_IMAGE,
   FAILED_TO_UPLOAD_IMAGE,
   NO_CHANGES_WERE_MADE,
   PROJECT_SAVED_SUCCESSFULLY
@@ -34,6 +34,7 @@ import {CredentialsService} from "../../../../shared/services/credentials.servic
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {S3_PROJECTS_FOLDER} from "../../../../shared/constants/api";
 import {Project} from "../../../../shared/interface/project";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 export interface ProjectData {
   newProject: boolean;
@@ -44,7 +45,7 @@ export interface ProjectData {
 @Component({
   selector: 'app-projects-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule],
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.scss']
 })
@@ -65,7 +66,7 @@ export class ProjectsFormComponent implements OnInit {
   filePicture?: File;
 
   isFormSubmitted = false;
-  disabledForm = false;
+  isDisabledForm = false;
 
   constructor(private matDialogRef: MatDialogRef<ProjectsFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ProjectData,
@@ -143,11 +144,12 @@ export class ProjectsFormComponent implements OnInit {
   onSubmit() {
     this.isFormSubmitted = true;
     if (this.form.valid) {
+      this.disableForm();
       if (this.tempImage) {
         this.loadCredentials();
         return;
       }
-      if (this.verifyIsnewProjectOrExistChangesOnProjectFromFormData()) {
+      if (this.verifyIsNewProjectOrExistChangesOnProjectFromFormData()) {
         this.saveProject();
         return;
       }
@@ -160,13 +162,38 @@ export class ProjectsFormComponent implements OnInit {
     this.credentialsService.getAwsCredentials()
       .pipe(take(1))
       .subscribe({
-        next: (credentials: AwsConfiguration) => this.uploadToS3Bucket(credentials),
-        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        next: (credentials: AwsConfiguration) => {
+          this.utilAwsS3Service.loadS3Client(credentials.region, credentials.accessKey, credentials.secretKey);
+          if (this.existPreviousImage()) {
+            this.deletePreviousImage(credentials, this.data.projectToEdit!.pictureUrl)
+          } else {
+            this.uploadToS3Bucket(credentials);
+          }
+        },
+        error: (error) => {
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.enableForm();
+        }
+      });
+  }
+
+  private existPreviousImage() {
+    return this.pictureUrl;
+  }
+
+  private deletePreviousImage(credentials: AwsConfiguration, previousImage: string) {
+    this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, previousImage)
+      .then(() => {
+        this.form.patchValue({pictureUrl: null, pictureOrientation: null});
+        this.uploadToS3Bucket(credentials);
+      })
+      .catch(() => {
+        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        this.enableForm();
       });
   }
 
   private uploadToS3Bucket(credentials: AwsConfiguration) {
-    this.utilAwsS3Service.loadS3Client(credentials.region, credentials.accessKey, credentials.secretKey);
     this.utilAwsS3Service.uploadSingleImageToAwsS3Bucket(credentials.bucketName, this.filePicture!, S3_PROJECTS_FOLDER)
       .then((result) => {
         this.form.patchValue({pictureUrl: result});
@@ -175,6 +202,7 @@ export class ProjectsFormComponent implements OnInit {
       .catch(() => {
         this.onFailedToUploadImage();
         this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE, 5000)
+        this.enableForm();
       });
   }
 
@@ -182,7 +210,7 @@ export class ProjectsFormComponent implements OnInit {
     this.data.isFailedToUploadImage = true;
   }
 
-  private verifyIsnewProjectOrExistChangesOnProjectFromFormData() {
+  private verifyIsNewProjectOrExistChangesOnProjectFromFormData() {
     if (this.data.newProject) return true;
     const project = this.data.projectToEdit;
     return project?.name !== this.form.get('name')?.value ||
@@ -193,11 +221,10 @@ export class ProjectsFormComponent implements OnInit {
   }
 
   private saveProject() {
-    this.disabledForm = true;
     this.userService.saveProjectRecord(this.form.value)
       .pipe(
         take(1),
-        finalize(() => this.disabledForm = false)
+        finalize(() => this.enableForm())
       )
       .subscribe({
         next: () => {
@@ -214,6 +241,10 @@ export class ProjectsFormComponent implements OnInit {
 
   get tempImage() {
     return this.form.get('tempImage')?.value;
+  }
+
+  get pictureUrl() {
+    return this.form.get('pictureUrl')?.value;
   }
 
   get status() {
@@ -235,5 +266,13 @@ export class ProjectsFormComponent implements OnInit {
 
   setRibbonColor() {
     return getRibbonClass(this.form.get('status')?.value ?? '');
+  }
+
+  private disableForm() {
+    this.isDisabledForm = true;
+  }
+
+  private enableForm() {
+    this.isDisabledForm = false;
   }
 }

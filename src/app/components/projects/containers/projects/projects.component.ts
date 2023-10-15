@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {ProjectsFormComponent} from "../projects-form/projects-form.component";
+import {ProjectsItemComponent} from "../../components/projects-item/projects-item.component";
 
 @Component({
   selector: 'app-projects',
@@ -49,12 +50,26 @@ export class ProjectsComponent implements OnInit {
       })
   }
 
+  private getProjectRecord(id: number) {
+    this.userService.getProjectRecord(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (project: Project) => this.openProjectItemDialog(project),
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+      })
+  }
+
   onAddProject() {
+   this.openProjectFormDialog(true);
+  }
+
+  openProjectFormDialog(newProject: boolean, project?: Project) {
     const matDialogRef = this.matDialog.open(ProjectsFormComponent, {
       width: '100%',
       maxWidth: '800px',
       data: {
-        newProject: true
+        newProject: newProject,
+        projectToEdit: project
       },
       autoFocus: false
     });
@@ -68,8 +83,32 @@ export class ProjectsComponent implements OnInit {
       })
   }
 
+  openProjectItemDialog(project: Project) {
+    const dialogRef = this.matDialog.open(ProjectsItemComponent, {
+      width: '100%',
+      maxHeight: '90vh',
+      autoFocus: false,
+      data: {
+        project: project,
+        editable: true
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: any) => {
+        if (result?.action === 'edit') {
+          this.openProjectFormDialog(false, result.project);
+        }
+      })
+  }
+
   private onRequestLoadingProjects() {
     this.isLoadingProjects = true;
     this.isFailedToLoadProjects = false;
+  }
+
+  onProjectClicked(id: number) {
+    this.getProjectRecord(id);
   }
 }

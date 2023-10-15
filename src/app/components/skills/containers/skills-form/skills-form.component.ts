@@ -121,7 +121,7 @@ export class SkillsFormComponent implements OnInit {
 
   onSubmit() {
     this.isFormSubmitted = true;
-    this.verifyEditSkillFormSubmittedWithoutNewImage();
+    this.removeValidatorsOnEditSkillFormSubmittedWithoutNewImage();
     if (this.form.valid) {
       if (this.form.get('tempImage')?.value) {
         this.loadCredentials();
@@ -136,7 +136,7 @@ export class SkillsFormComponent implements OnInit {
     }
   }
 
-  private verifyEditSkillFormSubmittedWithoutNewImage() {
+  private removeValidatorsOnEditSkillFormSubmittedWithoutNewImage() {
     if (!this.data.newSkill && this.data.skillToEdit && this.tempImage === '' && this.pictureUrl !== '') {
       this.form.get('tempImage')?.removeValidators([Validators.required]);
       this.form.get('tempImage')?.updateValueAndValidity();

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -16,6 +16,7 @@ import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-
 export class ProjectsListComponent {
 
   @Input() projects: Project[] = [];
+  @Output() projectClicked = new EventEmitter<number>();
 
   setImageCardSrc(project: Project): string {
     if (project?.pictureUrl) {
@@ -38,5 +39,9 @@ export class ProjectsListComponent {
    * */
   setRibbonColor(project: Project) {
     return getRibbonClass(project.status);
+  }
+
+  onProjectClicked(id: number) {
+    this.projectClicked.emit(id);
   }
 }

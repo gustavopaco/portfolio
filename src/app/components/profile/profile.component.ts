@@ -24,11 +24,13 @@ export class ProfileComponent {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private uiService: UiService) {
-    this.uiService.isResetMatTabEventEmitter.pipe(takeUntilDestroyed()).subscribe((value) => {
-      if (value) {
-        this.activeLink = undefined;
-      }
-    });
+    this.uiService.isResetMatTabEventEmitter
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        if (value) {
+          this.activeLink = undefined;
+        }
+      });
   }
 
   goToRoute(link: string) {

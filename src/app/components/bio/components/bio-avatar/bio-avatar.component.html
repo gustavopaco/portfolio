@@ -1,0 +1,17 @@
+<ng-container *ngIf="!avatarUrl">
+  <label class="position-relative cursor-pointer rounded-circle mb-3">
+    <span class="overlay position-absolute top-0 start-0 rounded-circle"></span>
+    <mat-icon
+      class="position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center">person
+    </mat-icon>
+    <input type="file" class="d-none" accept="image/*" (change)="onFileInputChange($event)"/>
+  </label>
+  <mat-hint class="d-block">Click at the image to change your avatar.</mat-hint>
+</ng-container>
+<ng-container *ngIf="avatarUrl">
+  <label class="cursor-pointer mb-3">
+    <img [src]="avatarUrl" alt="Avatar" class="img-fluid">
+    <input type="file" class="d-none" accept="image/*" (change)="onFileInputChange($event)"/>
+  </label>
+  <mat-hint class="d-block">Edit your avatar by clicking at the image.</mat-hint>
+</ng-container>

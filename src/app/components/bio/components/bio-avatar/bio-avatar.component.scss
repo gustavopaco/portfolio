@@ -1,0 +1,29 @@
+label {
+  width: 150px;
+  height: 150px;
+}
+
+.overlay {
+  width: 150px;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease-in-out;
+}
+
+mat-icon {
+  width: 150px;
+  height: 150px;
+  font-size: 120px;
+  color: #fff;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  transition: opacity 0.3s ease-in-out;
+}
+
+mat-hint {
+  color: rgba(0, 0, 0, 0.6)
+}

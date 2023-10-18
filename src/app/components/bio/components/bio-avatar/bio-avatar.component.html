@@ -1,4 +1,4 @@
-<ng-container *ngIf="!avatarUrl">
+<ng-container *ngIf="editable && !avatarUrl">
   <label class="position-relative cursor-pointer rounded-circle mb-3">
     <span class="overlay position-absolute top-0 start-0 rounded-circle"></span>
     <mat-icon
@@ -9,9 +9,9 @@
   <mat-hint class="d-block">Click at the image to change your avatar.</mat-hint>
 </ng-container>
 <ng-container *ngIf="avatarUrl">
-  <label class="cursor-pointer mb-3">
+  <label class="mb-3" [class.cursor-pointer]="editable">
     <img [src]="avatarUrl" alt="Avatar" class="img-fluid">
-    <input type="file" class="d-none" accept="image/*" (change)="onFileInputChange($event)"/>
+    <input type="file" class="d-none" accept="image/*" *ngIf="editable" (change)="onFileInputChange($event)"/>
   </label>
-  <mat-hint class="d-block">Edit your avatar by clicking at the image.</mat-hint>
+  <mat-hint class="d-block" *ngIf="editable">Edit your avatar by clicking at the image.</mat-hint>
 </ng-container>

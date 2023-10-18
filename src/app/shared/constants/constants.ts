@@ -20,3 +20,5 @@ export const ACTION_OK = "Ok";
 export const ACTION_SUCCESS = "Success";
 export const ACTION_FAILED = "Failed";
 export const NO_CHANGES_WERE_MADE = "No changes were made.";
+export const BIO_READY_TO_BE_SAVED = "Your bio is ready to be saved!";
+export const FILL_ALL_FIELDS = "Please, fill all the fields!";

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BioAvatarComponent} from "../../components/bio-avatar/bio-avatar.component";
 import {UserService} from "../../../../shared/services/user.service";
@@ -13,19 +13,22 @@ import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {ACTION_CLOSE, FAILED_TO_DELETE_STORED_IMAGE} from "../../../../shared/constants/constants";
 import {S3_AVATAR_FOLDER} from "../../../../shared/constants/api";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
+import {BioAboutMeComponent} from "../../components/bio-about-me/bio-about-me.component";
 
 @Component({
   selector: 'app-bio',
   standalone: true,
-  imports: [CommonModule, BioAvatarComponent, MatProgressSpinnerModule, MatToolbarModule],
+  imports: [CommonModule, BioAvatarComponent, MatProgressSpinnerModule, MatToolbarModule, BioAboutMeComponent],
   templateUrl: './bio.component.html',
   styleUrls: ['./bio.component.scss']
 })
 export class BioComponent implements OnInit {
 
+  @Input() editable = false;
   bio?: Bio;
 
   isLoadingBio = true;
+  isLoadingAboutMe = true;
 
   constructor(private userService: UserService,
               private credentialsService: CredentialsService,
@@ -92,10 +95,27 @@ export class BioComponent implements OnInit {
 
   private saveBioRecord() {
     this.userService.saveBioRecord(this.bio!)
-      .pipe(take(1))
-        .subscribe({
-          next: () => this.getBioRecord(),
-          error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
-        })
+      .pipe(
+        take(1),
+        finalize(() => this.onAboutMeSaved())
+      )
+      .subscribe({
+        next: () => this.getBioRecord(),
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+      })
+  }
+
+  onAboutMeChange(bio: Bio) {
+    this.bio = bio;
+    this.onRequestLoadingAboutMe();
+    this.saveBioRecord();
+  }
+
+  private onRequestLoadingAboutMe() {
+    this.isLoadingAboutMe = true;
+  }
+
+  private onAboutMeSaved() {
+    this.isLoadingAboutMe = false;
   }
 }

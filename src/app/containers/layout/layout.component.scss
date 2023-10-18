@@ -3,11 +3,11 @@ header, footer {
 }
 
 .complete-layout {
-  height: calc(100vh - 160px);
+  min-height: calc(100vh - 160px);
 }
 
 .parcial-complete-layout {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
 }
 
 .incomplete-layout {

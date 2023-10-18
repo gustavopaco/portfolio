@@ -19,6 +19,7 @@ import {MatInputModule} from "@angular/material/input";
 })
 export class BioAvatarComponent {
 
+  @Input() editable = false;
   @Input() avatarUrl?: string;
   @Output() changedFile = new EventEmitter<File>();
 

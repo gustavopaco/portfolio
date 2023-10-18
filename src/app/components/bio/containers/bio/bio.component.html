@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" class="justify-content-center rounded mb-5">Bio</mat-toolbar>
 <mat-spinner class="mx-auto" *ngIf="isLoadingBio; else loadedBio"></mat-spinner>
 <ng-template #loadedBio>
-  <app-bio-avatar [avatarUrl]="bio?.avatarUrl" (changedFile)="onImageChange($event)"></app-bio-avatar>
+  <app-bio-avatar [avatarUrl]="bio?.avatarUrl" [editable]="editable" (changedFile)="onImageChange($event)"></app-bio-avatar>
+  <app-bio-about-me [bio]="bio" (changedAboutMe)="onAboutMeChange($event)" [requestLoading]="isLoadingAboutMe"></app-bio-about-me>
 </ng-template>

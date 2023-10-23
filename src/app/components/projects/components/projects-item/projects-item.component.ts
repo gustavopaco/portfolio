@@ -12,6 +12,12 @@ import {
 } from "../../../../shared/external/angular-material/confirmation-dialog/confirmation-dialog.component";
 import {take} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
+import {BreakpointObserver} from "@angular/cdk/layout";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import {
+  BottomSheetDialogComponent
+} from "../../../../shared/external/angular-material/bottom-sheet-dialog/bottom-sheet-dialog.component";
 
 export interface ProjectItemData {
   project: Project;
@@ -21,16 +27,26 @@ export interface ProjectItemData {
 @Component({
   selector: 'app-projects-item',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule, MatBottomSheetModule],
   templateUrl: './projects-item.component.html',
   styleUrls: ['./projects-item.component.scss']
 })
 export class ProjectsItemComponent {
 
+  isDesktop = false;
+
   constructor(private matDialogRef: MatDialogRef<ProjectsItemComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ProjectItemData,
               private matDialog: MatDialog,
+              private breakpointObserver: BreakpointObserver,
+              private matBottomSheet: MatBottomSheet,
               private translateService: TranslateService) {
+    this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(takeUntilDestroyed())
+      .subscribe(result => {
+        this.isDesktop = result.matches;
+      });
   }
 
   setProjectImage() {
@@ -75,6 +91,26 @@ export class ProjectsItemComponent {
       .subscribe((result: boolean) => {
         if (result) {
           this.matDialogRef.close({action: 'delete', project: this.data.project});
+        }
+      })
+  }
+
+  onOptionsClick() {
+    const bottomSheetRef = this.matBottomSheet.open(BottomSheetDialogComponent, {
+      data: {
+        btnLabels: ['Edit project', 'Delete project'],
+        btnIcons: ['edit', 'delete'],
+        btnActions: ['edit', 'delete'],
+      }
+    });
+
+    bottomSheetRef.afterDismissed()
+      .pipe(take(1))
+      .subscribe((result: any) => {
+        if (result?.action === 'edit') {
+          this.onEdit();
+        } else if (result?.action === 'delete') {
+          this.onDelete();
         }
       })
   }

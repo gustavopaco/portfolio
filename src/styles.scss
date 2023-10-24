@@ -5,6 +5,22 @@
 @import "src/app/shared/external/angular-material/toast-snackbar/mat-snackbar";
 @include mat.core();
 
+$custom-primary: mat.define-palette(mat.$deep-purple-palette, 500, 300, 700);
+$custom-accent: mat.define-palette(mat.$amber-palette, 500, 300, 700);
+$custom-warn: mat.define-palette(mat.$red-palette, 500, 300, 700);
+
+.mat-primary-text {
+  color: mat.get-color-from-palette($custom-primary, 500);
+}
+
+.mat-accent-text {
+  color: mat.get-color-from-palette($custom-accent, 500);
+}
+
+.mat-warn-text {
+  color: mat.get-color-from-palette($custom-warn, 500);
+}
+
 /*Configurações de input Angular Material*/
 //.mdc-text-field--filled:not(.mdc-text-field--disabled) {
 //  background-color: white !important;

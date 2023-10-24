@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CrudService} from "./default/crud.service";
 import {User} from "../interface/user";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {API_USER} from "../constants/api";
 import {Skill} from "../interface/skill";
 import {Project} from "../interface/project";
@@ -16,47 +16,60 @@ export class UserService extends CrudService<User> {
     super(httpClient, API_USER)
   }
 
-  getUserRecords() {
-    return this.httpClient.get<User>(`${API_USER}/owner`);
+  getUserDataRecord() {
+    return this.httpClient.get<User>(`${API_USER}`);
   }
 
-  getSkillRecords() {
-    return this.httpClient.get<Skill[]>(`${API_USER}/owner/skill`);
+  getUserDataBioSocialRecord(params: HttpParams) {
+    return this.httpClient.get<User>(`${API_USER}/bio-social`, {params});
+  }
+
+  getSkillRecords(params: HttpParams) {
+    return this.httpClient.get<Skill[]>(`${API_USER}/skill`, {params});
   }
 
   getProjectStatus() {
-    return this.httpClient.get<string[]>(`${API_USER}/owner/project/status`);
+    return this.httpClient.get<string[]>(`${API_USER}/project/status`);
   }
 
-  getProjectRecords() {
-    return this.httpClient.get<Project[]>(`${API_USER}/owner/project`);
+  getProjectRecords(params: HttpParams) {
+    return this.httpClient.get<Project[]>(`${API_USER}/project`, {params});
   }
 
   getProjectRecord(id: number) {
-    return this.httpClient.get<Project>(`${API_USER}/owner/project/${id}`);
+    return this.httpClient.get<Project>(`${API_USER}/project/${id}`);
   }
 
   getBioRecord() {
-    return this.httpClient.get<Bio>(`${API_USER}/owner/bio`);
+    return this.httpClient.get<Bio>(`${API_USER}/bio`);
   }
 
   saveSkillRecord(form: any) {
-    if (form.id) return this.httpClient.put(`${API_USER}/owner/skill/${form.id}`, form);
-    return this.httpClient.post(`${API_USER}/owner/skill`, form);
+    if (form.id) return this.httpClient.put(`${API_USER}/skill/${form.id}`, form);
+    return this.httpClient.post(`${API_USER}/skill`, form);
   }
 
   saveProjectRecord(form: any) {
-    if (form.id) return this.httpClient.put(`${API_USER}/owner/project/${form.id}`, form);
-    return this.httpClient.post(`${API_USER}/owner/project`, form);
+    if (form.id) return this.httpClient.put(`${API_USER}/project/${form.id}`, form);
+    return this.httpClient.post(`${API_USER}/project`, form);
   }
 
-  saveBioRecord(bio: Bio) {
-    if (bio?.id) return this.httpClient.put(`${API_USER}/owner/bio/${bio.id}`, bio);
-    return this.httpClient.post(`${API_USER}/owner/bio`, bio);
+  saveBioRecord(bio: any) {
+    if (bio?.id) return this.httpClient.put(`${API_USER}/bio/${bio.id}`, bio);
+    return this.httpClient.post(`${API_USER}/bio`, bio);
+  }
+
+  saveSocialRecord(form: any) {
+    if (form?.id) return this.httpClient.put(`${API_USER}/social/${form.id}`, form);
+    return this.httpClient.post(`${API_USER}/social`, form);
+  }
+
+  saveBioSocialRecord(form: any) {
+    return this.httpClient.post(`${API_USER}/bio-social`, form);
   }
 
   deleteSkillRecord(id: number) {
-    return this.httpClient.delete(`${API_USER}/owner/skill/${id}`);
+    return this.httpClient.delete(`${API_USER}/skill/${id}`);
   }
 
   deleteProjectRecord(id: number) {

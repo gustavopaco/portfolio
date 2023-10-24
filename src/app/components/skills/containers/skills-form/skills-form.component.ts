@@ -31,6 +31,7 @@ import {
 import {Skill} from "../../../../shared/interface/skill";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 export interface SkillData {
   newSkill?: boolean;
@@ -41,7 +42,7 @@ export interface SkillData {
 @Component({
   selector: 'app-skills-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent, MatProgressSpinnerModule, MatToolbarModule],
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss']
 })

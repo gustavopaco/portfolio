@@ -4,11 +4,11 @@
   </header>
   <main class="flex-grow-1" [ngClass]="layoutClassStyle()">
     <mat-sidenav-container [ngClass]="layoutClassStyle()">
-      <mat-sidenav #sidenav mode="side" [opened]="isShowSideNav">
+      <mat-sidenav #sidenav mode="over" [opened]="isShowSideNav">
         <!-- Conteúdo do Menu -->
         <mat-nav-list>
-          <a mat-list-item>Portfolio</a>
-          <a mat-list-item>Logout</a>
+          <a mat-list-item  [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab(true)">Profile</a>
+          <a mat-list-item (click)="onLogout(true)">Logout</a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>

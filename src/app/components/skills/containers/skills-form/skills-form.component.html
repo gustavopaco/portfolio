@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data.newSkill ? 'New Skill' : 'Edit Skill' }}</h2>
+<mat-toolbar color="primary" class="justify-content-center">{{ data.newSkill ? 'New Skill' : 'Edit Skill' }}</mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content  class="d-flex flex-column">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3">

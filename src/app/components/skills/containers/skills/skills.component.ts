@@ -18,12 +18,24 @@ import {TranslateService} from "@ngx-translate/core";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {ACTION_CLOSE, FAILED_TO_DELETE_SKILL_IMAGE, SKILL_DELETED_SUCCESSFULLY} from "../../../../shared/constants/constants";
+import {
+  ACTION_CLOSE,
+  FAILED_TO_DELETE_SKILL_IMAGE,
+  SKILL_DELETED_SUCCESSFULLY
+} from "../../../../shared/constants/constants";
+import {AuthService} from "../../../../shared/services/default/auth.service";
+import {HttpParams} from "@angular/common/http";
+import {BreakpointObserver} from "@angular/cdk/layout";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import {
+  BottomSheetDialogComponent
+} from "../../../../shared/external/angular-material/bottom-sheet-dialog/bottom-sheet-dialog.component";
 
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, SkillsListComponent, MatDialogModule],
+  imports: [CommonModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, SkillsListComponent, MatDialogModule, MatBottomSheetModule],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss']
 })
@@ -37,12 +49,24 @@ export class SkillsComponent implements OnInit {
 
   skills: Skill[] = [];
 
+  isDesktop = false;
+
   constructor(private matDialog: MatDialog,
+              private authService: AuthService,
+              private breakpointObserver: BreakpointObserver,
+              private matBottomSheet: MatBottomSheet,
               private userService: UserService,
               private matSnackBarService: MatSnackbarService,
               private translateService: TranslateService,
               private credentialsService: CredentialsService,
               private utilAwsS3Service: UtilAwsS3Service) {
+    this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(takeUntilDestroyed())
+      .subscribe(result => {
+        this.isDesktop = result.matches;
+        this.resetSkillSelected();
+      });
   }
 
   ngOnInit(): void {
@@ -51,7 +75,7 @@ export class SkillsComponent implements OnInit {
 
   private getSkillRecords() {
     this.onRequestLoadingSkills();
-    this.userService.getSkillRecords()
+    this.userService.getSkillRecords(this.paramsToRequest())
       .pipe(take(1), finalize(() => this.isSkillsLoading = false))
       .subscribe({
         next: (response) => this.skills = response,
@@ -60,6 +84,10 @@ export class SkillsComponent implements OnInit {
           this.isFailedToLoadSkills = true;
         }
       })
+  }
+
+  private paramsToRequest(): HttpParams {
+    return new HttpParams().set('nickname', this.authService.getNickname());
   }
 
   onAddSkill() {
@@ -72,6 +100,29 @@ export class SkillsComponent implements OnInit {
       return;
     }
     this.setSkillSelected(skillId);
+    if (!this.isDesktop) {
+      this.openBottomSheet();
+    }
+  }
+
+  private openBottomSheet() {
+    const bottomSheetRef = this.matBottomSheet.open(BottomSheetDialogComponent, {
+      data: {
+        btnLabels: ['Edit skill', 'Delete skill'],
+        btnIcons: ['edit', 'delete'],
+        btnActions: ['edit', 'delete'],
+      }
+    });
+
+    bottomSheetRef.afterDismissed()
+      .pipe(take(1))
+      .subscribe((result: any) => {
+        if (result?.action === 'edit') {
+          this.onEditSkill();
+        } else if (result?.action === 'delete') {
+          this.onDeleteSkill(this.skillIdSelected);
+        }
+      })
   }
 
   onEditSkill() {
@@ -107,6 +158,7 @@ export class SkillsComponent implements OnInit {
         if (result) {
           this.loadCredentials(skillId);
         }
+        this.resetSkillSelected();
       });
   }
 
@@ -161,9 +213,9 @@ export class SkillsComponent implements OnInit {
     dialogRef.afterClosed()
       .pipe(take(1))
       .subscribe((result: boolean) => {
+        this.resetSkillSelected();
         if (result) {
           this.getSkillRecords();
-          this.resetSkillSelected();
         }
       });
   }

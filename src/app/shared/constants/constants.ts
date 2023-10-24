@@ -12,6 +12,7 @@ export const SKILL_SAVED_SUCCESSFULLY = "Skill saved successfully.";
 export const SKILL_DELETED_SUCCESSFULLY = "Skill deleted successfully.";
 export const PROJECT_SAVED_SUCCESSFULLY = "Project saved successfully.";
 export const PROJECT_DELETED_SUCCESSFULLY = "Project deleted successfully.";
+export const BIO_UPDATED_SUCCESSFULLY = "Bio updated successfully.";
 export const FAILED_TO_DELETE_PROJECT_IMAGE = "Failed to delete project's image. Please try again later.";
 export const DELETING_PROJECT = "Deleting project";
 export const PLEASE_WAIT_PROJECT_DELETING = "Please wait while the project is being deleted";

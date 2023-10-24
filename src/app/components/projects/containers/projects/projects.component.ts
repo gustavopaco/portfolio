@@ -23,6 +23,8 @@ import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {
   LoadingDialogComponent
 } from "../../../../shared/external/angular-material/loading-dialog/loading-dialog.component";
+import {HttpParams} from "@angular/common/http";
+import {AuthService} from "../../../../shared/services/default/auth.service";
 
 @Component({
   selector: 'app-projects',
@@ -39,6 +41,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
 
   constructor(private userService: UserService,
+              private authService: AuthService,
               private matSnackBarService: MatSnackbarService,
               private matDialog: MatDialog,
               private utilAwsS3Service: UtilAwsS3Service,
@@ -51,7 +54,7 @@ export class ProjectsComponent implements OnInit {
 
   private getProjectRecords() {
     this.onRequestLoadingProjects();
-    this.userService.getProjectRecords()
+    this.userService.getProjectRecords(this.paramsToRequest())
       .pipe(take(1), finalize(() => this.isLoadingProjects = false))
       .subscribe({
         next: (projects: Project[]) => this.projects = projects,
@@ -60,6 +63,10 @@ export class ProjectsComponent implements OnInit {
           this.isFailedToLoadProjects = true;
         }
       })
+  }
+
+  private paramsToRequest(): HttpParams {
+    return new HttpParams().set('nickname', this.authService.getNickname());
   }
 
   private getProjectRecord(id: number) {

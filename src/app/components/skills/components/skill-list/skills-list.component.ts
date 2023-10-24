@@ -17,6 +17,7 @@ import {StarRatingComponent} from "../../../../shared/external/angular-material/
 export class SkillsListComponent {
   skillIdSelected = -1;
   @Input() skills?: Skill[];
+  @Input('desktopView') isDesktop = false;
   @Input() editable = false;
   @Input() set isSkillSelected(value: boolean) {if (!value) this.skillIdSelected = -1;};
   @Output() selected = new EventEmitter();

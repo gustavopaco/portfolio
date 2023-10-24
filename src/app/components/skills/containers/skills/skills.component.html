@@ -5,12 +5,12 @@
       <div class="col-lg-6">
         <button mat-raised-button color="primary" class="w-100 mb-2" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
       </div><!--col-->
-      <div class="col-lg-6" *ngIf="isSkillSelected">
+      <div class="col-lg-6" *ngIf="isSkillSelected && isDesktop">
         <button mat-raised-button color="primary" class="w-100 mb-2"  (click)="onEditSkill()"><mat-icon>edit</mat-icon>Edit Skill</button>
       </div><!--col-->
     </div><!--row-->
     <ng-container *ngIf="skills.length > 0; else noSkills">
-      <app-skills-list [skills]="skills" [editable]="true" [isSkillSelected]="isSkillSelected" (selected)="onSelectedSkill($event)" (delete)="onDeleteSkill($event)"></app-skills-list>
+      <app-skills-list [skills]="skills" [editable]="true" [isSkillSelected]="isSkillSelected" [desktopView]="isDesktop" (selected)="onSelectedSkill($event)" (delete)="onDeleteSkill($event)"></app-skills-list>
     </ng-container><!--skills-content-container-->
     <ng-template #noSkills>
       <div class="col-12">

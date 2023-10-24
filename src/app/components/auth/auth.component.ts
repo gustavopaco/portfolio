@@ -15,6 +15,7 @@ import {AUTHORIZATION_HEADER} from "../../shared/constants/constants";
 import {MatSnackbarService} from "../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../shared/validator/http-validator";
 import {Router} from "@angular/router";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-auth',
@@ -53,8 +54,9 @@ export class AuthComponent implements OnInit {
       this.authService.authenticate(this.form.value)
         .pipe(take(1))
         .subscribe({
-          next: (response: any) => {
-            this.authService.saveToken(response.headers.get(AUTHORIZATION_HEADER));
+          next: (response: HttpResponse<any>) => {
+            this.authService.saveToken(response.headers.get(AUTHORIZATION_HEADER)!);
+            this.authService.saveNickname(response.body.nickname);
             this.router.navigate(['/profile'])
           },
           error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed to authenticate', 5000, 'center', 'top')

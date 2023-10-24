@@ -36,6 +36,10 @@ export class AuthService {
     localStorage.setItem("t", token);
   }
 
+  saveNickname(nickname: string): void {
+    localStorage.setItem("n", nickname);
+  }
+
   savePermissions(response: any): void {
     const localStorageMappings: Record<string, string> = {
       jwt: "KEY_JWT",
@@ -128,6 +132,10 @@ export class AuthService {
 
   getUserName(): string {
     return <string>localStorage.getItem("KEY_USERNAME");
+  }
+
+  getNickname(): string {
+    return <string>localStorage.getItem("n");
   }
 
   getUserPhoto(): string | undefined {

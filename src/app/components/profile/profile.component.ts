@@ -8,13 +8,13 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {UiService} from "../../shared/services/default/ui.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {BioComponent} from "../bio/containers/bio/bio.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {BioFormComponent} from "../bio/containers/bio-form/bio-form.component";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTabsModule, RouterOutlet, CamelCasePipe, MatButtonModule, MatTooltipModule, BioComponent, MatToolbarModule],
+  imports: [CommonModule, MatCardModule, MatTabsModule, RouterOutlet, CamelCasePipe, MatButtonModule, MatTooltipModule, MatToolbarModule, BioFormComponent],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

@@ -1,0 +1,104 @@
+<mat-toolbar color="primary" class="justify-content-center rounded mb-5">Bio</mat-toolbar>
+<mat-spinner class="mx-auto" *ngIf="isLoadingBio; else loadedBio"></mat-spinner>
+<ng-template #loadedBio>
+  <section class="avatar-wrapper position-relative">
+    <ng-container>
+      <label class="cursor-pointer rounded-circle mb-3">
+        <img [src]="tempAvatarUrl?.value ?? avatarUrl?.value" alt="Avatar" class="img-fluid" *ngIf="existPreviousImage()">
+        <span class="overlay position-absolute top-0 start-0 rounded-circle" *ngIf="!existPreviousImage()"></span>
+        <mat-icon *ngIf="!existPreviousImage()"
+                  class="position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center">
+          person
+        </mat-icon>
+        <input type="file" class="d-none" accept="image/*" (change)="onFileInputChange($event)"/>
+      </label>
+      <mat-hint class="d-block">{{ setAddEditAvatarHint() }}</mat-hint>
+    </ng-container>
+  </section><!--avatar-wrapper-->
+  <section class="about-me-wrapper">
+    <mat-stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" class="mt-5">
+      <form [formGroup]="form">
+        <mat-step [stepControl]="form.controls.bio.controls.presentation" errorMessage="Presentation is required">
+          <ng-template matStepLabel>Write a presentation</ng-template>
+          <ng-template matStepContent formGroupName="bio">
+            <mat-form-field class="w-100 mt-3">
+              <mat-label>Presentation</mat-label>
+              <textarea matInput #inputPresentation class="resize-none" placeholder="Write a brief presentation"
+                        formControlName="presentation"></textarea>
+              <mat-hint align="end">{{inputPresentation.value.length || 0}}/500</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step [stepControl]="form.controls.bio.controls.testimonial" errorMessage="Testimony is required">
+          <ng-template matStepLabel>Write a testimony</ng-template>
+          <ng-template matStepContent  formGroupName="bio">
+            <mat-form-field class="w-100 mt-3">
+              <mat-label>Testimony</mat-label>
+              <textarea matInput #inputTestimony class="resize-none" placeholder="Write a brief testimony"
+                        formControlName="testimonial"></textarea>
+              <mat-hint align="end">{{inputTestimony.value.length || 0}}/1000</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
+              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
+            </div>
+          </ng-template>
+        </mat-step>
+        <mat-step [stepControl]="form.controls.social" [optional]="true">
+          <ng-template matStepLabel>Social media</ng-template>
+          <ng-template matStepContent formGroupName="social">
+            <div class="row mt-3">
+              <mat-form-field class="col-lg-6">
+                <mat-label>Linkedin (Optional)</mat-label>
+                <input matInput formControlName="linkedin">
+                <mat-icon matIconPrefix><i class="fa-brands fa-linkedin"></i></mat-icon>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <mat-label>Git Hub (Optional)</mat-label>
+                <input matInput formControlName="github">
+                <mat-icon matIconPrefix><i class="fa-brands fa-github"></i></mat-icon>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <mat-label>Facebook (Optional)</mat-label>
+                <input matInput formControlName="facebook">
+                <mat-icon matIconPrefix><i class="fa-brands fa-facebook"></i></mat-icon>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <mat-label>Instagram (Optional)</mat-label>
+                <input matInput formControlName="instagram">
+                <mat-icon matIconPrefix><i class="fa-brands fa-instagram"></i></mat-icon>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <mat-label>X-Twitter (Optional)</mat-label>
+                <input matInput formControlName="twitter">
+                <mat-icon matIconPrefix><i class="fa-brands fa-x-twitter"></i></mat-icon>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <mat-label>Youtube (Optional)</mat-label>
+                <input matInput formControlName="youtube">
+                <mat-icon matIconPrefix><i class="fa-brands fa-youtube"></i></mat-icon>
+              </mat-form-field>
+            </div><!--row-->
+            <div>
+              <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
+              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
+            </div>
+          </ng-template>
+        </mat-step>
+      </form>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <h3 class="mt-3">{{ setMatStepperDoneMessage() }}</h3>
+        <div class="mt-2">
+          <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
+          <button mat-stroked-button type="button" color="primary" *ngIf="form.valid" (click)="onSubmit()">
+            {{ isLoadingRequestMatStepperForm ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </section><!--about-me-wrapper-->
+</ng-template>

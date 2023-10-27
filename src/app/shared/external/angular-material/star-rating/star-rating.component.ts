@@ -18,6 +18,7 @@ export class StarRatingComponent implements OnInit {
   @Input() starColor: ThemePalette = 'accent';
   @Input() rating = 0;
   @Input() editable = false;
+  @Input('desktopView') isDesktop = false;
   @Output() ratingChange = new EventEmitter<number>();
 
   starArray: number[] = [];

@@ -16,8 +16,8 @@ export class UserService extends CrudService<User> {
     super(httpClient, API_USER)
   }
 
-  getUserDataRecord() {
-    return this.httpClient.get<User>(`${API_USER}`);
+  getUserDataRecord(params: HttpParams) {
+    return this.httpClient.get<User>(`${API_USER}`, {params});
   }
 
   getUserDataBioSocialRecord(params: HttpParams) {

@@ -1,1 +1,16 @@
-<p>portfolio works!</p>
+<section class="container presentation d-lg-flex justify-content-lg-center align-items-lg-center">
+  <div class="row">
+    <div class="col-lg-7 order-1 order-lg-0">
+      <h1 class="text-center">{{ user?.bio?.presentation }}</h1>
+    </div><!--col-->
+    <div class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex justify-content-center">
+      <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle">
+    </div><!--col-->
+  </div><!--row-->
+</section><!--presentation-->
+<section class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
+  <h1 class="text-center text-white mb-5 w-100 z-1">Sobre mim</h1>
+  <h2 class="text-center text-white mx-auto z-1">{{ user?.bio?.testimonial }}</h2>
+  <div class="overlay"></div><!--overlay-->
+</section><!--about-me-->
+<section style="height: 3000px;"></section>

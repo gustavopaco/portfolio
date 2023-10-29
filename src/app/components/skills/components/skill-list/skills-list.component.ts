@@ -19,6 +19,7 @@ export class SkillsListComponent {
   @Input() skills?: Skill[];
   @Input('desktopView') isDesktop = false;
   @Input() editable = false;
+  @Input() bootstrapColumns = 6;
   @Input() set isSkillSelected(value: boolean) {if (!value) this.skillIdSelected = -1;};
   @Output() selected = new EventEmitter();
   @Output() delete = new EventEmitter();

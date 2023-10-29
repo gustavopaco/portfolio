@@ -15,7 +15,7 @@ import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-
 })
 export class ProjectsListComponent {
 
-  @Input() projects: Project[] = [];
+  @Input() projects?: Project[] = [];
   @Output() projectClicked = new EventEmitter<number>();
 
   setImageCardSrc(project: Project): string {

@@ -10,11 +10,14 @@ import {User} from "../../shared/interface/user";
 import {MatSnackbarService} from "../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {ACTION_CLOSE} from "../../shared/constants/constants";
 import {HttpValidator} from "../../shared/validator/http-validator";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {UiService} from "../../shared/services/default/ui.service";
+import {SkillsListComponent} from "../skills/components/skill-list/skills-list.component";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
@@ -22,23 +25,30 @@ export class PortfolioComponent implements OnInit {
 
   destroyRef = inject(DestroyRef);
   user?: User;
+  socialsClassIcons = [
+    ' fa-github ', ' fa-linkedin ', ' fa-facebook ', ' fa-instagram ', ' fa-x-twitter ', ' fa-youtube '
+  ]
+
+  mouseOverSocialIconIndex: number | null = null;
+  countSocials = 0;
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
-              private matSnackBarService: MatSnackbarService) {
+              private matSnackBarService: MatSnackbarService,
+              private uiService: UiService) {
   }
 
   ngOnInit(): void {
     this.getPathParams();
   }
 
- private getPathParams() {
-   this.activatedRoute.params
-     .pipe(takeUntilDestroyed(this.destroyRef))
-     .subscribe(params => {
-       params['nickname'] ? this.loadUserData(params['nickname']) : this.loadUserData(environment.OWNER_NICKNAME);
-     })
- }
+  private getPathParams() {
+    this.activatedRoute.params
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        params['nickname'] ? this.loadUserData(params['nickname']) : this.loadUserData(environment.OWNER_NICKNAME);
+      })
+  }
 
   private paramsToRequest(nickname: string) {
     return new HttpParams().set('nickname', nickname);
@@ -50,6 +60,7 @@ export class PortfolioComponent implements OnInit {
       .subscribe({
         next: (user) => {
           this.user = user;
+          this.getSocialsCount();
         },
         error: (error) => {
           this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
@@ -58,4 +69,50 @@ export class PortfolioComponent implements OnInit {
       });
   }
 
+  private getSocialsCount() {
+    this.countSocials = 0;
+    if (this.user?.social.facebook) this.countSocials++;
+    if (this.user?.social.github) this.countSocials++;
+    if (this.user?.social.instagram) this.countSocials++;
+    if (this.user?.social.linkedin) this.countSocials++;
+    if (this.user?.social.twitter) this.countSocials++;
+    if (this.user?.social.youtube) this.countSocials++;
+  }
+
+  showHideSocials(iconBrand: string) {
+    if ((this.user?.social.facebook && iconBrand.includes('facebook'))
+      || (this.user?.social.github && iconBrand.includes('github'))
+      || (this.user?.social.instagram && iconBrand.includes('instagram'))
+      || (this.user?.social.linkedin && iconBrand.includes('linkedin'))
+      || (this.user?.social.twitter && iconBrand.includes('twitter'))
+      || (this.user?.social.youtube && iconBrand.includes('facebook'))) {
+      return true;
+    }
+    return false;
+  }
+
+  setSocialsClass(iconBrand: string, x: number) {
+    let socialClass = iconBrand;
+    if (this.mouseOverSocialIconIndex === x) {
+      socialClass += ' fa-beat ';
+    }
+    if (this.countSocials > 1) {
+      socialClass += ' me-3 ';
+    }
+    return socialClass;
+  }
+
+  setMatTooltip(iconBrand: string) {
+    if (iconBrand.includes('facebook')) return 'Facebook';
+    if (iconBrand.includes('github')) return 'Github';
+    if (iconBrand.includes('instagram')) return 'Instagram';
+    if (iconBrand.includes('linkedin')) return 'Linkedin';
+    if (iconBrand.includes('twitter')) return 'Twitter';
+    if (iconBrand.includes('youtube')) return 'Youtube';
+    return '';
+  }
+
+  scrollToElement(element: string) {
+    this.uiService.scrollToElement(element)
+  }
 }

@@ -1,16 +1,66 @@
-<section class="container presentation d-lg-flex justify-content-lg-center align-items-lg-center">
-  <div class="row">
-    <div class="col-lg-7 order-1 order-lg-0">
-      <h1 class="text-center">{{ user?.bio?.presentation }}</h1>
-    </div><!--col-->
-    <div class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex justify-content-center">
-      <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle">
-    </div><!--col-->
-  </div><!--row-->
+<section
+  class="container-fluid presentation position-relative d-flex justify-content-center align-items-center">
+  <div class="overlay z-0"></div><!--overlay-->
+  <div class="container position-relative z-1">
+    <div class="row mb-5">
+      <div class="col-lg-7 order-1 order-lg-0">
+        <h1 class="text-white text-center">Gustavo Paco</h1>
+        <h2 class="text-center text-white fw-lighter">Desenvolvedor Fullstack</h2>
+        <p class="text-center text-white fw-lighter">Adoro transformar ideias em software de qualidade para impulsionar
+          o sucesso digital.</p>
+      </div><!--col-->
+      <div
+        class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex flex-column justify-content-center align-items-center">
+        <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-5 mb-lg-3">
+        <div class="row row-social">
+          <div class="col-12 d-flex justify-content-center">
+            <ng-container *ngFor="let iconBrand of socialsClassIcons; index as x">
+              <i class="fa-brands text-white cursor-pointer" [matTooltip]="setMatTooltip(iconBrand)"
+                 *ngIf="showHideSocials(iconBrand)"
+                 (mouseover)="mouseOverSocialIconIndex = x"
+                 (mouseout)="mouseOverSocialIconIndex = null"
+                 [ngClass]="[setSocialsClass(iconBrand, x)]"
+              ></i>
+            </ng-container>
+          </div>
+        </div>
+      </div><!--col-->
+    </div><!--row-->
+  </div><!--container-->
+  <i class="fa-solid fa-circle-arrow-down fa-bounce text-white fa-2xl cursor-pointer"
+     (click)="scrollToElement('about-me')"></i>
 </section><!--presentation-->
-<section class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
-  <h1 class="text-center text-white mb-5 w-100 z-1">Sobre mim</h1>
-  <h2 class="text-center text-white mx-auto z-1">{{ user?.bio?.testimonial }}</h2>
+<section id="about-me"
+         class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
+  <div class="container z-1">
+    <h1 class="text-center text-white mb-5 w-100 z-1">Sobre mim</h1>
+    <h2 class="text-center text-white mx-auto z-1">{{ user?.bio?.testimonial }}</h2>
+  </div><!--container-->
   <div class="overlay"></div><!--overlay-->
 </section><!--about-me-->
+<section class="skills container-fluid mat-primary-bg position-relative">
+  <div class="overlay"></div>
+  <div class="container position-relative z-1">
+    <div class="row">
+      <div class="col-12 mt-5 mb-3">
+        <h1 class="text-center text-white">Habilidades</h1>
+      </div><!--col-->
+      <div class="col-12">
+        <app-skills-list [skills]="user?.skills" [bootstrapColumns]="3"></app-skills-list>
+      </div><!--col-->
+    </div><!--row-->
+  </div><!--container-->
+</section><!--skills-->
+<section class="projects container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mt-5 mb-3">
+        <h1 class="text-center text-muted">Projetos</h1>
+      </div><!--col-->
+      <div class="col-12">
+        <!--todo: Chamar Projetos Componente AQUI!-->
+      </div><!--col-->
+    </div><!--row-->
+  </div><!--container-->
+</section><!--projects-->
 <section style="height: 3000px;"></section>

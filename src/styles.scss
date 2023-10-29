@@ -13,6 +13,10 @@ $custom-warn: mat.define-palette(mat.$red-palette, 500, 300, 700);
   color: mat.get-color-from-palette($custom-primary, 500);
 }
 
+.mat-primary-bg {
+  background-color: mat.get-color-from-palette($custom-primary, 500) !important;
+}
+
 .mat-accent-text {
   color: mat.get-color-from-palette($custom-accent, 500);
 }

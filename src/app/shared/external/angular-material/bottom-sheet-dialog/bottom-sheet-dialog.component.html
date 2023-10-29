@@ -1,8 +1,8 @@
 <mat-nav-list>
   <ng-container *ngFor="let label of data.btnLabels; index as i">
-    <mat-list-item (click)="onClick(i)">
+    <mat-list-item (click)="onClick(i)" *ngIf="notDefinedExternalLink(i)">
       <a matListItemTitle class="text-decoration-none">{{ label }}</a>
-      <mat-icon matListItemIcon>{{ data.btnIcons[i] }}</mat-icon>
+      <mat-icon matListItemIcon>{{ setIcon(i) }}</mat-icon>
     </mat-list-item>
   </ng-container>
 </mat-nav-list>

@@ -95,13 +95,27 @@ export class ProjectsItemComponent {
       })
   }
 
+  private setBottomSheetData() {
+    if (this.data.editable) {
+      return {
+        btnLabels: ['Visit site', 'Edit project', 'Delete project'],
+        btnIcons: ['launch', 'edit', 'delete'],
+        btnActions: ['visit', 'edit', 'delete'],
+        links: [this.data.project.url, '#', '#']
+      }
+    } else {
+      return {
+        btnLabels: ['Visit site'],
+        btnIcons: ['launch'],
+        btnActions: ['visit'],
+        links: [this.data.project.url]
+      }
+    }
+  }
+
   onOptionsClick() {
     const bottomSheetRef = this.matBottomSheet.open(BottomSheetDialogComponent, {
-      data: {
-        btnLabels: ['Edit project', 'Delete project'],
-        btnIcons: ['edit', 'delete'],
-        btnActions: ['edit', 'delete'],
-      }
+      data: this.setBottomSheetData()
     });
 
     bottomSheetRef.afterDismissed()

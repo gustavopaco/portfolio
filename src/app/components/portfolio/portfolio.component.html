@@ -9,8 +9,7 @@
         <p class="text-center text-white fw-lighter">Adoro transformar ideias em software de qualidade para impulsionar
           o sucesso digital.</p>
       </div><!--col-->
-      <div
-        class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex flex-column justify-content-center align-items-center">
+      <div class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex flex-column justify-content-center align-items-center">
         <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-5 mb-lg-3">
         <div class="row row-social">
           <div class="col-12 d-flex justify-content-center">
@@ -58,7 +57,7 @@
         <h1 class="text-center text-muted">Projetos</h1>
       </div><!--col-->
       <div class="col-12">
-        <!--todo: Chamar Projetos Componente AQUI!-->
+        <app-projects-list [projects]="user?.projects" (projectClicked)="onProjectClicked($event)"></app-projects-list>
       </div><!--col-->
     </div><!--row-->
   </div><!--container-->

@@ -13,11 +13,15 @@ import {HttpValidator} from "../../shared/validator/http-validator";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {UiService} from "../../shared/services/default/ui.service";
 import {SkillsListComponent} from "../skills/components/skill-list/skills-list.component";
+import {ProjectsListComponent} from "../projects/components/projects-list/projects-list.component";
+import {Project} from "../../shared/interface/project";
+import {ProjectsItemComponent} from "../projects/components/projects-item/projects-item.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
@@ -35,7 +39,8 @@ export class PortfolioComponent implements OnInit {
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
               private matSnackBarService: MatSnackbarService,
-              private uiService: UiService) {
+              private uiService: UiService,
+              private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -114,5 +119,24 @@ export class PortfolioComponent implements OnInit {
 
   scrollToElement(element: string) {
     this.uiService.scrollToElement(element)
+  }
+
+  onProjectClicked(idProject: number) {
+        this.openProjectItemDialog(this.getProjectRecordById(idProject)!);
+  }
+
+  private getProjectRecordById(idProject: number) {
+    return this.user?.projects?.find(project => project.id === idProject);
+  }
+
+  openProjectItemDialog(project: Project) {
+    this.matDialog.open(ProjectsItemComponent, {
+      width: '100%',
+      maxHeight: '90vh',
+      autoFocus: false,
+      data: {
+        project: project,
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-<div class="row mt-5 mb-2">
+<div class="row">
   <div class="col-lg-4 mb-3" *ngFor="let project of projects; index as i">
     <mat-card class="cursor-pointer" (click)="onProjectClicked(project.id)">
       <img mat-card-image [src]="setImageCardSrc(project)" alt="Project Image">

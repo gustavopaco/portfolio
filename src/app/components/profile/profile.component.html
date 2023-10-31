@@ -5,11 +5,15 @@
         <div class="col-12 mb-3 text-center">
           <app-bio-form></app-bio-form>
         </div><!--col-->
+        <div class="col-12 mb-3">
+          <mat-divider></mat-divider>
+        </div><!--col-->
         <div class="col-12 overflow-hidden">
           <mat-toolbar color="primary" class="justify-content-center rounded mb-3">Accomplishments</mat-toolbar>
-            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-              <a mat-tab-link *ngFor="let link of links" [active]="activeLink == link" (click)="goToRoute(link)" [matTooltip]="'Open ' + link">{{ link | camelCase }}</a>
-            </nav>
+          <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+            <a mat-tab-link *ngFor="let link of links" [active]="activeLink == link" (click)="goToRoute(link)"
+               [matTooltip]="'Open ' + link">{{ link | camelCase }}</a>
+          </nav>
           <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
           <router-outlet></router-outlet>
         </div><!--col-->

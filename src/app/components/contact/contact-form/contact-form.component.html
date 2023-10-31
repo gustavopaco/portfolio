@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="w-100 mb-2">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Name" formControlName="name">
+    <mat-error class="mat-accent-text">{{ matErrorMessage('name', 'Nome') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100 mb-2">
+    <mat-label>E-mail</mat-label>
+    <input matInput placeholder="E-mail" formControlName="email">
+    <mat-error class="mat-accent-text">{{ matErrorMessage('email', 'E-mail') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100 mb-2">
+    <mat-label>Mensagem</mat-label>
+    <input matInput placeholder="Mensagem" formControlName="message">
+    <mat-error class="mat-accent-text">{{ matErrorMessage('message', 'Mensagem') }}</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="accent">Enviar</button>
+</form>

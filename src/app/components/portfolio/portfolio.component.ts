@@ -17,11 +17,13 @@ import {ProjectsListComponent} from "../projects/components/projects-list/projec
 import {Project} from "../../shared/interface/project";
 import {ProjectsItemComponent} from "../projects/components/projects-item/projects-item.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {ContactFormComponent} from "../contact/contact-form/contact-form.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })

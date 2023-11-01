@@ -11,7 +11,7 @@
   </mat-form-field>
   <mat-form-field class="w-100 mb-2">
     <mat-label>Mensagem</mat-label>
-    <input matInput placeholder="Mensagem" formControlName="message">
+    <textarea matInput placeholder="Mensagem" formControlName="message" class="resize-none"></textarea>
     <mat-error class="mat-accent-text">{{ matErrorMessage('message', 'Mensagem') }}</mat-error>
   </mat-form-field>
   <button mat-raised-button color="accent">Enviar</button>

@@ -13,14 +13,7 @@
         <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-5 mb-lg-3">
         <div class="row row-social">
           <div class="col-12 d-flex justify-content-center">
-            <ng-container *ngFor="let iconBrand of socialsClassIcons; index as x">
-              <i class="fa-brands text-white cursor-pointer" [matTooltip]="setMatTooltip(iconBrand)"
-                 *ngIf="showHideSocials(iconBrand)"
-                 (mouseover)="mouseOverSocialIconIndex = x"
-                 (mouseout)="mouseOverSocialIconIndex = null"
-                 [ngClass]="[setSocialsClass(iconBrand, x)]"
-              ></i>
-            </ng-container>
+            <app-social [social]="user?.social" [size]="35"></app-social>
           </div>
         </div>
       </div><!--col-->
@@ -62,7 +55,7 @@
     </div><!--row-->
   </div><!--container-->
 </section><!--projects-->
-<section class="contact mat-primary-bg">
+<section class="contact deep-purple darken-1">
   <div class="container">
     <div class="row">
       <div class="col-12 mt-5 mb-3">

@@ -19,11 +19,13 @@ import {ProjectsItemComponent} from "../projects/components/projects-item/projec
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {ContactFormComponent} from "../contact/contact-form/contact-form.component";
 import {TranslateModule} from "@ngx-translate/core";
+import {SocialService} from "../../shared/services/social.service";
+import {SocialComponent} from "../social/social.component";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
@@ -39,6 +41,7 @@ export class PortfolioComponent implements OnInit {
   countSocials = 0;
 
   constructor(private userService: UserService,
+              private socialService: SocialService,
               private activatedRoute: ActivatedRoute,
               private matSnackBarService: MatSnackbarService,
               private uiService: UiService,
@@ -67,7 +70,7 @@ export class PortfolioComponent implements OnInit {
       .subscribe({
         next: (user) => {
           this.user = user;
-          this.getSocialsCount();
+          this.socialService.emitSocialEvent(user.social);
         },
         error: (error) => {
           this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);

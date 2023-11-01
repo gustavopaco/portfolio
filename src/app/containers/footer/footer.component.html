@@ -1,1 +1,9 @@
-<p>footer works!</p>
+<mat-toolbar color="primary" class="justify-content-end align-items-center">
+  <mat-toolbar-row class="align-items-center" [ngClass]="isLgScreen ? 'justify-content-around': 'justify-content-center'">
+    <div class="d-flex">
+      <app-social [toolTipPosition]="'right'" [size]="25" [hidden]="!isLgScreen"></app-social>
+    </div><!--d-flex-->
+    <p class="text-white fs-6 mb-0 text-center">&copy; Todos os direitos reservados</p>
+    <a mat-button (click)="scrollToElement('nav-toolbar')" [hidden]="!isLgScreen">Início</a>
+  </mat-toolbar-row>
+</mat-toolbar>

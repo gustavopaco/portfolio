@@ -52,8 +52,6 @@ section.presentation {
   .fa-circle-arrow-down {
     position: absolute;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 
@@ -103,6 +101,9 @@ section.skills, section.projects, section.about-me, section.contact {
   }
 }
 
+section.contact {
+  //background-color: #5E35B1;
+}
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);

@@ -1,0 +1,9 @@
+<ng-container *ngFor="let brand of brands; index as i">
+  <a [href]="setHrefSocial(brand)" target="_blank"><i class="fa-brands cursor-pointer text-white"
+                                                      [matTooltip]="setTooltip(brand)" [matTooltipPosition]="toolTipPosition"
+                                                      *ngIf="showHideBrand(brand)"
+                                                      (mouseover)="indexHovered = i"
+                                                      (mouseout)="indexHovered = -1"
+                                                      [ngStyle]="{'fontSize': size + 'px'}"
+                                                      [ngClass]="setSocialClass(brand, i)"></i></a>
+</ng-container>

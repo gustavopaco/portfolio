@@ -3,14 +3,14 @@
 </div><!--ribbon-lg-wrapper-->
 <mat-toolbar color="primary" class="justify-content-center">Details</mat-toolbar>
 <mat-dialog-content class="row">
-  <div class="col-12 mb-2 overflow-hidden d-flex flex-wrap justify-content-center align-items-center">
-    <div class="project-wrapper position-relative">
-      <img [src]="setProjectImage()" alt="">
+  <div class="col-12 mb-2 d-flex flex-wrap justify-content-center align-items-center ">
+    <div class="col-auto position-relative overflow-hidden">
       <div class="ribbon-lg-wrapper" *ngIf="!isDesktop">
         <div class="ribbon-lg"
              [ngClass]="setRibbonColor()">{{ data.project.status | statusProject }}
         </div><!--ribbon-lg-->
       </div><!--ribbon-lg-wrapper-->
+      <img [src]="setProjectImage()" alt="Project Image">
     </div><!--project-wrapper-->
   </div><!--col-->
   <div class="col-12">
@@ -33,5 +33,8 @@
   <button mat-raised-button color="primary" mat-dialog-close>Close</button>
 </mat-dialog-actions>
 <mat-dialog-actions align="center" *ngIf="!isDesktop">
-  <button mat-raised-button color="primary" (click)="onOptionsClick()">Options</button>
+  <button mat-raised-button color="primary" (click)="onOptionsClick()" *ngIf="data.editable">Options</button>
+  <a mat-raised-button color="primary" [href]="data.project.url" target="_blank"
+     *ngIf="!data.editable"
+     [disabled]="data.project.url == null"><mat-icon iconPositionEnd>launch</mat-icon>{{ data.project.url ? 'Visit site': 'URL not available' }}</a>
 </mat-dialog-actions>

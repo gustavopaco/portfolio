@@ -9,3 +9,9 @@ img {
     scale: (1.2);
   }
 }
+
+.ribbon-lg-wrapper {
+  &:hover + img {
+    scale: (1.2);
+  }
+}

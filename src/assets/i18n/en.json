@@ -19,5 +19,6 @@
   "cancelButton": "Cancel",
   "deleteButton": "Delete",
   "editButton": "Edit",
-  "saveButton": "Save"
+  "saveButton": "Save",
+  "contact-form_mailSent": "Your message has been sent successfully."
 }

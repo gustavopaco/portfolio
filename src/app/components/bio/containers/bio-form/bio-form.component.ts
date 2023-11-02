@@ -150,8 +150,8 @@ export class BioFormComponent implements OnInit {
         imageChangedEvent: $event,
         returnImageType: 'blob',
         title: 'Project image',
-        resizeToWidth: 150,
-        resizeToHeight: 150,
+        resizeToWidth: 250,
+        resizeToHeight: 250,
         roundCropper: true
       }
     });

@@ -49,7 +49,10 @@ export class ContactFormComponent {
         finalize(() => this.isFormSubmitted = false)
       )
       .subscribe({
-        next: () => this.form.reset(),
+        next: () => {
+          this.matSnackBarService.success(this.translateService.instant('contact-form_mailSent'), ACTION_CLOSE, 5000);
+          this.form.reset();
+        },
         error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
       })
   }

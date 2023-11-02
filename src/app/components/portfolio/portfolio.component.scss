@@ -82,10 +82,14 @@ section.about-me {
 }
 
 section.skills {
-  background-image: url("../../../assets/backgrounds/background-purple2.jpg"); //todo: Adicionar background Image para skills
+  background-image: url("../../../assets/backgrounds/background-purple3.jpg"); //todo: Adicionar background Image para skills
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 section.skills, section.projects, section.about-me, section.contact {
@@ -103,6 +107,10 @@ section.skills, section.projects, section.about-me, section.contact {
 
 section.contact {
   //background-color: #5E35B1;
+  background-image: url("../../../assets/backgrounds/background-landing-page.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .overlay {

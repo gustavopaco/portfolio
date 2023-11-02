@@ -5,8 +5,13 @@
     </button>
     <a mat-button [routerLink]="['/']"><h1>Paco Projects</h1></a>
     <div class="ms-auto" *ngIf="isLgScreen">
-      <a mat-button [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab()"> Profile </a>
-      <a mat-button (click)="onLogout()"> Logout </a>
+      <ng-container *ngIf="isUserLoggedIn; else userNotLogged">
+        <a mat-button [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab()"> Profile </a>
+        <a mat-button (click)="onLogout()"> Logout </a>
+      </ng-container>
+      <ng-template #userNotLogged>
+        <a mat-button [routerLink]="'/auth'" [routerLinkActive]="'active-link'"> Login </a>
+      </ng-template>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

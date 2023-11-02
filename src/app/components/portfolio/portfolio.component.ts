@@ -137,6 +137,7 @@ export class PortfolioComponent implements OnInit {
   openProjectItemDialog(project: Project) {
     this.matDialog.open(ProjectsItemComponent, {
       width: '100%',
+      maxWidth: '600px',
       maxHeight: '90vh',
       autoFocus: false,
       data: {

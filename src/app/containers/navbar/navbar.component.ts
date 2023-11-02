@@ -14,6 +14,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 })
 export class NavbarComponent {
   @Input('lgScreen') isLgScreen: boolean = false;
+  @Input('userLogged') isUserLoggedIn = false;
   @Output() sideNav = new EventEmitter(false);
   @Output() logout = new EventEmitter(false);
   @Output() matTab = new EventEmitter(false);

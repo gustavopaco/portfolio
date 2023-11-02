@@ -1,4 +1,7 @@
-<h2 mat-dialog-title>{{ data.newProject ? 'New Project' : 'Edit Project' }}</h2>
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="justify-content-center">{{ data.newProject ? 'New Project' : 'Edit Project' }}</mat-toolbar-row>
+</mat-toolbar>
+<h2 mat-dialog-title></h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="row px-3">
     <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center"

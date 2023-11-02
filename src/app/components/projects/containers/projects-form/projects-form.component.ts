@@ -35,6 +35,7 @@ import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {S3_PROJECTS_FOLDER} from "../../../../shared/constants/api";
 import {Project} from "../../../../shared/interface/project";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 export interface ProjectData {
   newProject: boolean;
@@ -45,7 +46,7 @@ export interface ProjectData {
 @Component({
   selector: 'app-projects-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule],
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.scss']
 })

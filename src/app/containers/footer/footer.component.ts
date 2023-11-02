@@ -18,7 +18,6 @@ export class FooterComponent {
   @Input('lgScreen') isLgScreen = false;
 
   constructor(private uiService: UiService) {
-    console.log('LgScreen: ', this.isLgScreen);
   }
 
   scrollToElement(element: string) {

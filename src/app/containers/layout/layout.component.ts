@@ -25,6 +25,7 @@ export class LayoutComponent {
   isShowNavbar = true;
   isShowFooter = true;
   isShowSideNav = false;
+  isUserLoggedIn = false;
 
   isLgScreen: boolean = false;
 
@@ -48,7 +49,8 @@ export class LayoutComponent {
         if (this.isLgScreen) {
           this.hideSideNav();
         }
-      })
+      });
+     this.isUserLoggedIn = authService.isUserLogged();
   }
 
   toggleSideNav(sideNav: boolean) {

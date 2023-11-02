@@ -19,5 +19,6 @@
   "cancelButton": "Cancelar",
   "deleteButton": "Deletar",
   "editButton": "Editar",
-  "saveButton": "Salvar"
+  "saveButton": "Salvar",
+  "contact-form_mailSent": "E-mail enviado com sucesso!"
 }

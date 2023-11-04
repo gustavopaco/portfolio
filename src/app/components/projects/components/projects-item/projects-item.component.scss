@@ -8,6 +8,9 @@ img {
   &:hover {
     scale: (1.2);
   }
+  @media screen and (max-width: 600px) {
+    max-width: 300px;
+  }
 }
 
 .ribbon-lg-wrapper {

@@ -24,6 +24,14 @@ html,body {
   cursor:pointer
 }
 
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
 .resize-none {
   resize: none !important;
 }

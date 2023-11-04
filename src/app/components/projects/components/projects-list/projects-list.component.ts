@@ -1,22 +1,102 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {Project} from "../../../../shared/interface/project";
 import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-class";
+import {register} from "swiper/element/bundle";
+import {SwiperDirective} from "../../../../shared/diretivas/swiper.directive";
+import {SwiperOptions} from "swiper/types";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {SwiperContainer} from "swiper/swiper-element";
+
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, SwiperDirective, MatIconModule, MatButtonModule],
   templateUrl: './projects-list.component.html',
-  styleUrls: ['./projects-list.component.scss']
+  styleUrls: ['./projects-list.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ProjectsListComponent {
+export class ProjectsListComponent implements AfterViewInit {
 
   @Input() projects?: Project[] = [];
   @Output() projectClicked = new EventEmitter<number>();
+  @ViewChild('swiperRef') swiperRef?: ElementRef<SwiperContainer>;
+
+  activeIndex: number = 0;
+  numberOfSlides: number = 0;
+
+  isSwiperTouched: boolean = false;
+
+  swiperConfig: SwiperOptions = {
+    init: true,
+    centeredSlides: true,
+    pagination: {
+      clickable: true,
+      dynamicBullets: true,
+    },
+    slidesPerView: 3,
+    effect: 'coverflow',
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 2,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 80,
+          modifier: 1,
+          depth: 200,
+          slideShadows: true,
+        },
+      },
+      1024: {
+        slidesPerView: 3,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 80,
+          modifier: 1,
+          depth: 200,
+          slideShadows: true,
+        },
+      }
+    },
+    on: {
+      afterInit: (swiper) => {
+
+      },
+      paginationRender: (swiper, paginationContainer) => {
+        this.numberOfSlides = swiper.slides.length;
+      },
+      slideChange: (swiper) => {
+        this.activeIndex = swiper.activeIndex;
+      },
+      touchStart: (swiper) => {
+        this.isSwiperTouched = true;
+      },
+      touchEnd: (swiper) => {
+        this.isSwiperTouched = false;
+      },
+    }
+  }
+
+  ngAfterViewInit(): void {
+    register();
+  }
 
   setImageCardSrc(project: Project): string {
     if (project?.pictureUrl) {
@@ -41,7 +121,32 @@ export class ProjectsListComponent {
     return getRibbonClass(project.status);
   }
 
-  onProjectClicked(id: number) {
-    this.projectClicked.emit(id);
+  onProjectClicked(id: number, index: number) {
+    if (index === this.activeIndex) {
+      this.projectClicked.emit(id);
+    }
+  }
+
+  moveToBackSlide() {
+    this.swiperRef?.nativeElement.swiper.slidePrev();
+  }
+
+  moveToNextSlide() {
+    this.swiperRef?.nativeElement.swiper.slideNext();
+  }
+
+  addSlide() {
+    this.projects?.push({
+      id: 10,
+      name: 'Teste',
+      description: 'Teste',
+      status: 'IN_PROGRESS',
+      pictureUrl: 'assets/backgrounds/under-construction.jpg',
+      url: 'https://www.google.com',
+      pictureOrientation: 'LANDSCAPE'
+    })
+    setTimeout(() => {
+    this.swiperRef?.nativeElement.swiper.update();
+    })
   }
 }

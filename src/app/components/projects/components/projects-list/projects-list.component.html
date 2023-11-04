@@ -1,17 +1,29 @@
-<div class="row">
-  <div class="col-lg-4 mb-3" *ngFor="let project of projects; index as i">
-    <mat-card class="cursor-pointer" (click)="onProjectClicked(project.id)">
+<swiper-container swiper #swiperRef [config]="swiperConfig" class="mb-3">
+  <swiper-slide *ngFor="let project of projects; index as i">
+    <mat-card [ngClass]="isSwiperTouched ? 'cursor-grabbing' : 'cursor-pointer'" (click)="onProjectClicked(project.id, i)">
       <img mat-card-image [src]="setImageCardSrc(project)" alt="Project Image">
-      <mat-card-content class="d-flex justify-content-center align-items-center">
+      <div class="overlay"></div>
+      <mat-card-content class="d-flex justify-content-center align-items-center z-3">
         <div class="ribbon-lg-wrapper">
           <div class="ribbon-lg" [ngClass]="setRibbonColor(project)">{{ project.status }}</div>
         </div>
-        <h2 class="text-white">{{ project.name }}</h2>
-        <div class="overlay"></div>
+        <h2 class="text-white" *ngIf="activeIndex == i">{{ project.name }}</h2>
       </mat-card-content>
       <mat-card-footer>
         <mat-progress-bar mode="determinate" value="100" color="warn"></mat-progress-bar>
       </mat-card-footer>
     </mat-card>
-  </div><!--col-->
+  </swiper-slide>
+</swiper-container>
+<div class="row justify-content-center mb-3">
+  <button mat-icon-button color="accent" class="cursor-pointer me-3"
+          [disabled]="activeIndex == 0"
+          (click)="moveToBackSlide()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <button mat-icon-button color="accent" class="cursor-pointer"
+          [disabled]="activeIndex == numberOfSlides - 1"
+          (click)="moveToNextSlide()">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
 </div><!--row-->

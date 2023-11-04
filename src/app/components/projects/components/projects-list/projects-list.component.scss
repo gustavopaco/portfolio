@@ -1,6 +1,7 @@
 @import 'src/app/shared/scss/default/ribbon.scss';
 
 mat-card {
+  width: 100%;
   mat-card-content {
     width: 100%;
     height: 300px;
@@ -52,4 +53,17 @@ img {
   transition: all 0.3s ease-in-out;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+}
+
+swiper-container {
+  width: 100%;
+  swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+button[mat-icon-button] {
+  background-color: rgba(0,0,0,0.5);
 }

@@ -5,7 +5,7 @@
     <ng-container>
       <label class="cursor-pointer rounded-circle mb-3">
         <img [src]="tempAvatarUrl?.value ?? avatarUrl?.value" alt="Avatar" class="img-fluid" *ngIf="existPreviousImage()">
-        <span class="overlay position-absolute top-0 start-0 rounded-circle" *ngIf="!existPreviousImage()"></span>
+        <span class="overlay position-absolute top-50 start-50 translate-middle rounded-circle" *ngIf="!existPreviousImage()"></span>
         <mat-icon *ngIf="!existPreviousImage()"
                   class="position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center">
           person
@@ -18,31 +18,38 @@
   <section class="about-me-wrapper">
     <mat-stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" class="mt-5">
       <form [formGroup]="form">
-        <mat-step [stepControl]="form.controls.bio.controls.presentation" errorMessage="Presentation is required">
-          <ng-template matStepLabel>Write a presentation</ng-template>
+        <mat-step [stepControl]="form.controls.bio" errorMessage="Bio is required">
+          <ng-template matStepLabel>Bio information</ng-template>
           <ng-template matStepContent formGroupName="bio">
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field class="w-100 mt-3">
+                  <mat-label>Full name</mat-label>
+                  <input matInput #inputFullName formControlName="fullName" placeholder="Write your full name">
+                  <mat-hint align="end">{{inputFullName.value.length || 0}}/50</mat-hint>
+                </mat-form-field>
+              </div><!--col-->
+              <div class="col-lg-6">
+                <mat-form-field class="w-100 mt-3">
+                  <mat-label>Job title</mat-label>
+                  <input matInput #inputJobTitle formControlName="jobTitle" placeholder="Write your job title">
+                  <mat-hint align="end">{{inputJobTitle.value.length || 0}}/50</mat-hint>
+                </mat-form-field>
+              </div><!--col-->
+            </div><!--row-->
             <mat-form-field class="w-100 mt-3">
               <mat-label>Presentation</mat-label>
               <textarea matInput #inputPresentation class="resize-none" placeholder="Write a brief presentation"
                         formControlName="presentation"></textarea>
-              <mat-hint align="end">{{inputPresentation.value.length || 0}}/500</mat-hint>
+              <mat-hint align="end">{{inputPresentation.value.length || 0}}/250</mat-hint>
             </mat-form-field>
-            <div>
-              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
-            </div>
-          </ng-template>
-        </mat-step>
-        <mat-step [stepControl]="form.controls.bio.controls.testimonial" errorMessage="Testimony is required">
-          <ng-template matStepLabel>Write a testimony</ng-template>
-          <ng-template matStepContent  formGroupName="bio">
             <mat-form-field class="w-100 mt-3">
               <mat-label>Testimony</mat-label>
-              <textarea matInput #inputTestimony class="resize-none" placeholder="Write a brief testimony"
+              <textarea matInput #inputTestimony class="resize-none testimony" placeholder="Write a brief testimony"
                         formControlName="testimonial"></textarea>
               <mat-hint align="end">{{inputTestimony.value.length || 0}}/1000</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
               <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
             </div>
           </ng-template>

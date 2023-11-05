@@ -54,7 +54,9 @@ export class BioFormComponent implements OnInit {
       id: new FormControl<number | null>(null),
       avatarUrl: new FormControl<string | null>(null),
       tempAvatarUrl: new FormControl<string | null>(null),
-      presentation: ['', [Validators.required, Validators.maxLength(500)]],
+      fullName: ['', [Validators.required, Validators.maxLength(50)]],
+      jobTitle: ['', [Validators.required, Validators.maxLength(50)]],
+      presentation: ['', [Validators.required, Validators.maxLength(250)]],
       testimonial: ['', [Validators.required, Validators.maxLength(1000)]]
     }),
     social: this.fb.group({
@@ -119,6 +121,8 @@ export class BioFormComponent implements OnInit {
     this.bioGroup?.patchValue({
       id: user.bio?.id,
       avatarUrl: user.bio?.avatarUrl,
+      fullName: user.bio?.fullName,
+      jobTitle: user.bio?.jobTitle,
       presentation: user.bio?.presentation,
       testimonial: user.bio?.testimonial,
       tempAvatarUrl: null
@@ -253,7 +257,9 @@ export class BioFormComponent implements OnInit {
 
   private existChangesOnBioFormGroup() {
     return (this.bioGroup?.value?.presentation && this.bioGroup?.value?.presentation !== this.bio?.presentation)
-      || (this.bioGroup?.value?.testimonial && this.bioGroup?.value?.testimonial !== this.bio?.testimonial);
+      || (this.bioGroup?.value?.testimonial && this.bioGroup?.value?.testimonial !== this.bio?.testimonial)
+      || (this.bioGroup?.value?.jobTitle && this.bioGroup?.value?.jobTitle !== this.bio?.jobTitle)
+      || (this.bioGroup?.value?.fullName && this.bioGroup?.value?.fullName !== this.bio?.fullName);
   }
 
   private existChangesOnSocialFormGroup() {

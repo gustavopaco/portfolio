@@ -4,10 +4,9 @@
   <div class="container position-relative z-1">
     <div class="row mb-5">
       <div class="col-lg-7 order-1 order-lg-0">
-        <h1 class="text-white text-center">Gustavo Paco</h1>
-        <h2 class="text-center text-white fw-lighter">Desenvolvedor Fullstack</h2>
-        <p class="text-center text-white fw-lighter">Adoro transformar ideias em software de qualidade para impulsionar
-          o sucesso digital.</p>
+        <h1 class="text-white text-center">{{ user?.bio?.fullName }}</h1>
+        <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
+        <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
       </div><!--col-->
       <div class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex flex-column justify-content-center align-items-center">
         <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-5 mb-lg-3">

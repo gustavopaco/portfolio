@@ -50,29 +50,28 @@ export class ProjectsListComponent implements AfterViewInit {
     },
     slidesPerView: 3,
     effect: 'coverflow',
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 80,
+      modifier: 1,
+      depth: 200,
+      slideShadows: true,
+    },
+    autoplay : {
+      delay: 6000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
+    },
     breakpoints: {
       320: {
         slidesPerView: 1,
+
       },
       768: {
         slidesPerView: 2,
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 80,
-          modifier: 1,
-          depth: 200,
-          slideShadows: true,
-        },
       },
       1024: {
         slidesPerView: 3,
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 80,
-          modifier: 1,
-          depth: 200,
-          slideShadows: true,
-        },
       }
     },
     on: {

@@ -1,18 +1,17 @@
-<div class="row">
-  <ng-container *ngFor="let skill of skills; index as j">
-    <div [ngClass]="'col-lg-' + bootstrapColumns" class="mb-3">
-      <mat-card [ngClass]="{'blue': skillIdSelected === j, 'cursor-pointer': editable}" (click)="onSkillSelected(j)">
-        <button mat-icon-button color="warn" class="position-absolute end-0 top-0" *ngIf="editable && skillIdSelected === j && isDesktop" (click)="onDelete(j)">
-          <mat-icon>close</mat-icon>
-        </button>
-        <mat-card-header class="justify-content-center">
-          <mat-card-title class="text-center"><img [src]="skill.pictureUrl" alt="Skill"></mat-card-title>
-          <mat-card-subtitle class="text-center">{{ skill.name }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="my-2 d-flex justify-content-center">
-          <app-star-rating [rating]="skill.rating" [editable]="false" [desktopView]="isDesktop"></app-star-rating>
-        </mat-card-content>
-      </mat-card>
-    </div><!--col-->
-  </ng-container>
-</div><!--row-->
+<swiper-container swiper [config]="swiperConfig" #swiperRef class="w-100 mb-3">
+  <swiper-slide class="d-flex justify-content-center align-items-center" *ngFor="let skill of skills; index as j">
+    <mat-card [ngClass]="{'blue': skillIdSelected === j, 'cursor-pointer': editable}" (click)="onSkillSelected(j)">
+      <button mat-icon-button color="warn" class="position-absolute end-0 top-0"
+              *ngIf="editable && skillIdSelected === j && isDesktop" (click)="onDelete(j)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-card-header class="justify-content-center">
+        <mat-card-title class="text-center"><img [src]="skill.pictureUrl" alt="Skill"></mat-card-title>
+        <mat-card-subtitle class="text-center">{{ skill.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="my-2 d-flex justify-content-center">
+        <app-star-rating [rating]="skill.rating" [editable]="false" [desktopView]="isDesktop"></app-star-rating>
+      </mat-card-content>
+    </mat-card>
+  </swiper-slide>
+</swiper-container>

@@ -1,0 +1,12 @@
+<section class="request-error">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-white text-center text-lg-end">{{ codeError }}</h1>
+                <h2 class="text-white text-center text-lg-end">{{ setCodeName() }}</h2>
+                <p class="text-white text-center text-lg-start">{{ setCodeDescription() }}</p>
+                <div class="text-center text-lg-start"><a mat-raised-button color="accent" (click)="navigateBack()">{{ 'error_component.button_back' | translate }}</a></div>
+            </div>
+        </div>
+    </div>
+</section>

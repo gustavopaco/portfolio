@@ -1,6 +1,6 @@
-<swiper-container swiper #swiperRef [config]="swiperConfig" class="mb-3">
+<swiper-container swiper [config]="swiperConfig" init="false" #swiperRef class="mb-3">
   <swiper-slide *ngFor="let project of projects; index as i">
-    <mat-card [ngClass]="isSwiperTouched ? 'cursor-grabbing' : 'cursor-pointer'" (click)="onProjectClicked(project.id, i)">
+    <mat-card class="cursor-pointer" (click)="onProjectClicked(project.id, i)">
       <img mat-card-image [src]="setImageCardSrc(project)" alt="Project Image">
       <div class="overlay"></div>
       <mat-card-content class="d-flex justify-content-center align-items-center z-3">

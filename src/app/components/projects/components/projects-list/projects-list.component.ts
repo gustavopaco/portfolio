@@ -1,49 +1,37 @@
-import {
-  AfterViewInit,
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {Project} from "../../../../shared/interface/project";
 import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-class";
-import {register} from "swiper/element/bundle";
-import {SwiperDirective} from "../../../../shared/diretivas/swiper.directive";
 import {SwiperOptions} from "swiper/types";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {SwiperContainer} from "swiper/swiper-element";
-
+import {SwiperDirective} from "../../../../shared/diretivas/swiper.directive";
+import {SwiperContainer} from "swiper/element";
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, SwiperDirective, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, MatIconModule, MatButtonModule, SwiperDirective],
   templateUrl: './projects-list.component.html',
   styleUrls: ['./projects-list.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ProjectsListComponent implements AfterViewInit {
+export class ProjectsListComponent {
 
   @Input() projects?: Project[] = [];
   @Output() projectClicked = new EventEmitter<number>();
-  @ViewChild('swiperRef') swiperRef?: ElementRef<SwiperContainer>;
+  @ViewChild('swiperRef') swiperRef!: ElementRef<SwiperContainer>;
 
   activeIndex: number = 0;
   numberOfSlides: number = 0;
 
-  isSwiperTouched: boolean = false;
-
   swiperConfig: SwiperOptions = {
-    init: true,
     centeredSlides: true,
+    observer: true,
+    observeParents: true,
     pagination: {
       clickable: true,
       dynamicBullets: true,
@@ -57,7 +45,7 @@ export class ProjectsListComponent implements AfterViewInit {
       depth: 200,
       slideShadows: true,
     },
-    autoplay : {
+    autoplay: {
       delay: 6000,
       disableOnInteraction: false,
       pauseOnMouseEnter: true
@@ -65,7 +53,6 @@ export class ProjectsListComponent implements AfterViewInit {
     breakpoints: {
       320: {
         slidesPerView: 1,
-
       },
       768: {
         slidesPerView: 2,
@@ -75,26 +62,13 @@ export class ProjectsListComponent implements AfterViewInit {
       }
     },
     on: {
-      afterInit: (swiper) => {
-
-      },
       paginationRender: (swiper, paginationContainer) => {
         this.numberOfSlides = swiper.slides.length;
       },
       slideChange: (swiper) => {
         this.activeIndex = swiper.activeIndex;
-      },
-      touchStart: (swiper) => {
-        this.isSwiperTouched = true;
-      },
-      touchEnd: (swiper) => {
-        this.isSwiperTouched = false;
-      },
+      }
     }
-  }
-
-  ngAfterViewInit(): void {
-    register();
   }
 
   setImageCardSrc(project: Project): string {

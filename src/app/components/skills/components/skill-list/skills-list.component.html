@@ -1,5 +1,5 @@
-<swiper-container swiper [config]="swiperConfig" #swiperRef class="w-100 mb-3">
-  <swiper-slide class="d-flex justify-content-center align-items-center" *ngFor="let skill of skills; index as j">
+<swiper-container swiper init="false" [config]="swiperConfig" #swiperRef class="w-100 mb-3">
+  <swiper-slide class="d-flex justify-content-center align-items-center mb-2" *ngFor="let skill of skills; index as j">
     <mat-card [ngClass]="{'blue': skillIdSelected === j, 'cursor-pointer': editable}" (click)="onSkillSelected(j)">
       <button mat-icon-button color="warn" class="position-absolute end-0 top-0"
               *ngIf="editable && skillIdSelected === j && isDesktop" (click)="onDelete(j)">

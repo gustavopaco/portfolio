@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, TranslateModule],
+  imports: [CommonModule, MatButtonModule, TranslateModule, RouterLink],
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })

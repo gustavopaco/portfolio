@@ -1,4 +1,164 @@
 {
+  "portfolio": {
+    "about_me": "About Me",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "contact_form": {
+    "label_name": "Name",
+    "placeholder_name": "Type your name",
+    "label_email": "E-mail",
+    "placeholder_email": "Type your e-mail",
+    "label_message": "Message",
+    "placeholder_message": "Type your message",
+    "button_send": "Send",
+    "message": {
+      "success": "Message sent successfully.",
+      "error": "Failed to send message."
+    }
+  },
+  "error_component": {
+    "404_code_name": "Page not found",
+    "404_code_description": "Sorry, the page you are looking for could not be found.",
+    "500_code_name": "Internal server error",
+    "500_code_description": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
+    "default_code_name": "Unexpected error",
+    "default_code_description": "Sorry, something went wrong.",
+    "button_back": "Back"
+  },
+  "header": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "footer": {
+    "all_rights_reserved": "All rights reserved",
+    "developed_by": "Developed by Gustavo Paco",
+    "back_to_top": "Top"
+  },
+  "auth": {
+    "title": "Enter your credentials to login",
+    "label_email": "E-mail",
+    "placeholder_email": "Type your e-mail",
+    "label_password": "Password",
+    "placeholder_password": "Type your password",
+    "button_login": "Login",
+    "message": {
+      "success": "Login successful.",
+      "error": "Failed to authenticate."
+    }
+  },
+  "profile": {
+    "toolbar_accomplishments": "Accomplishments",
+    "mat_tab_tooltip_skills": "Open Skills",
+    "title_skills": "Skills",
+    "mat_tab_tooltip_projects": "Open Projects",
+    "title_projects": "Projects",
+    "mat_tab_tooltip_courses": "Open Courses",
+    "title_courses": "Courses"
+  },
+  "bio_form": {
+    "toolbar_bio": "Bio",
+    "hint_edit_avatar": "Edit your avatar by clicking at the image.",
+    "hint_add_avatar": "Add your avatar by clicking at the image.",
+    "step_bio": {
+      "title": "Bio information",
+      "on_error": "Bio is required",
+      "label_name": "Full name",
+      "placeholder_name": "Write your full name",
+      "label_job": "Job title",
+      "placeholder_job": "Write your job title",
+      "label_presentation": "Presentation",
+      "placeholder_presentation": "Write a brief presentation about yourself",
+      "label_testimony": "Testimony",
+      "placeholder_testimony": "Write a testimony about yourself"
+    },
+    "step_social": {
+      "title": "Social media",
+      "optional": "Optional"
+    },
+    "step_done": {
+      "title": "Done",
+      "ready_message": "Your bio is ready to be saved!",
+      "not_ready_message": "You must fill all the required fields before saving your bio."
+    },
+    "step_btn_back": "Back",
+    "step_btn_next": "Next",
+    "step_btn_save": "Save",
+    "step_btn_saving": "Saving...",
+    "cropper_avatar_title": "Crop your avatar",
+    "message": {
+      "success": "Bio saved successfully.",
+      "error": "Failed to save bio."
+    }
+  },
+  "skills": {
+    "add_skill": "Add Skill",
+    "edit_skill": "Edit Skill",
+    "no_skills": "No skills found! Click the button above to create a new skill.",
+    "failed_to_load_skills": "Failed to load skills",
+    "btn_edit_skill": "Edit",
+    "btn_delete_skill": "Delete",
+    "skill_deleted_successfully": "Skill deleted successfully."
+  },
+  "skills_form": {
+    "new_skill": "New Skill",
+    "edit_skill": "Edit Skill",
+    "hint_image_description": "Click on the image to change it",
+    "label_name": "Name",
+    "placeholder_name": "Type the skill name",
+    "label_description": "Description",
+    "placeholder_description": "Type the skill description",
+    "label_rating": "Rating*",
+    "btn_load_image": "Load image",
+    "btn_save": "Save",
+    "btn_cancel": "Cancel",
+    "messages": {
+      "success": "Skill saved successfully.",
+      "failed": "Failed to save skill.",
+      "no_changes": "No changes were made."
+    }
+  },
+  "projects": {
+    "new_project": "New Project",
+    "no_projects": "No projects found! Click the button above to create a new project.",
+    "failed_to_load_projects": "Failed to load projects",
+    "loading_delete_project": "Deleting project...",
+    "loading_delete_project_description": "Please wait while the project is being deleted.",
+    "project_deleted_successfully": "Project deleted successfully."
+  },
+  "projects_form": {
+    "new_project": "New Project",
+    "edit_project": "Edit Project",
+    "image_edit_description": "Click on the image to change it",
+    "mat_tooltip_change_image": "Change image",
+    "filled_image_edit_description": "You can change the image by clicking on the icon",
+    "label_name": "Name",
+    "placeholder_name": "Type the project name",
+    "label_website": "Website(Optional)",
+    "placeholder_website": "Type the project website",
+    "label_description": "Description",
+    "placeholder_description": "Type the project description",
+    "label_status": "Status",
+    "btn_save": "Save",
+    "btn_cancel": "Cancel",
+    "messages": {
+      "success": "Project saved successfully.",
+      "no_changes": "No changes were made."
+    }
+  },
+  "projects_item": {
+    "title": "Details",
+    "btn_options": "Options",
+    "options": {
+      "visit": "Visit site",
+      "edit": "Edit",
+      "delete": "Delete",
+      "close": "Close",
+      "not_available": "Site not available"
+    }
+  },
   "required": "*{{fieldName}} is required.",
   "mask": "*Invalid {{fieldName}}.",
   "minlength": "*Minimum {{fieldName}} characters: {{requiredLength}}.",
@@ -20,5 +180,11 @@
   "deleteButton": "Delete",
   "editButton": "Edit",
   "saveButton": "Save",
-  "contact-form_mailSent": "Your message has been sent successfully."
+  "generic_messages": {
+    "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
+    "failed_to_upload_image": "Failed to upload image. Please try again later.",
+    "action_close": "Close",
+    "action_ok": "Ok",
+    "action_failed": "Failed"
+  }
 }

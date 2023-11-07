@@ -10,11 +10,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {SwiperDirective} from "../../../../shared/diretivas/swiper.directive";
 import {SwiperContainer} from "swiper/element";
+import {StatusProjectPipe} from "../../../../shared/pipe/status-project.pipe";
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, MatIconModule, MatButtonModule, SwiperDirective],
+  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, MatIconModule, MatButtonModule, SwiperDirective, StatusProjectPipe],
   templateUrl: './projects-list.component.html',
   styleUrls: ['./projects-list.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

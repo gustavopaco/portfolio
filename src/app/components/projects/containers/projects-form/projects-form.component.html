@@ -1,7 +1,6 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class="justify-content-center">{{ data.newProject ? 'New Project' : 'Edit Project' }}</mat-toolbar-row>
+  <mat-toolbar-row class="justify-content-center">{{ (data.newProject ? 'projects_form.new_project' : 'projects_form.edit_project') | translate }}</mat-toolbar-row>
 </mat-toolbar>
-<h2 mat-dialog-title></h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="row px-3">
     <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center"
@@ -11,7 +10,7 @@
         <mat-icon class="position-absolute top-50 start-50 translate-middle">camera_alt</mat-icon>
         <input type="file" id="projectImage" class="d-none" (change)="onFileInputChange($event)">
       </label><!--file-upload-img-wrapper-->
-      <mat-hint>Click on the image to change it</mat-hint>
+      <mat-hint>{{ 'projects_form.image_edit_description' | translate }}</mat-hint>
       <mat-error *ngIf="data.isFailedToUploadImage">{{ matErrorImageMessage() }}</mat-error>
     </div><!--col-->
     <div class="col-12 mb-4 d-flex flex-column justify-content-center align-items-center cropped-image-wrapper"
@@ -23,31 +22,32 @@
         <img [src]="tempImage ?? pictureUrl" alt="Project Image">
       </div><!--cropped-image-->
       <mat-hint class="text-center d-flex flex-wrap justify-content-center align-items-center edit-btn-image-wrapper">
-        <label for="fileInput" matRipple [matRippleCentered]="true" matTooltip="Change image" class="me-2">
+        <label for="fileInput" class="me-2"
+               matRipple [matRippleCentered]="true" matTooltip="{{ 'projects_form.mat_tooltip_change_image' | translate }}">
           <mat-icon color="primary" class="d-flex justify-content-center align-items-center">edit</mat-icon>
           <input type="file" id="fileInput" class="d-none" (change)="onFileInputChange($event)">
         </label>
-       You can change the image by clicking on the icon
+       {{ 'projects_form.filled_image_edit_description' | translate }}
       </mat-hint><!--edit-btn-image-wrapper-->
       <mat-error *ngIf="data.isFailedToUploadImage">{{ matErrorImageMessage() }}</mat-error>
     </div><!--col__cropped-image-wrapper-->
     <mat-form-field class="col-lg-6">
-      <mat-label>Name</mat-label>
-      <input matInput placeholder="Project Name" formControlName="name">
+      <mat-label>{{ 'projects_form.label_name' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'projects_form.placeholder_name' | translate }}" formControlName="name">
       <mat-error>{{ matErrorMessage('name', 'Project name') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-lg-6">
-      <mat-label>Website(Optional)</mat-label>
-      <input matInput placeholder="https://www.mywebsite.com" formControlName="url">
+      <mat-label>{{ 'projects_form.label_website' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'projects_form.placeholder_website' | translate }}" formControlName="url">
       <mat-error>{{ matErrorMessage('url', 'Website') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
-      <mat-label>Description</mat-label>
-      <textarea matInput class="resize-none" placeholder="Project Description" formControlName="description"></textarea>
+      <mat-label>{{ 'projects_form.label_description' | translate }}</mat-label>
+      <textarea matInput class="resize-none" placeholder="{{ 'projects_form.placeholder_description' | translate }}" formControlName="description"></textarea>
       <mat-error>{{ matErrorMessage('description', 'Project description') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
-      <mat-label>Status</mat-label>
+      <mat-label>{{ 'projects_form.label_status' | translate }}</mat-label>
       <mat-select formControlName="status">
         <mat-option *ngFor="let status of projectStatusList" [value]="status">{{ status | statusProject }}</mat-option>
       </mat-select>
@@ -58,8 +58,8 @@
     <button mat-raised-button color="primary" type="submit">
       <mat-icon *ngIf="isDisabledForm"><mat-spinner color="accent" diameter="18"></mat-spinner></mat-icon>
       <mat-icon *ngIf="!isDisabledForm">save</mat-icon>
-      Save
+      {{ 'projects_form.btn_save' | translate }}
     </button>
-    <button mat-raised-button color="primary" type="button" mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" type="button" mat-dialog-close>{{ 'projects_form.btn_cancel' | translate }}</button>
   </mat-dialog-actions>
 </form>

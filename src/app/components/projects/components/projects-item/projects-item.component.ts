@@ -11,7 +11,7 @@ import {
   ConfirmationDialogComponent
 } from "../../../../shared/external/angular-material/confirmation-dialog/confirmation-dialog.component";
 import {take} from "rxjs";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
@@ -28,7 +28,7 @@ export interface ProjectItemData {
 @Component({
   selector: 'app-projects-item',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule, MatBottomSheetModule, MatTooltipModule],
+  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule, MatBottomSheetModule, MatTooltipModule, TranslateModule],
   templateUrl: './projects-item.component.html',
   styleUrls: ['./projects-item.component.scss']
 })
@@ -99,14 +99,14 @@ export class ProjectsItemComponent {
   private setBottomSheetData() {
     if (this.data.editable) {
       return {
-        btnLabels: ['Visit site', 'Edit project', 'Delete project'],
+        btnLabels: [this.translateService.instant('projects_item.options.visit'), this.translateService.instant('projects_item.options.edit'), this.translateService.instant('projects_item.options.delete')],
         btnIcons: ['launch', 'edit', 'delete'],
         btnActions: ['visit', 'edit', 'delete'],
         links: [this.data.project.url, '#', '#']
       }
     } else {
       return {
-        btnLabels: ['Visit site'],
+        btnLabels: [this.translateService.instant('projects_item.options.visit')],
         btnIcons: ['launch'],
         btnActions: ['visit'],
         links: [this.data.project.url]

@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ThemePalette} from "@angular/material/core";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-star-rating',
@@ -23,6 +24,8 @@ export class StarRatingComponent implements OnInit {
 
   starArray: number[] = [];
 
+  constructor(private translateService: TranslateService) { }
+
   ngOnInit(): void {
    this.createStarArray();
   }
@@ -38,7 +41,10 @@ export class StarRatingComponent implements OnInit {
   }
 
   tooltip(i: number) {
-    return `${i + 1} stars`;
+    if (this.translateService.currentLang === 'pt') {
+      return (i + 1 > 1) ? `${i + 1} estrelas` : `${i + 1} estrela`;
+    }
+    return (i + 1 > 1) ? `${i + 1} stars` : `${i + 1} star`;
   }
 
   onClick(i: number) {

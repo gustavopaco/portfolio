@@ -14,15 +14,10 @@ import {MatSnackbarService} from "../../../../shared/external/angular-material/t
 import {
   ConfirmationDialogComponent
 } from "../../../../shared/external/angular-material/confirmation-dialog/confirmation-dialog.component";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {
-  ACTION_CLOSE,
-  FAILED_TO_DELETE_SKILL_IMAGE,
-  SKILL_DELETED_SUCCESSFULLY
-} from "../../../../shared/constants/constants";
 import {AuthService} from "../../../../shared/services/default/auth.service";
 import {HttpParams} from "@angular/common/http";
 import {BreakpointObserver} from "@angular/cdk/layout";
@@ -35,7 +30,7 @@ import {
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, SkillsListComponent, MatDialogModule, MatBottomSheetModule],
+  imports: [CommonModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, SkillsListComponent, MatDialogModule, MatBottomSheetModule, TranslateModule],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss']
 })
@@ -80,7 +75,7 @@ export class SkillsComponent implements OnInit {
       .subscribe({
         next: (response) => this.skills = response,
         error: (error) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed', 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_failed'), 5000);
           this.isFailedToLoadSkills = true;
         }
       })
@@ -108,7 +103,7 @@ export class SkillsComponent implements OnInit {
   private openBottomSheet() {
     const bottomSheetRef = this.matBottomSheet.open(BottomSheetDialogComponent, {
       data: {
-        btnLabels: ['Edit skill', 'Delete skill'],
+        btnLabels: [this.translateService.instant('skills.btn_edit_skill'), this.translateService.instant('skills.btn_delete_skill')],
         btnIcons: ['edit', 'delete'],
         btnActions: ['edit', 'delete'],
       }
@@ -167,7 +162,7 @@ export class SkillsComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response: AwsConfiguration) => this.deleteSkillFromAws(skillId, response),
-        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed', 5000)
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_failed'), 5000)
       })
   }
 
@@ -175,7 +170,7 @@ export class SkillsComponent implements OnInit {
     this.utilAwsS3Service.loadS3Client(response.region, response.accessKey, response.secretKey);
     this.utilAwsS3Service.deleteImageFromAwsS3Bucket(response.bucketName, this.filterSkillById(skillId).pictureUrl)
       .then(() => this.deleteSkill(skillId))
-      .catch(() => this.matSnackBarService.error(FAILED_TO_DELETE_SKILL_IMAGE, ACTION_CLOSE, 5000))
+      .catch(() => this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000))
   }
 
   private deleteSkill(skillId: number) {
@@ -183,11 +178,11 @@ export class SkillsComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(SKILL_DELETED_SUCCESSFULLY, ACTION_CLOSE, 5000);
+          this.matSnackBarService.success(this.translateService.instant('skills.skill_deleted_successfully'), this.translateService.instant('generic_messages.action_close'), 5000);
           this.removeSkillFromList(skillId);
           this.resetSkillSelected();
         },
-        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed', 5000)
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_failed'), 5000)
       })
   }
 

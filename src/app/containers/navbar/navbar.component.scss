@@ -6,3 +6,8 @@ mat-toolbar, mat-toolbar-row {
   font-weight: bold;
   //background-color: rgba(0, 0, 0, 0.1);
 }
+
+
+::ng-deep .dark-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}

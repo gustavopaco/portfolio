@@ -3,7 +3,7 @@
   <ng-container *ngIf="!isFailedToLoadProjects; else failedToLoadProjects">
     <div class="row my-4">
       <div class="col-12">
-        <button mat-raised-button color="primary" class="w-100" (click)="onAddProject()"><mat-icon>add</mat-icon>New Project</button>
+        <button mat-raised-button color="primary" class="w-100" (click)="onAddProject()"><mat-icon>add</mat-icon>{{ 'projects.new_project' | translate }}</button>
       </div><!--col-->
     </div><!--row-->
     <ng-container *ngIf="projects.length > 0; else noProjects">
@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-12">
           <div class="alert alert-light text-center" role="alert">
-            <strong>No projects found! Click the button above to create a new project.</strong>
+            <strong>{{ 'projects.no_projects' | translate }}</strong>
           </div><!--alert-->
         </div><!--col-->
       </div><!--row-->
@@ -23,7 +23,7 @@
     <div class="row my-4">
       <div class="col-12">
         <div class="alert alert-danger text-center" role="alert">
-          <strong>Failed to load projects</strong>
+          <strong>{{ 'projects.failed_to_load_projects' | translate }}</strong>
         </div><!--alert-->
       </div><!--col-->
     </div><!--row-->

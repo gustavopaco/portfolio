@@ -9,10 +9,10 @@
           <mat-divider></mat-divider>
         </div><!--col-->
         <div class="col-12 overflow-hidden">
-          <mat-toolbar color="primary" class="justify-content-center rounded mb-3">Accomplishments</mat-toolbar>
+          <mat-toolbar color="primary" class="justify-content-center rounded mb-3">{{ 'profile.toolbar_accomplishments' | translate }}</mat-toolbar>
           <nav mat-tab-nav-bar [tabPanel]="tabPanel">
             <a mat-tab-link *ngFor="let link of links" [active]="activeLink == link" (click)="goToRoute(link)"
-               [matTooltip]="'Open ' + link">{{ link | camelCase }}</a>
+               [matTooltip]="setMatTabTooltip(link)">{{ setMatTabTitle(link) }}</a>
           </nav>
           <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
           <router-outlet></router-outlet>

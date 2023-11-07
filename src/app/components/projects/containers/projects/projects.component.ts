@@ -6,11 +6,6 @@ import {finalize, take} from "rxjs";
 import {Project} from "../../../../shared/interface/project";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
-import {
-  ACTION_CLOSE, DELETING_PROJECT,
-  FAILED_TO_DELETE_STORED_IMAGE, PLEASE_WAIT_PROJECT_DELETING,
-  PROJECT_DELETED_SUCCESSFULLY
-} from "../../../../shared/constants/constants";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
@@ -25,11 +20,12 @@ import {
 } from "../../../../shared/external/angular-material/loading-dialog/loading-dialog.component";
 import {HttpParams} from "@angular/common/http";
 import {AuthService} from "../../../../shared/services/default/auth.service";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, ProjectsListComponent, MatProgressSpinnerModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [CommonModule, ProjectsListComponent, MatProgressSpinnerModule, MatButtonModule, MatIconModule, MatDialogModule, TranslateModule],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
@@ -42,6 +38,7 @@ export class ProjectsComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
+              private translateService: TranslateService,
               private matSnackBarService: MatSnackbarService,
               private matDialog: MatDialog,
               private utilAwsS3Service: UtilAwsS3Service,
@@ -59,7 +56,7 @@ export class ProjectsComponent implements OnInit {
       .subscribe({
         next: (projects: Project[]) => this.projects = projects,
         error: (error: any) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
           this.isFailedToLoadProjects = true;
         }
       })
@@ -74,7 +71,7 @@ export class ProjectsComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (project: Project) => this.openProjectItemDialog(project),
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 
@@ -120,14 +117,18 @@ export class ProjectsComponent implements OnInit {
           this.openProjectFormDialog(false, result.project);
         } else if (result?.action === 'delete') {
           const project = result.project as Project;
-          const loadingDialogRef = this.openLoadingDialog(DELETING_PROJECT, PLEASE_WAIT_PROJECT_DELETING);
-          if (this.existPreviousImage(project)) {
-            this.loadCredentials(loadingDialogRef, project);
-          } else {
-            this.deleteProjectRecord(loadingDialogRef, project.id);
-          }
+          this.deleteProject(project);
         }
       })
+  }
+
+  private deleteProject(project: Project) {
+    const loadingDialogRef = this.openLoadingDialog(this.translateService.instant('projects.loading_delete_project'), this.translateService.instant('projects.loading_delete_project_description'));
+    if (this.existPreviousImage(project)) {
+      this.loadCredentials(loadingDialogRef, project);
+    } else {
+      this.deleteProjectRecord(loadingDialogRef, project.id);
+    }
   }
 
   private loadCredentials(loadingDialogRef: MatDialogRef<LoadingDialogComponent>, project: Project) {
@@ -136,7 +137,7 @@ export class ProjectsComponent implements OnInit {
       .subscribe({
         next: (credentials: AwsConfiguration) => this.deleteProjectImageFromAwsS3Bucket(loadingDialogRef, credentials, project),
         error: (error: any) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
           loadingDialogRef.close();
         }
       })
@@ -147,7 +148,7 @@ export class ProjectsComponent implements OnInit {
     this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, project.pictureUrl)
       .then(() => this.deleteProjectRecord(loadingDialogRef, project.id))
       .catch(() => {
-        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000);
         loadingDialogRef.close();
       })
   }
@@ -157,10 +158,10 @@ export class ProjectsComponent implements OnInit {
       .pipe(take(1), finalize(() => loadingDialogRef.close()))
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(PROJECT_DELETED_SUCCESSFULLY, ACTION_CLOSE);
+          this.matSnackBarService.success(this.translateService.instant('projects.project_deleted_successfully'), this.translateService.instant('generic_messages.action_close'));
           this.getProjectRecords();
         },
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 

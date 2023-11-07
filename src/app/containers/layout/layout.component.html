@@ -1,7 +1,7 @@
 <div class="d-flex flex-column min-vh-100">
   <header class="flex-shrink-0 flex-grow-0" *ngIf="isShowNavbar">
     <app-navbar (sideNav)="toggleSideNav($event)" [lgScreen]="isLgScreen" [userLogged]="isUserLoggedIn"
-                (logout)="onLogout($event)" (matTab)="resetMatTab($event)"></app-navbar>
+                (logout)="onLogout($event)" (matTab)="resetMatTab($event)" (language)="defineLanguage($event)"></app-navbar>
   </header>
   <main class="flex-grow-1" [ngClass]="layoutClassStyle()">
     <mat-sidenav-container [ngClass]="layoutClassStyle()">
@@ -9,11 +9,11 @@
         <!-- Conteúdo do Menu -->
         <mat-nav-list>
           <ng-container *ngIf="isUserLoggedIn; else userNotLogged">
-            <a mat-list-item [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab(true)">Profile</a>
-            <a mat-list-item (click)="onLogout(true)">Logout</a>
+            <a mat-list-item [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab(true)">{{ 'header.profile' | translate }}</a>
+            <a mat-list-item (click)="onLogout(true)">{{ 'header.logout' | translate }}</a>
           </ng-container>
           <ng-template #userNotLogged>
-            <a mat-list-item [routerLink]="'/auth'" [routerLinkActive]="'active-link'">Login</a>
+            <a mat-list-item [routerLink]="'/auth'" [routerLinkActive]="'active-link'">{{ 'header.login' | translate }}</a>
           </ng-template>
         </mat-nav-list>
       </mat-sidenav>

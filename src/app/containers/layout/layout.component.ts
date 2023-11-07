@@ -12,11 +12,12 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "../../shared/services/default/auth.service";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RouterOutlet, FooterComponent, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, NavbarComponent, RouterOutlet, FooterComponent, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, RouterLink, RouterLinkActive, TranslateModule],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
@@ -31,7 +32,9 @@ export class LayoutComponent {
 
   constructor(private uiService: UiService,
               private authService: AuthService,
+              private translateService: TranslateService,
               private breakPointObserver: BreakpointObserver) {
+    this.translateService.use(this.authService.getDefaultLanguage());
     this.uiService.isShowNavBarEventEmitter
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
@@ -77,5 +80,10 @@ export class LayoutComponent {
 
   resetMatTab($event: boolean) {
     this.uiService.resetMatTabEventEmitter($event);
+  }
+
+  defineLanguage($event: string) {
+    this.authService.saveDefaultLanguage($event);
+    this.translateService.use($event);
   }
 }

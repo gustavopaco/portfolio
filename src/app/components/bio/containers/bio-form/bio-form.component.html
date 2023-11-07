@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="justify-content-center rounded mb-5">Bio</mat-toolbar>
+<mat-toolbar color="primary" class="justify-content-center rounded mb-5">{{ 'bio_form.toolbar_bio' | translate }}</mat-toolbar>
 <mat-spinner class="mx-auto" *ngIf="isLoadingBio; else loadedBio"></mat-spinner>
 <ng-template #loadedBio>
   <section class="avatar-wrapper position-relative">
@@ -18,91 +18,91 @@
   <section class="about-me-wrapper">
     <mat-stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" class="mt-5">
       <form [formGroup]="form">
-        <mat-step [stepControl]="form.controls.bio" errorMessage="Bio is required">
-          <ng-template matStepLabel>Bio information</ng-template>
+        <mat-step [stepControl]="form.controls.bio" errorMessage="{{ 'bio_form.step_bio.on_error' | translate }}">
+          <ng-template matStepLabel>{{ 'bio_form.step_bio.title' | translate }}</ng-template>
           <ng-template matStepContent formGroupName="bio">
             <div class="row">
               <div class="col-lg-6">
                 <mat-form-field class="w-100 mt-3">
-                  <mat-label>Full name</mat-label>
-                  <input matInput #inputFullName formControlName="fullName" placeholder="Write your full name">
+                  <mat-label>{{ 'bio_form.step_bio.label_name' | translate }}</mat-label>
+                  <input matInput #inputFullName formControlName="fullName" placeholder="{{ 'bio_form.step_bio.placeholder_name' | translate }}">
                   <mat-hint align="end">{{inputFullName.value.length || 0}}/50</mat-hint>
                 </mat-form-field>
               </div><!--col-->
               <div class="col-lg-6">
                 <mat-form-field class="w-100 mt-3">
-                  <mat-label>Job title</mat-label>
-                  <input matInput #inputJobTitle formControlName="jobTitle" placeholder="Write your job title">
+                  <mat-label>{{ 'bio_form.step_bio.label_job' | translate }}</mat-label>
+                  <input matInput #inputJobTitle formControlName="jobTitle" placeholder="{{ 'bio_form.step_bio.placeholder_job' | translate }}">
                   <mat-hint align="end">{{inputJobTitle.value.length || 0}}/50</mat-hint>
                 </mat-form-field>
               </div><!--col-->
             </div><!--row-->
             <mat-form-field class="w-100 mt-3">
-              <mat-label>Presentation</mat-label>
-              <textarea matInput #inputPresentation class="resize-none" placeholder="Write a brief presentation"
+              <mat-label>{{ 'bio_form.step_bio.label_presentation' | translate }}</mat-label>
+              <textarea matInput #inputPresentation class="resize-none" placeholder="{{ 'bio_form.step_bio.placeholder_presentation' | translate }}"
                         formControlName="presentation"></textarea>
               <mat-hint align="end">{{inputPresentation.value.length || 0}}/250</mat-hint>
             </mat-form-field>
             <mat-form-field class="w-100 mt-3">
-              <mat-label>Testimony</mat-label>
-              <textarea matInput #inputTestimony class="resize-none testimony" placeholder="Write a brief testimony"
+              <mat-label>{{ 'bio_form.step_bio.label_testimony' | translate }}</mat-label>
+              <textarea matInput #inputTestimony class="resize-none testimony" placeholder="{{ 'bio_form.step_bio.placeholder_testimony' | translate }}"
                         formControlName="testimonial"></textarea>
               <mat-hint align="end">{{inputTestimony.value.length || 0}}/1000</mat-hint>
             </mat-form-field>
             <div>
-              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
+              <button mat-stroked-button matStepperNext type="button" color="primary">{{ 'bio_form.step_btn_next' | translate }}</button>
             </div>
           </ng-template>
         </mat-step>
         <mat-step [stepControl]="form.controls.social" [optional]="true">
-          <ng-template matStepLabel>Social media</ng-template>
+          <ng-template matStepLabel>{{ 'bio_form.step_social.title' | translate }}</ng-template>
           <ng-template matStepContent formGroupName="social">
             <div class="row mt-3">
               <mat-form-field class="col-lg-6">
-                <mat-label>Linkedin (Optional)</mat-label>
+                <mat-label>Linkedin ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="linkedin">
                 <mat-icon matIconPrefix><i class="fa-brands fa-linkedin"></i></mat-icon>
               </mat-form-field>
               <mat-form-field class="col-lg-6">
-                <mat-label>Git Hub (Optional)</mat-label>
+                <mat-label>Git Hub ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="github">
                 <mat-icon matIconPrefix><i class="fa-brands fa-github"></i></mat-icon>
               </mat-form-field>
               <mat-form-field class="col-lg-6">
-                <mat-label>Facebook (Optional)</mat-label>
+                <mat-label>Facebook ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="facebook">
                 <mat-icon matIconPrefix><i class="fa-brands fa-facebook"></i></mat-icon>
               </mat-form-field>
               <mat-form-field class="col-lg-6">
-                <mat-label>Instagram (Optional)</mat-label>
+                <mat-label>Instagram ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="instagram">
                 <mat-icon matIconPrefix><i class="fa-brands fa-instagram"></i></mat-icon>
               </mat-form-field>
               <mat-form-field class="col-lg-6">
-                <mat-label>X-Twitter (Optional)</mat-label>
+                <mat-label>X-Twitter ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="twitter">
                 <mat-icon matIconPrefix><i class="fa-brands fa-x-twitter"></i></mat-icon>
               </mat-form-field>
               <mat-form-field class="col-lg-6">
-                <mat-label>Youtube (Optional)</mat-label>
+                <mat-label>Youtube ({{ 'bio_form.step_social.optional' | translate }})</mat-label>
                 <input matInput formControlName="youtube">
                 <mat-icon matIconPrefix><i class="fa-brands fa-youtube"></i></mat-icon>
               </mat-form-field>
             </div><!--row-->
             <div>
-              <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
-              <button mat-stroked-button matStepperNext type="button" color="primary">Next</button>
+              <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">{{ 'bio_form.step_btn_back' | translate }}</button>
+              <button mat-stroked-button matStepperNext type="button" color="primary">{{ 'bio_form.step_btn_next' | translate }}</button>
             </div>
           </ng-template>
         </mat-step>
       </form>
       <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
+        <ng-template matStepLabel>{{ 'bio_form.step_done.title' | translate }}</ng-template>
         <h3 class="mt-3">{{ setMatStepperDoneMessage() }}</h3>
         <div class="mt-2">
-          <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">Back</button>
+          <button mat-stroked-button matStepperPrevious type="button" color="primary" class="me-2">{{ 'bio_form.step_btn_back' | translate }}</button>
           <button mat-stroked-button type="button" color="primary" *ngIf="form.valid" (click)="onSubmit()">
-            {{ isLoadingRequestMatStepperForm ? 'Saving...' : 'Save' }}
+            {{ (isLoadingRequestMatStepperForm ? 'bio_form.step_btn_saving' : 'bio_form.step_btn_save') | translate }}
           </button>
         </div>
       </mat-step>

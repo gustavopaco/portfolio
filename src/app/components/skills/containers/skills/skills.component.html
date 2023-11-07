@@ -3,10 +3,10 @@
   <ng-container *ngIf="!isFailedToLoadSkills; else failedToLoadSkills">
     <div class="row my-4">
       <div class="col-lg-6">
-        <button mat-raised-button color="primary" class="w-100 mb-2" (click)="onAddSkill()"><mat-icon>add</mat-icon>Add Skill</button>
+        <button mat-raised-button color="primary" class="w-100 mb-2" (click)="onAddSkill()"><mat-icon>add</mat-icon>{{ 'skills.add_skill' | translate }}</button>
       </div><!--col-->
       <div class="col-lg-6" *ngIf="isSkillSelected && isDesktop">
-        <button mat-raised-button color="primary" class="w-100 mb-2"  (click)="onEditSkill()"><mat-icon>edit</mat-icon>Edit Skill</button>
+        <button mat-raised-button color="primary" class="w-100 mb-2"  (click)="onEditSkill()"><mat-icon>edit</mat-icon>{{ 'skills.edit_skill' | translate }}</button>
       </div><!--col-->
     </div><!--row-->
     <ng-container *ngIf="skills.length > 0; else noSkills">
@@ -15,7 +15,7 @@
     <ng-template #noSkills>
       <div class="col-12">
         <div class="alert alert-light text-center" role="alert">
-          <strong>No skills added yet!</strong>
+          <strong>{{ 'skills.no_skills' | translate }}</strong>
         </div><!--alert-->
       </div><!--col-->
     </ng-template><!--skills-empty-template-->
@@ -24,7 +24,7 @@
     <div class="row my-4">
       <div class="col-12">
         <div class="alert alert-danger  text-center" role="alert">
-          <strong>Error while loading user skills. Please try again later!</strong>
+          <strong>{{ 'skills.failed_to_load_skills' | translate }}</strong>
         </div><!--alert-->
       </div><!--col-->
     </div><!--row-->

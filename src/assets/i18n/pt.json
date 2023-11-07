@@ -1,0 +1,207 @@
+{
+  "portfolio": {
+    "about_me": "Sobre mim",
+    "skills": "Habilidades",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "contact_form": {
+    "label_name": "Nome",
+    "placeholder_name": "Digite seu nome",
+    "label_email": "E-mail",
+    "placeholder_email": "Digite seu e-mail",
+    "label_message": "Mensagem",
+    "placeholder_message": "Digite a mensagem",
+    "button_send": "Enviar",
+    "message": {
+      "success": "Mensagem enviada com sucesso!",
+      "error": "Erro ao enviar mensagem!"
+    }
+  },
+  "error_component": {
+    "404_code_name": "Página não encontrada",
+    "404_code_description": "Desculpe, a página que você está procurando não existe.",
+    "500_code_name": "Erro interno do servidor",
+    "500_code_description": "O servidor encontrou um erro interno ou configuração incorreta e não pôde concluir sua solicitação.",
+    "default_code_name": "Erro inesperado",
+    "default_code_description": "Desculpe, algo deu errado.",
+    "button_back": "Voltar"
+  },
+  "header": {
+    "profile": "Perfil",
+    "logout": "Sair",
+    "login": "Entrar"
+  },
+  "footer": {
+    "all_rights_reserved": "Todos os direitos reservados",
+    "developed_by": "Desenvolvido por Gustavo Paco",
+    "back_to_top": "Início"
+  },
+  "auth": {
+    "title": "Entre com suas credenciais",
+    "label_email": "E-mail",
+    "placeholder_email": "Entre com seu e-mail",
+    "label_password": "Senha",
+    "placeholder_password": "Entre com sua senha",
+    "button_login": "Entrar",
+    "message": {
+      "success": "Login realizado com sucesso!",
+      "error": "Erro ao realizar login!"
+    }
+  },
+  "profile": {
+    "toolbar_accomplishments": "Conquistas",
+    "mat_tab_tooltip_skills": "Ver habilidades",
+    "title_skills": "Habilidades",
+    "mat_tab_tooltip_projects": "Ver projetos",
+    "title_projects": "Projetos",
+    "mat_tab_tooltip_courses": "Ver cursos",
+    "title_courses": "Cursos"
+  },
+  "bio_form": {
+    "toolbar_bio": "Biografia",
+    "hint_edit_avatar": "Clique na imagem para editar seu avatar.",
+    "hint_add_avatar": "Clique na imagem para adicionar seu avatar.",
+    "step_bio": {
+      "title": "Dados pessoais",
+      "on_error": "Dados pessoais são obrigatórios.",
+      "label_name": "Nome completo",
+      "placeholder_name": "Digite seu nome",
+      "label_job": "Profissão",
+      "placeholder_job": "Digite sua profissão",
+      "label_presentation": "Apresentação",
+      "placeholder_presentation": "Escreva uma breve apresentação sobre você",
+      "label_testimony": "Testemunho",
+      "placeholder_testimony": "Escreva um testemunho sobre você"
+    },
+    "step_social": {
+      "title": "Redes sociais",
+      "optional": "Opcional"
+    },
+    "step_done": {
+      "title": "Pronto",
+      "ready_message": "Seu perfil está pronto para ser salvo.",
+      "not_ready_message": "Preencha todos os campos obrigatórios para salvar seu perfil."
+    },
+    "step_btn_back": "Voltar",
+    "step_btn_next": "Próximo",
+    "step_btn_save": "Salvar",
+    "step_btn_saving": "Salvando...",
+    "cropper_avatar_title": "Editar avatar",
+    "message": {
+      "success": "Biografia salva com sucesso!",
+      "error": "Erro ao salvar biografia!"
+    }
+  },
+  "skills": {
+    "add_skill": "Adicionar habilidade",
+    "edit_skill": "Editar habilidade",
+    "no_skills": "Nenhuma habilidade foi encontrada. Clique no botão acima para adicionar uma nova habilidade.",
+    "failed_to_load_skills": "Falha ao carregar habilidades.",
+    "btn_edit_skill": "Editar",
+    "btn_delete_skill": "Deletar",
+    "skill_deleted_successfully": "Habilidade deletada com sucesso!"
+  },
+  "skills_form": {
+    "new_skill": "Nova habilidade",
+    "edit_skill": "Editar habilidade",
+    "hint_image_description": "Clique na imagem para alterar.",
+    "label_name": "Nome",
+    "placeholder_name": "Digite o nome da habilidade",
+    "label_description": "Descrição",
+    "placeholder_description": "Digite a descrição da habilidade",
+    "label_rating": "Avaliação*",
+    "btn_load_image": "Carregar imagem",
+    "btn_save": "Salvar",
+    "btn_cancel": "Cancelar",
+    "messages": {
+      "success": "Habilidade salva com sucesso!",
+      "failed": "Erro ao salvar habilidade!",
+      "no_changes": "Nenhuma alteração foi feita."
+    }
+  },
+  "projects": {
+    "new_project": "Novo projeto",
+    "no_projects": "Nenhum projeto foi encontrado. Clique no botão acima para adicionar um novo projeto.",
+    "failed_to_load_projects": "Falha ao carregar projetos.",
+    "loading_delete_project": "Deletando projeto...",
+    "loading_delete_project_description": "Por favor, aguarde enquanto o projeto está sendo deletado.",
+    "project_deleted_successfully": "Projeto deletado com sucesso!"
+  },
+  "projects_form": {
+    "new_project": "Novo projeto",
+    "edit_project": "Editar projeto",
+    "image_edit_description": "Clique na imagem para alterar.",
+    "mat_tooltip_change_image": "Alterar imagem",
+    "filled_image_edit_description": "Você pode alterar a imagem clicando no ícone",
+    "label_name": "Nome",
+    "placeholder_name": "Digite o nome do projeto",
+    "label_website": "Website(Opcional))",
+    "placeholder_website": "Digite o website do projeto",
+    "label_description": "Descrição",
+    "placeholder_description": "Digite a descrição do projeto",
+    "label_status": "Status",
+    "btn_save": "Salvar",
+    "btn_cancel": "Cancelar",
+    "messages": {
+      "success": "Projeto salvo com sucesso!",
+      "no_changes": "Nenhuma alteração foi feita."
+    }
+  },
+  "projects_list": {
+    "ribbon": {
+      "inProgress": "Em Progresso",
+      "completed": "Concluído",
+      "delayed": "Atrasado",
+      "cancelled": "Cancelado",
+      "testing": "Testando",
+      "underReview": "Em Revisão",
+      "launched": "Lançado",
+      "emergency": "Emergência",
+      "maintenance": "Manutenção",
+      "future": "Futuro",
+      "paused": "Pausado",
+      "highlight": "Destaque",
+      "old": "Antigo"
+    }
+  },
+  "projects_item": {
+    "title": "Detalhes do projeto",
+    "btn_options": "Opções",
+    "options": {
+      "visit": "Visitar site",
+      "edit": "Editar",
+      "delete": "Deletar",
+      "close": "Fechar",
+      "not_available": "Site não disponível"
+    }
+  },
+  "required": "*{{fieldName}} obrigatório.",
+  "mask": "*{{fieldName}} inválido.",
+  "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",
+  "maxlength": "*{{fieldName}} máximo de caracteres: {{requiredLength}}.",
+  "email": "*E-mail inválido.",
+  "emailInUse": "*E-mail já existe.",
+  "cepInvalido": "*CEP inválido.",
+  "upload": "*Erro ao fazer upload.",
+  "bsDate": "*Formato de data inválido.",
+  "equalsTo": "*{{fieldName}} e {{fieldNameEqualsTo}}, devem ser iguais.",
+  "min": "*{{fieldName}} deve ser maior ou igual a {{min}}.",
+  "max": "*{{fieldName}} deve ser menor ou igual a {{max}}.",
+  "deleteSkillTitle": "Deletar habilidade",
+  "deleteSkillMessage": "Deseja realmente deletar \"{{skillName}}\"?",
+  "deleteProjectTitle": "Deletar projeto",
+  "deleteProjectMessage": "Deseja realmente deletar \"{{projectName}}\"?",
+  "confirmButton": "Confirmar",
+  "cancelButton": "Cancelar",
+  "deleteButton": "Deletar",
+  "editButton": "Editar",
+  "saveButton": "Salvar",
+  "generic_messages": {
+    "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
+    "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde.",
+    "action_close": "Fechar",
+    "action_ok": "Ok",
+    "action_failed": "Falhou"
+  }
+}

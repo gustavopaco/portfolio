@@ -5,7 +5,7 @@
       <div class="overlay"></div>
       <mat-card-content class="d-flex justify-content-center align-items-center z-3">
         <div class="ribbon-lg-wrapper">
-          <div class="ribbon-lg" [ngClass]="setRibbonColor(project)">{{ project.status }}</div>
+          <div class="ribbon-lg" [ngClass]="setRibbonColor(project)">{{ project.status | statusProject }}</div>
         </div>
         <h2 class="text-white" *ngIf="activeIndex == i">{{ project.name }}</h2>
       </mat-card-content>

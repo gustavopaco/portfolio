@@ -26,13 +26,6 @@ export class ErrorComponent {
           this.codeError = 500;
         }
       });
-    this.activatedRoute.params
-      .pipe(takeUntilDestroyed())
-      .subscribe(params => {
-        if (params['lang']) {
-          this.translateService.use(params['lang']);
-        }
-      })
   }
 
   setCodeName() {

@@ -1,9 +1,10 @@
 <mat-toolbar color="primary" class="justify-content-end align-items-center">
-  <mat-toolbar-row class="align-items-center" [ngClass]="isLgScreen ? 'justify-content-around': 'justify-content-center'">
+  <mat-toolbar-row class="align-items-center"
+                   [ngClass]="isLgScreen ? 'justify-content-around': 'justify-content-center'">
     <div class="d-flex">
       <app-social [toolTipPosition]="'above'" [size]="25" [hidden]="!isLgScreen"></app-social>
     </div><!--d-flex-->
-    <p class="text-white fs-6 mb-0 text-center">&copy; Todos os direitos reservados</p>
-    <a mat-button (click)="scrollToElement('nav-toolbar')" [hidden]="!isLgScreen">Início</a>
+    <p class="text-white text-center fw-normal"> {{ 'footer.developed_by' | translate }} <br> &copy; {{ 'footer.all_rights_reserved' | translate }}</p>
+    <a mat-button (click)="scrollToElement('nav-toolbar')" [hidden]="!isLgScreen">{{ 'footer.back_to_top' | translate }}</a>
   </mat-toolbar-row>
 </mat-toolbar>

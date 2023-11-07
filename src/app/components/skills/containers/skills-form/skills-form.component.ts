@@ -15,19 +15,13 @@ import {finalize, take} from "rxjs";
 import {StarRatingComponent} from "../../../../shared/external/angular-material/star-rating/star-rating.component";
 import {FormularioDebugComponent} from "../../../../shared/components/formulario-debug/formulario-debug.component";
 import {FormValidator} from "../../../../shared/validator/form-validator";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {S3_SKILLS_FOLDER} from "../../../../shared/constants/api";
 import {UserService} from "../../../../shared/services/user.service";
-import {
-  ACTION_CLOSE, FAILED_TO_DELETE_STORED_IMAGE,
-  FAILED_TO_SAVE_SKILL,
-  FAILED_TO_UPLOAD_IMAGE, NO_CHANGES_WERE_MADE,
-  SKILL_SAVED_SUCCESSFULLY
-} from "../../../../shared/constants/constants";
 import {Skill} from "../../../../shared/interface/skill";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -42,7 +36,7 @@ export interface SkillData {
 @Component({
   selector: 'app-skills-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent, MatProgressSpinnerModule, MatToolbarModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ImageCropperModule, MatIconModule, MatDialogModule, StarRatingComponent, FormularioDebugComponent, MatProgressSpinnerModule, MatToolbarModule, TranslateModule],
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss']
 })
@@ -94,8 +88,8 @@ export class SkillsFormComponent implements OnInit {
       maxHeight: '600px',
       data: {
         imageChangedEvent: $event,
-        btnConfirmLabel: 'Load image',
-        btnCancelLabel: 'Cancel',
+        btnConfirmLabel: this.translateService.instant('skills_form.btn_load_image'),
+        btnCancelLabel: this.translateService.instant('skills_form.btn_cancel'),
         returnImageType: 'blob',
         resizeToWidth: 60,
         resizeToHeight: 60,
@@ -135,7 +129,7 @@ export class SkillsFormComponent implements OnInit {
         this.saveSkill();
         return;
       }
-      this.matSnackBarService.warning(NO_CHANGES_WERE_MADE, ACTION_CLOSE,3000, 'center', 'top');
+      this.matSnackBarService.warning(this.translateService.instant('skills_form.messages.no_changes'), this.translateService.instant('generic_messages.action_close'),3000, 'center', 'top');
       this.matDialogRef.close(false);
     }
   }
@@ -167,7 +161,7 @@ export class SkillsFormComponent implements OnInit {
           this.uploadToAwsS3Bucket(awsCredentials);
         },
         error: (error) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
           this.enableForm();
         }
       });
@@ -180,7 +174,7 @@ export class SkillsFormComponent implements OnInit {
         this.uploadToAwsS3Bucket(credentials);
       })
       .catch(() => {
-        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000);
         this.enableForm();
       });
   }
@@ -193,7 +187,7 @@ export class SkillsFormComponent implements OnInit {
       })
       .catch(() => {
         this.onFailedToUploadImage();
-        this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE);
+        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_upload_image'), this.translateService.instant('generic_messages.action_close'));
         this.enableForm();
       });
   }
@@ -206,10 +200,10 @@ export class SkillsFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(SKILL_SAVED_SUCCESSFULLY, ACTION_CLOSE);
+          this.matSnackBarService.success(this.translateService.instant('skills_form.messages.success'), this.translateService.instant('generic_messages.action_close'));
           this.matDialogRef.close(true);
         },
-        error: () => this.matSnackBarService.error(FAILED_TO_SAVE_SKILL, ACTION_CLOSE)
+        error: () => this.matSnackBarService.error(this.translateService.instant('skills_form.messages.failed'), this.translateService.instant('generic_messages.action_close'))
       })
   }
 

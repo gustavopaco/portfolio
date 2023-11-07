@@ -7,12 +7,6 @@ import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {finalize, map, Observable, take} from "rxjs";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
-import {
-  ACTION_CLOSE,
-  BIO_READY_TO_BE_SAVED, BIO_UPDATED_SUCCESSFULLY,
-  FAILED_TO_DELETE_STORED_IMAGE,
-  FILL_ALL_FIELDS
-} from "../../../../shared/constants/constants";
 import {S3_AVATAR_FOLDER} from "../../../../shared/constants/api";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -36,11 +30,13 @@ import {HttpParams} from "@angular/common/http";
 import {User} from "../../../../shared/interface/user";
 import {FormularioDebugComponent} from "../../../../shared/components/formulario-debug/formulario-debug.component";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {SocialService} from "../../../../shared/services/social.service";
 
 @Component({
   selector: 'app-bio-form',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, MatToolbarModule, MatFormFieldModule, MatIconModule, MatDialogModule, MatButtonModule, MatInputModule, MatStepperModule, ReactiveFormsModule, FormularioDebugComponent],
+  imports: [CommonModule, MatProgressSpinnerModule, MatToolbarModule, MatFormFieldModule, MatIconModule, MatDialogModule, MatButtonModule, MatInputModule, MatStepperModule, ReactiveFormsModule, FormularioDebugComponent, TranslateModule],
   templateUrl: './bio-form.component.html',
   styleUrls: ['./bio-form.component.scss'],
   providers: [
@@ -85,6 +81,8 @@ export class BioFormComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
+              private socialService: SocialService,
+              private translateService: TranslateService,
               private fb: FormBuilder,
               private breakpointObserver: BreakpointObserver,
               private matDialog: MatDialog,
@@ -113,6 +111,7 @@ export class BioFormComponent implements OnInit {
       .subscribe((user: User) => {
         this.bio = user.bio;
         this.social = user.social;
+        this.socialService.emitSocialEvent(user.social);
         this.loadBioSocialOnForm(user, loadingImageOnly);
       });
   }
@@ -153,7 +152,7 @@ export class BioFormComponent implements OnInit {
       data: {
         imageChangedEvent: $event,
         returnImageType: 'blob',
-        title: 'Project image',
+        title: this.translateService.instant('bio_form.cropper_avatar_title'),
         resizeToWidth: 250,
         resizeToHeight: 250,
         roundCropper: true
@@ -195,14 +194,14 @@ export class BioFormComponent implements OnInit {
             this.uploadToAwsS3Bucket(credentials, file);
           }
         },
-        error: (error: any) => this.matSnackBarService.error(error, ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 
   private deletePreviousImage(credentials: AwsConfiguration, file: File) {
     this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, this.avatarUrl?.value!)
       .then(() => this.uploadToAwsS3Bucket(credentials, file))
-      .catch(() => this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000))
+      .catch(() => this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000))
   }
 
   private uploadToAwsS3Bucket(credentials: AwsConfiguration, file: File) {
@@ -211,7 +210,7 @@ export class BioFormComponent implements OnInit {
         this.defineNewImage(imageUrl);
         this.saveBioImageRecord();
       })
-      .catch((error: any) => this.matSnackBarService.error(error, ACTION_CLOSE, 5000))
+      .catch((error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic_messages.action_close'), 5000))
   }
 
   private defineNewImage(imageUrl: string) {
@@ -224,7 +223,7 @@ export class BioFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => this.getBioSocialRecord(true),
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 
@@ -237,18 +236,18 @@ export class BioFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(BIO_UPDATED_SUCCESSFULLY, ACTION_CLOSE, 5000);
+          this.matSnackBarService.success(this.translateService.instant('bio_form.message.success'), this.translateService.instant('generic_messages.action_close'), 5000);
           this.getBioSocialRecord();
         },
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 
   setMatStepperDoneMessage() {
     if (this.form.valid) {
-      return BIO_READY_TO_BE_SAVED;
+      return this.translateService.instant('bio_form.step_done.ready_message');
     }
-    return FILL_ALL_FIELDS;
+    return this.translateService.instant('bio_form.step_done.not_ready_message');
   }
 
   existPreviousImage() {
@@ -273,9 +272,9 @@ export class BioFormComponent implements OnInit {
 
   setAddEditAvatarHint() {
     if (this.existPreviousImage()) {
-      return 'Edit your avatar by clicking at the image.';
+      return this.translateService.instant("bio_form.hint_edit_avatar");
     }
-    return 'Click at the image to change your avatar.';
+    return this.translateService.instant("bio_form.hint_add_avatar");
   }
 
   private startLoadingBio() {

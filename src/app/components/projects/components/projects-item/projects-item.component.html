@@ -1,7 +1,7 @@
 <div class="ribbon-lg-wrapper" *ngIf="isDesktop">
   <div class="ribbon-lg" [ngClass]="setRibbonColor()">{{ data.project.status | statusProject }}</div><!--ribbon-lg-->
 </div><!--ribbon-lg-wrapper-->
-<mat-toolbar color="primary" class="justify-content-center">Details</mat-toolbar>
+<mat-toolbar color="primary" class="justify-content-center">{{ 'projects_item.title' | translate }}</mat-toolbar>
 <mat-dialog-content class="row">
   <div class="col-12 mb-2 d-flex flex-wrap justify-content-center align-items-center ">
     <div class="col-auto position-relative overflow-hidden">
@@ -19,22 +19,22 @@
   </div><!--col-->
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="isDesktop">
-  <a mat-raised-button color="primary" [href]="data.project.url" target="_blank" *ngIf="data.project.url">
-    <mat-icon>launch</mat-icon>
-    Visit site</a>
+  <a mat-raised-button color="primary" [href]="data.project.url" target="_blank" [disabled]="data.project.url == null">
+    <mat-icon iconPositionEnd>launch</mat-icon>
+    {{ (data.project.url ? 'projects_item.options.visit': 'projects_item.options.not_available') | translate }}</a>
   <button mat-raised-button color="accent" *ngIf="data.editable" (click)="onEdit()">
     <mat-icon>edit</mat-icon>
-    Edit
+    {{ 'projects_item.options.edit' | translate }}
   </button>
   <button mat-raised-button color="warn" *ngIf="data.editable" (click)="onDelete()">
     <mat-icon>delete</mat-icon>
-    Delete
+    {{ 'projects_item.options.delete' | translate }}
   </button>
-  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  <button mat-raised-button color="primary" mat-dialog-close>{{ 'projects_item.options.close' | translate }}</button>
 </mat-dialog-actions>
 <mat-dialog-actions align="center" *ngIf="!isDesktop">
-  <button mat-raised-button color="primary" (click)="onOptionsClick()" *ngIf="data.editable">Options</button>
+  <button mat-raised-button color="primary" (click)="onOptionsClick()" *ngIf="data.editable">{{ 'projects_item.btn_options' | translate }}</button>
   <a mat-raised-button color="primary" [href]="data.project.url" target="_blank"
      *ngIf="!data.editable"
-     [disabled]="data.project.url == null"><mat-icon iconPositionEnd>launch</mat-icon>{{ data.project.url ? 'Visit site': 'URL not available' }}</a>
+     [disabled]="data.project.url == null"><mat-icon iconPositionEnd>launch</mat-icon>{{ (data.project.url ? 'projects_item.options.visit': 'projects_item.options.not_available') | translate }}</a>
 </mat-dialog-actions>

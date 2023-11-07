@@ -9,16 +9,10 @@ import {UserService} from "../../../../shared/services/user.service";
 import {finalize, take} from "rxjs";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
-import {
-  ACTION_CLOSE, FAILED_TO_DELETE_STORED_IMAGE,
-  FAILED_TO_UPLOAD_IMAGE,
-  NO_CHANGES_WERE_MADE,
-  PROJECT_SAVED_SUCCESSFULLY
-} from "../../../../shared/constants/constants";
 import {MatSelectModule} from "@angular/material/select";
 import {MatIconModule} from "@angular/material/icon";
 import {FormValidator} from "../../../../shared/validator/form-validator";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
   ImageCroppedData,
   ImageCropperDialogComponent
@@ -46,7 +40,7 @@ export interface ProjectData {
 @Component({
   selector: 'app-projects-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, TranslateModule],
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.scss']
 })
@@ -90,7 +84,7 @@ export class ProjectsFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (projectStatusList: string[]) => this.projectStatusList = projectStatusList,
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 
@@ -138,7 +132,7 @@ export class ProjectsFormComponent implements OnInit {
         this.form.patchValue({pictureOrientation: result})
       })
       .catch((error) => {
-        this.matSnackBarService.error(error.message, ACTION_CLOSE, 5000);
+        this.matSnackBarService.error(error.message, this.translateService.instant('generic_messages.action_close'), 5000);
       });
   }
 
@@ -154,7 +148,7 @@ export class ProjectsFormComponent implements OnInit {
         this.saveProject();
         return;
       }
-      this.matSnackBarService.warning(NO_CHANGES_WERE_MADE, ACTION_CLOSE, 3000, 'center', 'top');
+      this.matSnackBarService.warning(this.translateService.instant('projects_form.messages.no_changes'), this.translateService.instant('generic_messages.action_close'), 3000, 'center', 'top');
       this.matDialogRef.close(false);
     }
   }
@@ -172,7 +166,7 @@ export class ProjectsFormComponent implements OnInit {
           }
         },
         error: (error) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
           this.enableForm();
         }
       });
@@ -189,7 +183,7 @@ export class ProjectsFormComponent implements OnInit {
         this.uploadToS3Bucket(credentials);
       })
       .catch(() => {
-        this.matSnackBarService.error(FAILED_TO_DELETE_STORED_IMAGE, ACTION_CLOSE, 5000);
+        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000);
         this.enableForm();
       });
   }
@@ -202,7 +196,7 @@ export class ProjectsFormComponent implements OnInit {
       })
       .catch(() => {
         this.onFailedToUploadImage();
-        this.matSnackBarService.error(FAILED_TO_UPLOAD_IMAGE, ACTION_CLOSE, 5000)
+        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_upload_image'), this.translateService.instant('generic_messages.action_close'), 5000)
         this.enableForm();
       });
   }
@@ -229,10 +223,10 @@ export class ProjectsFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(PROJECT_SAVED_SUCCESSFULLY, ACTION_CLOSE, 5000);
+          this.matSnackBarService.success(this.translateService.instant('projects_form.messages.success'), this.translateService.instant('generic_messages.action_close'), 5000);
           this.matDialogRef.close(true);
         },
-        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), ACTION_CLOSE, 5000)
+        error: (error) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
       })
   }
 

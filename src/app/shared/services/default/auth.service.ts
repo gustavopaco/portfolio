@@ -59,6 +59,14 @@ export class AuthService {
     }
   }
 
+  saveDefaultLanguage(language: string): void {
+    localStorage.setItem("defaultLanguage", language);
+  }
+
+  getDefaultLanguage(): string {
+    return localStorage.getItem("defaultLanguage") ?? "pt";
+  }
+
   getLat() {
     return localStorage.getItem("lat");
   }

@@ -2,23 +2,23 @@
   <mat-card class="position-absolute translate-middle top-50 start-50">
     <mat-card-header class="justify-content-center">
       <mat-card-title class="text-center"><img src="assets/icons/user.png" alt="user"></mat-card-title>
-      <mat-card-subtitle class="text-white">Enter your credentials to login</mat-card-subtitle>
+      <mat-card-subtitle class="text-white">{{ 'auth.title' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-card-content class="d-flex flex-column">
         <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="usuario@email.com" formControlName="username" autocomplete="email">
+          <mat-label>{{ 'auth.label_email' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'auth.placeholder_email' | translate }}" formControlName="username" autocomplete="email">
           <mat-error class="yellow-text">{{ validatorMessages('username', 'Email') }}</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input matInput type="password" placeholder="Password" formControlName="password" autocomplete="current-password">
+          <mat-label>{{ 'auth.label_password' | translate }}</mat-label>
+          <input matInput type="password" placeholder="{{ 'auth.placeholder_password' | translate }}" formControlName="password" autocomplete="current-password">
           <mat-error class="yellow-text">{{ validatorMessages('password', 'Password') }}</mat-error>
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions class="px-3">
-        <button mat-raised-button color="primary" class="w-100" type="submit">Login</button>
+        <button mat-raised-button color="primary" class="w-100" type="submit">{{ 'auth.button_login' | translate }}</button>
       </mat-card-actions>
     </form>
   </mat-card>

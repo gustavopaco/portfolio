@@ -1,4 +1,13 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
@@ -18,7 +27,7 @@ import {SwiperOptions} from "swiper/types";
     styleUrls: ['./skills-list.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SkillsListComponent {
+export class SkillsListComponent implements AfterViewInit {
     @Input() skills?: Skill[];
     @Input('desktopView') isDesktop = false;
     @Input() editable = false;
@@ -82,6 +91,12 @@ export class SkillsListComponent {
 
     skillIdSelected = -1;
     isDeleteEvent = false;
+
+  ngAfterViewInit(): void {
+    if (this.editable) {
+      this.swiperRef?.nativeElement.swiper.autoplay.stop();
+    }
+  }
 
     onSkillSelected(j: number) {
         if (this.skills && this.editable) {

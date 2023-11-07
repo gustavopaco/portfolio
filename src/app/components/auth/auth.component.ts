@@ -6,7 +6,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {FormValidator} from "../../shared/validator/form-validator";
 import {AuthService} from "../../shared/services/default/auth.service";
 import {take} from "rxjs";
@@ -20,7 +20,7 @@ import {HttpResponse} from "@angular/common/http";
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, FormularioDebugComponent],
+  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, FormularioDebugComponent, TranslateModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
@@ -59,7 +59,7 @@ export class AuthComponent implements OnInit {
             this.authService.saveNickname(response.body.nickname);
             this.router.navigate(['/profile'])
           },
-          error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), 'Failed to authenticate', 5000, 'center', 'top')
+          error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translate.instant('auth.message.error'), 5000, 'center', 'top')
         })
     }
   }

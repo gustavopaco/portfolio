@@ -4,14 +4,25 @@
       <mat-icon>menu</mat-icon>
     </button>
     <a mat-button [routerLink]="['/']"><h1>Paco Projects</h1></a>
-    <div class="ms-auto" *ngIf="isLgScreen">
-      <ng-container *ngIf="isUserLoggedIn; else userNotLogged">
-        <a mat-button [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab()"> Profile </a>
-        <a mat-button (click)="onLogout()"> Logout </a>
+
+    <div class="ms-auto d-flex justify-content-center align-items-center">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Language">
+        <mat-icon>language</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" hasBackdrop="true" [backdropClass]="'dark-backdrop'">
+        <mat-radio-group [value]="defaultLanguage" class="d-flex flex-column">
+          <mat-radio-button (click)="defineLanguage(lang)" *ngFor="let lang of languages" [value]="lang">{{ lang | language }}</mat-radio-button>
+        </mat-radio-group>
+      </mat-menu>
+      <ng-container *ngIf="isLgScreen">
+        <ng-container *ngIf="isUserLoggedIn; else userNotLogged">
+          <a mat-button [routerLink]="'/profile'" [routerLinkActive]="'active-link'" (click)="resetMatTab()">{{ 'header.profile' | translate }}</a>
+          <a mat-button (click)="onLogout()">{{ 'header.logout' | translate }}</a>
+        </ng-container>
+        <ng-template #userNotLogged>
+          <a mat-button [routerLink]="'/auth'" [routerLinkActive]="'active-link'">{{ 'header.login' | translate }}</a>
+        </ng-template>
       </ng-container>
-      <ng-template #userNotLogged>
-        <a mat-button [routerLink]="'/auth'" [routerLinkActive]="'active-link'"> Login </a>
-      </ng-template>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

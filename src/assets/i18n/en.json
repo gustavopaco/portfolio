@@ -3,7 +3,8 @@
     "about_me": "About Me",
     "skills": "Skills",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact",
+    "btn_contact": "Contact me"
   },
   "contact_form": {
     "label_name": "Name",

@@ -20,11 +20,12 @@ import {ContactFormComponent} from "../contact/contact-form/contact-form.compone
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {SocialService} from "../../shared/services/social.service";
 import {SocialComponent} from "../social/social.component";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })

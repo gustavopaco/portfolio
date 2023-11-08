@@ -3,7 +3,8 @@
     "about_me": "Sobre mim",
     "skills": "Habilidades",
     "projects": "Projetos",
-    "contact": "Contato"
+    "contact": "Contato",
+    "btn_contact": "Contate-me"
   },
   "contact_form": {
     "label_name": "Nome",

@@ -3,18 +3,23 @@
   <div class="overlay z-0"></div><!--overlay-->
   <div class="container position-relative z-1">
     <div class="row mb-5">
-      <div class="col-lg-7 order-1 order-lg-0">
+      <div class="col-lg-7 order-1 order-lg-0 d-lg-flex d-xl-block flex-lg-column justify-content-lg-center align-items-lg-center">
         <h1 class="text-white text-center">{{ user?.bio?.fullName }}</h1>
         <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
         <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
       </div><!--col-->
-      <div class="col-lg-5 order-0 order-lg-1 my-5 my-lg-0 d-flex flex-column justify-content-center align-items-center">
-        <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-5 mb-lg-3">
-        <div class="row row-social">
-          <div class="col-12 d-flex justify-content-center">
+      <div class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex flex-column justify-content-center align-items-center">
+        <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center mb-3">
             <app-social [social]="user?.social" [size]="35"></app-social>
-          </div>
-        </div>
+          </div><!--col-->
+          <div class="col-12 text-center d-none d-lg-block">
+            <button mat-raised-button color="accent" type="button" (click)="scrollToElement('contact')">
+              {{ 'portfolio.btn_contact' | translate }}
+            </button>
+          </div><!--col-->
+        </div><!--row-->
       </div><!--col-->
     </div><!--row-->
   </div><!--container-->
@@ -54,7 +59,7 @@
     </div><!--row-->
   </div><!--container-->
 </section><!--projects-->
-<section class="contact position-relative">
+<section class="contact position-relative" id="contact">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">

@@ -40,7 +40,7 @@ export class TokenInterceptor implements HttpInterceptor {
         this.matSnackBarService.error(INVALID_SESSION_EXCEPTION_MESSAGE);
       }
       // Note: Estou utilizando o logout em vez de usar o invalidSession pois ao enviar para a pagina de login existe um guarda de rotas que verifica se usuario ja esta logado, entao nesse caso se enviar para uma pagina com guarda de rotas ele ira enviar uma mensagem duplicada de token invalido
-      this.authService.logout();
+      this.authService.invalidateSession();
       return of();
     }
     return throwError(() => error);

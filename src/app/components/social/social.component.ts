@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Social} from "../../shared/interface/social";
 import {SocialService} from "../../shared/services/social.service";
@@ -12,7 +12,7 @@ import {MatTooltipModule, TooltipPosition} from "@angular/material/tooltip";
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.scss']
 })
-export class SocialComponent {
+export class SocialComponent implements AfterViewInit {
 
   brands = [
     ' fa-github ', ' fa-linkedin ', ' fa-facebook ', ' fa-instagram ', ' fa-x-twitter ', ' fa-youtube '
@@ -30,16 +30,20 @@ export class SocialComponent {
       this.social = social;
       this.getSocialsCount();
     });
+  }
+
+  ngAfterViewInit(): void {
     if (this.social) {
       this.getSocialsCount();
     }
   }
 
-  setSocialClass(brand: string, index: number) {
-    let socialClass = brand;
-    if (this.indexHovered == index) socialClass += ' fa-beat ';
-    if (this.countSocials > 1) socialClass += ' me-2 ';
-    return socialClass;
+  setSocialClass(index: number) {
+    if (this.countSocials > 1) {
+      if (this.indexHovered == index) return ' me-2 fa-beat ';
+      return ' me-2 ';
+    }
+    return ' ';
   }
 
   getSocialsCount() {

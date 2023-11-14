@@ -1,5 +1,7 @@
 {
   "portfolio": {
+    "loading_user_data": "Carregando dados do usuário...",
+    "user_bio_data_missing": "Desculpe, mas estão faltando dados da biografia do usuário. Por favor, faça login e preencha os dados de perfil.",
     "about_me": "Sobre mim",
     "skills": "Habilidades",
     "projects": "Projetos",

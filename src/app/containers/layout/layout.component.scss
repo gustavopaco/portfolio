@@ -2,18 +2,6 @@ header, footer {
   height: 80px;
 }
 
-.complete-layout {
-  min-height: calc(100vh - 160px);
-}
-
-.parcial-complete-layout {
-  min-height: calc(100vh - 80px);
-}
-
-.incomplete-layout {
-  height: 100vh;
-}
-
 mat-sidenav {
   width: 200px;
 }

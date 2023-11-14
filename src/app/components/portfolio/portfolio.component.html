@@ -1,74 +1,95 @@
-<section
-  class="container-fluid presentation position-relative d-flex justify-content-center align-items-center">
-  <div class="overlay z-0"></div><!--overlay-->
-  <div class="container position-relative z-1">
-    <div class="row mb-5">
-      <div class="col-lg-7 order-1 order-lg-0 d-lg-flex d-xl-block flex-lg-column justify-content-lg-center align-items-lg-center">
-        <h1 class="text-white text-center">{{ user?.bio?.fullName }}</h1>
-        <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
-        <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
-      </div><!--col-->
-      <div class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex flex-column justify-content-center align-items-center">
-        <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
-        <div class="row">
-          <div class="col-12 d-flex justify-content-center mb-3">
-            <app-social [social]="user?.social" [size]="35"></app-social>
+<ng-container *ngIf="isLoadingUserData; else userDataLoaded">
+  <section class="complete-layout d-flex flex-column justify-content-center align-items-center deep-purple-400">
+    <mat-spinner color="accent" class="mb-3"></mat-spinner>
+    <h2 class="text-center text-white fw-lighter">{{ 'portfolio.loading_user_data' | translate }}</h2>
+  </section>
+</ng-container>
+<ng-template #userDataLoaded>
+  <ng-container *ngIf="isUserBioDataValid; else userBioDataInvalid">
+    <section
+      class="container-fluid presentation position-relative d-flex justify-content-center align-items-center">
+      <div class="overlay z-0"></div><!--overlay-->
+      <div class="container position-relative z-1">
+        <div class="row mb-5">
+          <div
+            class="col-lg-7 order-1 order-lg-0 d-lg-flex d-xl-block flex-lg-column justify-content-lg-center align-items-lg-center">
+            <h1 class="text-white text-center">{{ user?.bio?.fullName }}</h1>
+            <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
+            <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
           </div><!--col-->
-          <div class="col-12 text-center d-none d-lg-block">
-            <button mat-raised-button color="accent" type="button" (click)="scrollToElement('contact')">
-              {{ 'portfolio.btn_contact' | translate }}
-            </button>
+          <div
+            class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex flex-column justify-content-center align-items-center">
+            <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center mb-3">
+                <app-social [social]="user?.social" [size]="35"></app-social>
+              </div><!--col-->
+              <div class="col-12 text-center d-none d-lg-block">
+                <button mat-raised-button color="accent" type="button" (click)="scrollToElement('contact')">
+                  {{ 'portfolio.btn_contact' | translate }}
+                </button>
+              </div><!--col-->
+            </div><!--row-->
           </div><!--col-->
         </div><!--row-->
-      </div><!--col-->
-    </div><!--row-->
-  </div><!--container-->
-  <i class="fa-solid fa-circle-arrow-down fa-bounce text-white fa-2xl cursor-pointer"
-     (click)="scrollToElement('about-me')"></i>
-</section><!--presentation-->
-<section id="about-me"
-         class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
-  <div class="container z-1">
-    <h1 class="text-center text-white mb-5 w-100 z-1">{{ 'portfolio.about_me' | translate }}</h1>
-    <h2 class="text-center text-white mx-auto z-1">{{ user?.bio?.testimonial }}</h2>
-  </div><!--container-->
-  <div class="overlay"></div><!--overlay-->
-</section><!--about-me-->
-<section class="skills container-fluid mat-primary-bg position-relative">
-  <div class="overlay"></div>
-  <div class="container position-relative z-1">
-    <div class="row">
-      <div class="col-12 mt-5 mb-3">
-        <h1 class="text-center text-white">{{ 'portfolio.skills' | translate }}</h1>
-      </div><!--col-->
-      <div class="col-12">
-        <app-skills-list [skills]="user?.skills"></app-skills-list>
-      </div><!--col-->
-    </div><!--row-->
-  </div><!--container-->
-</section><!--skills-->
-<section class="projects container-fluid">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 mt-5 mb-3">
-        <h1 class="text-center text-muted">{{ 'portfolio.projects' | translate }}</h1>
-      </div><!--col-->
-      <div class="col-12">
-        <app-projects-list [projects]="user?.projects" (projectClicked)="onProjectClicked($event)"></app-projects-list>
-      </div><!--col-->
-    </div><!--row-->
-  </div><!--container-->
-</section><!--projects-->
-<section class="contact position-relative" id="contact">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 mt-5 mb-3  z-1">
-        <h1 class="text-center text-white">{{ 'portfolio.contact' | translate }}</h1>
-      </div><!--col-->
-      <div class="col-12 mb-3">
-        <app-contact-form></app-contact-form>
-      </div><!--col-->
-    </div><!--row-->
-  </div><!--container-->
-</section><!--contact-->
+      </div><!--container-->
+      <i class="fa-solid fa-circle-arrow-down fa-bounce text-white fa-2xl cursor-pointer"
+         (click)="scrollToElement('about-me')"></i>
+    </section><!--presentation-->
+    <section id="about-me"
+             class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
+      <div class="container z-1">
+        <h1 class="text-center text-white mb-5 w-100 z-1">{{ 'portfolio.about_me' | translate }}</h1>
+        <h2 class="text-center text-white mx-auto z-1">{{ user?.bio?.testimonial }}</h2>
+      </div><!--container-->
+      <div class="overlay"></div><!--overlay-->
+    </section><!--about-me-->
+    <section class="skills container-fluid mat-primary-bg position-relative">
+      <div class="overlay"></div>
+      <div class="container position-relative z-1">
+        <div class="row">
+          <div class="col-12 mt-5 mb-3">
+            <h1 class="text-center text-white">{{ 'portfolio.skills' | translate }}</h1>
+          </div><!--col-->
+          <div class="col-12">
+            <app-skills-list [skills]="user?.skills"></app-skills-list>
+          </div><!--col-->
+        </div><!--row-->
+      </div><!--container-->
+    </section><!--skills-->
+    <section class="projects container-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-5 mb-3">
+            <h1 class="text-center text-muted">{{ 'portfolio.projects' | translate }}</h1>
+          </div><!--col-->
+          <div class="col-12">
+            <app-projects-list [projects]="user?.projects"
+                               (projectClicked)="onProjectClicked($event)"></app-projects-list>
+          </div><!--col-->
+        </div><!--row-->
+      </div><!--container-->
+    </section><!--projects-->
+    <section class="contact position-relative" id="contact">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-5 mb-3  z-1">
+            <h1 class="text-center text-white">{{ 'portfolio.contact' | translate }}</h1>
+          </div><!--col-->
+          <div class="col-12 mb-3">
+            <app-contact-form></app-contact-form>
+          </div><!--col-->
+        </div><!--row-->
+      </div><!--container-->
+    </section><!--contact-->
+  </ng-container>
+  <ng-template #userBioDataInvalid>
+    <section
+      class="complete-layout bio-data-missing d-flex flex-column justify-content-center align-items-center deep-purple-400">
+      <div class="container">
+        <h2 class="text-center text-white fw-lighter">{{ 'portfolio.user_bio_data_missing' | translate }}</h2>
+      </div>
+    </section>
+  </ng-template>
+</ng-template>

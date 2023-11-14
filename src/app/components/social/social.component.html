@@ -5,5 +5,5 @@
                                                       (mouseover)="indexHovered = i"
                                                       (mouseout)="indexHovered = -1"
                                                       [ngStyle]="{'fontSize': size + 'px'}"
-                                                      [ngClass]="setSocialClass(brand, i)"></i></a>
+                                                      [ngClass]="brand + setSocialClass(i)"></i></a>
 </ng-container>

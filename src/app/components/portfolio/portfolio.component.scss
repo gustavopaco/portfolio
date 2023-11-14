@@ -121,3 +121,16 @@ section.contact {
   left: 0;
   z-index: 0;
 }
+
+
+section.bio-data-missing {
+  h2 {
+    line-height: 1.6;
+    @media screen and (max-width: 1200px) {
+      font-size: 16px;
+    }
+    @media screen and (max-width: 992px) {
+      font-size: 14px;
+    }
+  }
+}

@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {environment} from "../../../environments/environment";
 import {HttpParams} from "@angular/common/http";
-import {take} from "rxjs";
+import {finalize, take} from "rxjs";
 import {User} from "../../shared/interface/user";
 import {MatSnackbarService} from "../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../shared/validator/http-validator";
@@ -21,11 +21,12 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {SocialService} from "../../shared/services/social.service";
 import {SocialComponent} from "../social/social.component";
 import {MatButtonModule} from "@angular/material/button";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
@@ -33,12 +34,9 @@ export class PortfolioComponent implements OnInit {
 
   destroyRef = inject(DestroyRef);
   user?: User;
-  socialsClassIcons = [
-    ' fa-github ', ' fa-linkedin ', ' fa-facebook ', ' fa-instagram ', ' fa-x-twitter ', ' fa-youtube '
-  ]
 
-  mouseOverSocialIconIndex: number | null = null;
-  countSocials = 0;
+  isLoadingUserData = true;
+  isUserBioDataValid = false;
 
   constructor(private userService: UserService,
               private translateService: TranslateService,
@@ -68,10 +66,14 @@ export class PortfolioComponent implements OnInit {
 
   private loadUserData(nickname: string) {
     this.userService.getUserDataRecord(this.paramsToRequest(nickname))
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        finalize(() => this.isLoadingUserData = false)
+      )
       .subscribe({
         next: (user) => {
           this.user = user;
+          this.validateUserBioData();
           this.socialService.emitSocialEvent(user.social);
         },
         error: (error) => {
@@ -107,5 +109,19 @@ export class PortfolioComponent implements OnInit {
         project: project,
       }
     });
+  }
+
+  validateUserBioData() {
+    if (this.user?.bio === null || this.user?.bio === undefined) {
+      this.isUserBioDataValid = false;
+      return;
+    }
+    if (!((this.user?.bio?.avatarUrl === null || this.user?.bio?.avatarUrl === undefined)
+      && (this.user?.bio?.fullName === null || this.user?.bio?.fullName === undefined)
+      && (this.user?.bio?.jobTitle === null || this.user?.bio?.jobTitle === undefined)
+      && (this.user?.bio?.presentation === null || this.user?.bio?.presentation === undefined)
+      && (this.user?.bio?.testimonial === null || this.user?.bio?.testimonial === undefined))) {
+      this.isUserBioDataValid = true;
+    }
   }
 }

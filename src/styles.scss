@@ -25,6 +25,18 @@ $custom-warn: mat.define-palette(mat.$red-palette, 500, 300, 700);
   color: mat.get-color-from-palette($custom-warn, 500);
 }
 
+.complete-layout {
+  min-height: calc(100vh - 160px);
+}
+
+.parcial-complete-layout {
+  min-height: calc(100vh - 80px);
+}
+
+.incomplete-layout {
+  height: 100vh;
+}
+
 /*Configurações de input Angular Material*/
 //.mdc-text-field--filled:not(.mdc-text-field--disabled) {
 //  background-color: white !important;

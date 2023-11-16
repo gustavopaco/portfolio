@@ -19,7 +19,6 @@ import {
 } from "../../../../shared/external/angular-material/image-cropper-dialog/image-cropper-dialog.component";
 import {StatusProjectPipe} from "../../../../shared/pipe/status-project.pipe";
 import {UtilImageOrientation} from "../../../../shared/utils/util-image-orientation";
-import {FormularioDebugComponent} from "../../../../shared/components/formulario-debug/formulario-debug.component";
 import {getRibbonClass} from "../../../../shared/utils/project-status-to-ribbon-class";
 import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -30,6 +29,7 @@ import {S3_PROJECTS_FOLDER} from "../../../../shared/constants/api";
 import {Project} from "../../../../shared/interface/project";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 
 export interface ProjectData {
   newProject: boolean;
@@ -40,7 +40,7 @@ export interface ProjectData {
 @Component({
   selector: 'app-projects-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, FormularioDebugComponent, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, TranslateModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, TranslateModule, MatChipsModule],
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.scss']
 })
@@ -54,10 +54,12 @@ export class ProjectsFormComponent implements OnInit {
     pictureUrl: new FormControl<string | null>(null),
     pictureOrientation: new FormControl<string | null>(null),
     status: ['', [Validators.required]],
+    tags: new FormControl<string[]>([]),
     tempImage: new FormControl<string | null>(null)
   });
 
   projectStatusList: string[] = [];
+  separatorKeysCodes: number[] = [13, 188, 186, 190]
   filePicture?: File;
 
   isFormSubmitted = false;
@@ -90,7 +92,18 @@ export class ProjectsFormComponent implements OnInit {
 
   private loadProjectToEdit() {
     if (!this.data.newProject && this.data.projectToEdit) {
-      this.form.patchValue(this.data.projectToEdit);
+      this.form.patchValue({
+        id: this.data.projectToEdit.id,
+        name: this.data.projectToEdit.name,
+        description: this.data.projectToEdit.description,
+        url: this.data.projectToEdit.url,
+        pictureUrl: this.data.projectToEdit.pictureUrl,
+        pictureOrientation: this.data.projectToEdit.pictureOrientation,
+        status: this.data.projectToEdit.status,
+      });
+      this.data.projectToEdit.tags.forEach((tag) => {
+        this.tags?.push(tag);
+      })
     }
   }
 
@@ -212,7 +225,8 @@ export class ProjectsFormComponent implements OnInit {
       project?.description !== this.form.get('description')?.value ||
       project?.url !== this.form.get('url')?.value ||
       project?.pictureUrl !== this.form.get('pictureUrl')?.value ||
-      project?.status !== this.form.get('status')?.value;
+      project?.status !== this.form.get('status')?.value ||
+      project?.tags !== this.form.get('tags')?.value;
   }
 
   private saveProject() {
@@ -246,6 +260,10 @@ export class ProjectsFormComponent implements OnInit {
     return this.form.get('status')?.value;
   }
 
+  get tags() {
+    return this.form.get('tags')?.value;
+  }
+
   matErrorMessage(formControlName: string, fieldName: string) {
     return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl>this.form.get(formControlName), fieldName);
   }
@@ -269,5 +287,20 @@ export class ProjectsFormComponent implements OnInit {
 
   private enableForm() {
     this.isDisabledForm = false;
+  }
+
+  removeTag(tag: string) {
+    const index = this.tags?.indexOf(tag);
+    if (index !== undefined && index !== null && index >= 0) {
+      this.tags?.splice(index, 1);
+    }
+  }
+
+  addTag(value: string, event: MatChipInputEvent) {
+    const valueTrimmed = (value || '').trim();
+    if (valueTrimmed) {
+      this.tags?.push(valueTrimmed);
+    }
+    event.chipInput?.clear();
   }
 }

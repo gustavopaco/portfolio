@@ -18,3 +18,8 @@ img {
     scale: (1.2);
   }
 }
+
+::ng-deep div[role="presentation"] {
+  justify-content: center;
+  align-items: center;
+}

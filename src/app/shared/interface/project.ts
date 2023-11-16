@@ -6,4 +6,5 @@ export interface Project {
   pictureUrl: string;
   pictureOrientation: string;
   status: string;
+  tags: string[];
 }

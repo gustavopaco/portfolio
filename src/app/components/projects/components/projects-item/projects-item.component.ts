@@ -19,6 +19,7 @@ import {
   BottomSheetDialogComponent
 } from "../../../../shared/external/angular-material/bottom-sheet-dialog/bottom-sheet-dialog.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatChipsModule} from "@angular/material/chips";
 
 export interface ProjectItemData {
   project: Project;
@@ -28,7 +29,7 @@ export interface ProjectItemData {
 @Component({
   selector: 'app-projects-item',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule, MatBottomSheetModule, MatTooltipModule, TranslateModule],
+  imports: [CommonModule, MatToolbarModule, MatDialogModule, StatusProjectPipe, MatButtonModule, MatIconModule, MatBottomSheetModule, MatTooltipModule, TranslateModule, MatChipsModule],
   templateUrl: './projects-item.component.html',
   styleUrls: ['./projects-item.component.scss']
 })

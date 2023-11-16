@@ -53,6 +53,18 @@
       </mat-select>
       <mat-error>{{ matErrorMessage('status', 'Project status') }}</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'projects_form.label_tags' | translate }}</mat-label>
+      <mat-chip-grid #chipList>
+                    <mat-chip *ngFor="let tag of tags"  highlighted [removable]="true" (removed)="removeTag(tag)">
+                      <mat-icon matChipRemove>cancel</mat-icon>{{ tag }}
+                    </mat-chip>
+      </mat-chip-grid>
+        <input placeholder="{{ 'projects_form.placeholder_tags' | translate }}" #tagInput [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="addTag(tagInput.value, $event)">
+      <mat-error>{{ matErrorMessage('tags', 'Project tags') }}</mat-error>
+    </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">
     <button mat-raised-button color="primary" type="submit">

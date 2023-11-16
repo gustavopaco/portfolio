@@ -117,7 +117,8 @@ export class ProjectsListComponent {
       status: 'IN_PROGRESS',
       pictureUrl: 'assets/backgrounds/under-construction.jpg',
       url: 'https://www.google.com',
-      pictureOrientation: 'LANDSCAPE'
+      pictureOrientation: 'LANDSCAPE',
+      tags: ['teste', 'teste2']
     })
     setTimeout(() => {
     this.swiperRef?.nativeElement.swiper.update();

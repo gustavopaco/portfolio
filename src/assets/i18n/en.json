@@ -144,6 +144,8 @@
     "label_description": "Description",
     "placeholder_description": "Type the project description",
     "label_status": "Status",
+    "label_tags": "Tags(Optional)",
+    "placeholder_tags": "Type the project tags, separated by commas",
     "btn_save": "Save",
     "btn_cancel": "Cancel",
     "messages": {

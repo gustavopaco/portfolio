@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Social} from "../../shared/interface/social";
 import {SocialService} from "../../shared/services/social.service";
@@ -12,7 +12,7 @@ import {MatTooltipModule, TooltipPosition} from "@angular/material/tooltip";
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.scss']
 })
-export class SocialComponent implements AfterViewInit {
+export class SocialComponent implements OnInit {
 
   brands = [
     ' fa-github ', ' fa-linkedin ', ' fa-facebook ', ' fa-instagram ', ' fa-x-twitter ', ' fa-youtube '
@@ -32,7 +32,7 @@ export class SocialComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (this.social) {
       this.getSocialsCount();
     }

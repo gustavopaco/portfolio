@@ -144,6 +144,8 @@
     "label_description": "Descrição",
     "placeholder_description": "Digite a descrição do projeto",
     "label_status": "Status",
+    "label_tags": "Tags(Opcional)",
+    "placeholder_tags": "Digite as tags do projeto, separadas por vírgula",
     "btn_save": "Salvar",
     "btn_cancel": "Cancelar",
     "messages": {

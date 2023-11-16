@@ -14,6 +14,11 @@
     </div><!--project-wrapper-->
   </div><!--col-->
   <div class="col-12">
+    <mat-chip-listbox *ngIf="data.project.tags.length > 0">
+        <mat-chip color="primary" highlighted *ngFor="let tag of data.project.tags">
+          {{ tag }}
+        </mat-chip>
+    </mat-chip-listbox>
     <h2 class="text-center">{{ data.project.name }}</h2>
     <p class="text-center">{{ data.project.description }}</p>
   </div><!--col-->
@@ -21,7 +26,7 @@
 <mat-dialog-actions align="end" *ngIf="isDesktop">
   <a mat-raised-button color="primary" [href]="data.project.url" target="_blank" [disabled]="data.project.url == null">
     <mat-icon iconPositionEnd>launch</mat-icon>
-    {{ (data.project.url ? 'projects_item.options.visit': 'projects_item.options.not_available') | translate }}</a>
+    {{ (data.project.url ? 'projects_item.options.visit' : 'projects_item.options.not_available') | translate }}</a>
   <button mat-raised-button color="accent" *ngIf="data.editable" (click)="onEdit()">
     <mat-icon>edit</mat-icon>
     {{ 'projects_item.options.edit' | translate }}
@@ -33,8 +38,11 @@
   <button mat-raised-button color="primary" mat-dialog-close>{{ 'projects_item.options.close' | translate }}</button>
 </mat-dialog-actions>
 <mat-dialog-actions align="center" *ngIf="!isDesktop">
-  <button mat-raised-button color="primary" (click)="onOptionsClick()" *ngIf="data.editable">{{ 'projects_item.btn_options' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onOptionsClick()"
+          *ngIf="data.editable">{{ 'projects_item.btn_options' | translate }}</button>
   <a mat-raised-button color="primary" [href]="data.project.url" target="_blank"
      *ngIf="!data.editable"
-     [disabled]="data.project.url == null"><mat-icon iconPositionEnd>launch</mat-icon>{{ (data.project.url ? 'projects_item.options.visit': 'projects_item.options.not_available') | translate }}</a>
+     [disabled]="data.project.url == null">
+    <mat-icon iconPositionEnd>launch</mat-icon>
+    {{ (data.project.url ? 'projects_item.options.visit' : 'projects_item.options.not_available') | translate }}</a>
 </mat-dialog-actions>

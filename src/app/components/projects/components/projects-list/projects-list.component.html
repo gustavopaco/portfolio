@@ -17,11 +17,13 @@
 </swiper-container>
 <div class="row justify-content-center mb-3">
   <button mat-icon-button color="accent" class="cursor-pointer me-3"
+          *ngIf="projects && projects.length > 1"
           [disabled]="activeIndex == 0"
           (click)="moveToBackSlide()">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
   <button mat-icon-button color="accent" class="cursor-pointer"
+          *ngIf="projects && projects.length > 1"
           [disabled]="activeIndex == numberOfSlides - 1"
           (click)="moveToNextSlide()">
     <mat-icon>keyboard_arrow_right</mat-icon>

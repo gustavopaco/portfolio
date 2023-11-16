@@ -64,7 +64,7 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  validatorMessages(formControlName: string, validatorName: string): string {
-    return FormValidator.validateSmallI18nGenericInterpolation(this.translate, <FormControl>this.form.get(formControlName), validatorName);
+  matErrorMessages(formControlName: string, fieldName: string): string {
+    return FormValidator.validateSmallI18nGenericInterpolation(this.translate, <FormControl>this.form.get(formControlName), fieldName);
   }
 }

@@ -16,6 +16,11 @@
     "label_message": "Message",
     "placeholder_message": "Type your message",
     "button_send": "Send",
+    "field_name": {
+      "name": "Name",
+      "email": "E-mail",
+      "message": "Message"
+    },
     "message": {
       "success": "Message sent successfully.",
       "error": "Failed to send message."
@@ -47,6 +52,10 @@
     "label_password": "Password",
     "placeholder_password": "Type your password",
     "button_login": "Login",
+    "field_name": {
+      "email": "E-mail",
+      "password": "Password"
+    },
     "message": {
       "success": "Login successful.",
       "error": "Failed to authenticate."

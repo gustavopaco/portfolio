@@ -2,18 +2,18 @@
   <mat-form-field class="w-100 mb-2">
     <mat-label>{{ 'contact_form.label_name' | translate }}</mat-label>
     <input matInput [placeholder]=" 'contact_form.placeholder_name' | translate " formControlName="name">
-    <mat-error class="mat-accent-text">{{ matErrorMessage('name', 'Nome') }}</mat-error>
+    <mat-error class="mat-accent-text">{{ matErrorMessage('name', ('contact_form.field_name.name' | translate)) }}</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100 mb-2">
     <mat-label>{{ 'contact_form.label_email' | translate }}</mat-label>
     <input matInput [placeholder]=" 'contact_form.placeholder_email' | translate " formControlName="email">
-    <mat-error class="mat-accent-text">{{ matErrorMessage('email', 'E-mail') }}</mat-error>
+    <mat-error class="mat-accent-text">{{ matErrorMessage('email', ('contact_form.field_name.email' | translate)) }}</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100 mb-2">
     <mat-label>{{ 'contact_form.label_message' | translate }}</mat-label>
     <textarea matInput [placeholder]=" 'contact_form.placeholder_message' | translate " formControlName="message"
               class="resize-none"></textarea>
-    <mat-error class="mat-accent-text">{{ matErrorMessage('message', 'Mensagem') }}</mat-error>
+    <mat-error class="mat-accent-text">{{ matErrorMessage('message', ('contact_form.field_name.message' | translate)) }}</mat-error>
   </mat-form-field>
   <button mat-raised-button color="accent">{{ 'contact_form.button_send' | translate }}</button>
 </form>

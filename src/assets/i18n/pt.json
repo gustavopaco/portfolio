@@ -16,6 +16,11 @@
     "label_message": "Mensagem",
     "placeholder_message": "Digite a mensagem",
     "button_send": "Enviar",
+    "field_name": {
+      "name": "Nome",
+      "email": "E-mail",
+      "message": "Mensagem"
+    },
     "message": {
       "success": "Mensagem enviada com sucesso!",
       "error": "Erro ao enviar mensagem!"
@@ -47,6 +52,10 @@
     "label_password": "Senha",
     "placeholder_password": "Entre com sua senha",
     "button_login": "Entrar",
+    "field_name": {
+      "email": "E-mail",
+      "password": "Senha"
+    },
     "message": {
       "success": "Login realizado com sucesso!",
       "error": "Erro ao realizar login!"

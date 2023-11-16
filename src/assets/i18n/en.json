@@ -146,8 +146,23 @@
     "label_status": "Status",
     "label_tags": "Tags(Optional)",
     "placeholder_tags": "Type the project tags, separated by commas",
+    "btn_add_section": "Add section",
+    "section_title": "Section",
+    "label_section_title": "Section title",
+    "placeholder_section_title": "Type the section title",
+    "label_section_description": "Section description",
+    "placeholder_section_description": "Type the section description",
     "btn_save": "Save",
     "btn_cancel": "Cancel",
+    "field_names": {
+      "name": "Name",
+      "website": "Website",
+      "description": "Description",
+      "status": "Status",
+      "tags": "Tags",
+      "section_title": "Section title",
+      "section_description": "Section description"
+    },
     "messages": {
       "success": "Project saved successfully.",
       "no_changes": "No changes were made."

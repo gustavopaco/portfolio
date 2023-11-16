@@ -146,8 +146,23 @@
     "label_status": "Status",
     "label_tags": "Tags(Opcional)",
     "placeholder_tags": "Digite as tags do projeto, separadas por vírgula",
+    "btn_add_section": "Adicionar segmento",
+    "section_title": "Segmento",
+    "label_section_title": "Título do segmento",
+    "placeholder_section_title": "Digite o título do segmento",
+    "label_section_description": "Descrição do segmento",
+    "placeholder_section_description": "Digite a descrição do segmento",
     "btn_save": "Salvar",
     "btn_cancel": "Cancelar",
+    "field_names": {
+      "name": "Nome",
+      "website": "Website",
+      "description": "Descrição",
+      "status": "Status",
+      "tags": "Tags",
+      "section_title": "Título do segmento",
+      "section_description": "Descrição do segmento"
+    },
     "messages": {
       "success": "Projeto salvo com sucesso!",
       "no_changes": "Nenhuma alteração foi feita."

@@ -92,11 +92,20 @@ export class PortfolioComponent implements OnInit {
   }
 
   onProjectClicked(idProject: number) {
-        this.openProjectItemDialog(this.getProjectRecordById(idProject)!);
+    this.getProjectRecordById(idProject);
   }
 
   private getProjectRecordById(idProject: number) {
-    return this.user?.projects?.find(project => project.id === idProject);
+    this.userService.getProjectRecord(idProject)
+      .pipe(take(1))
+      .subscribe({
+        next: (project) => {
+          this.openProjectItemDialog(project);
+        },
+        error: (error) => {
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
+        }
+      })
   }
 
   openProjectItemDialog(project: Project) {

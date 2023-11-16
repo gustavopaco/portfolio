@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class="justify-content-center">{{ (data.newProject ? 'projects_form.new_project' : 'projects_form.edit_project') | translate }}</mat-toolbar-row>
+  <mat-toolbar-row
+    class="justify-content-center">{{ (data.newProject ? 'projects_form.new_project' : 'projects_form.edit_project') | translate }}</mat-toolbar-row>
 </mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="row px-3">
@@ -23,55 +24,86 @@
       </div><!--cropped-image-->
       <mat-hint class="text-center d-flex flex-wrap justify-content-center align-items-center edit-btn-image-wrapper">
         <label for="fileInput" class="me-2"
-               matRipple [matRippleCentered]="true" matTooltip="{{ 'projects_form.mat_tooltip_change_image' | translate }}">
+               matRipple [matRippleCentered]="true"
+               matTooltip="{{ 'projects_form.mat_tooltip_change_image' | translate }}">
           <mat-icon color="primary" class="d-flex justify-content-center align-items-center">edit</mat-icon>
           <input type="file" id="fileInput" class="d-none" (change)="onFileInputChange($event)">
         </label>
-       {{ 'projects_form.filled_image_edit_description' | translate }}
+        {{ 'projects_form.filled_image_edit_description' | translate }}
       </mat-hint><!--edit-btn-image-wrapper-->
       <mat-error *ngIf="data.isFailedToUploadImage">{{ matErrorImageMessage() }}</mat-error>
     </div><!--col__cropped-image-wrapper-->
     <mat-form-field class="col-lg-6">
       <mat-label>{{ 'projects_form.label_name' | translate }}</mat-label>
       <input matInput placeholder="{{ 'projects_form.placeholder_name' | translate }}" formControlName="name">
-      <mat-error>{{ matErrorMessage('name', 'Project name') }}</mat-error>
+      <mat-error>{{ matErrorMessage('name', ('projects_form.field_names.name' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-lg-6">
       <mat-label>{{ 'projects_form.label_website' | translate }}</mat-label>
       <input matInput placeholder="{{ 'projects_form.placeholder_website' | translate }}" formControlName="url">
-      <mat-error>{{ matErrorMessage('url', 'Website') }}</mat-error>
+      <mat-error>{{ matErrorMessage('url', ('projects_form.field_names.website' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
       <mat-label>{{ 'projects_form.label_description' | translate }}</mat-label>
-      <textarea matInput class="resize-none" placeholder="{{ 'projects_form.placeholder_description' | translate }}" formControlName="description"></textarea>
-      <mat-error>{{ matErrorMessage('description', 'Project description') }}</mat-error>
+      <textarea matInput class="resize-none" placeholder="{{ 'projects_form.placeholder_description' | translate }}"
+                formControlName="description"></textarea>
+      <mat-error>{{ matErrorMessage('description', ('projects_form.field_names.description' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
       <mat-label>{{ 'projects_form.label_status' | translate }}</mat-label>
       <mat-select formControlName="status">
         <mat-option *ngFor="let status of projectStatusList" [value]="status">{{ status | statusProject }}</mat-option>
       </mat-select>
-      <mat-error>{{ matErrorMessage('status', 'Project status') }}</mat-error>
+      <mat-error>{{ matErrorMessage('status', ('projects_form.field_names.status' | translate)) }}</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field [floatLabel]="tags && tags.length > 0 ? 'always': 'auto'">
       <mat-label>{{ 'projects_form.label_tags' | translate }}</mat-label>
       <mat-chip-grid #chipList>
-                    <mat-chip *ngFor="let tag of tags"  highlighted [removable]="true" (removed)="removeTag(tag)">
-                      <mat-icon matChipRemove>cancel</mat-icon>{{ tag }}
-                    </mat-chip>
+        <mat-chip *ngFor="let tag of tags" highlighted [removable]="true" (removed)="removeTag(tag)">
+          <mat-icon matChipRemove>cancel</mat-icon>
+          {{ tag }}
+        </mat-chip>
       </mat-chip-grid>
-        <input placeholder="{{ 'projects_form.placeholder_tags' | translate }}" #tagInput [matChipInputFor]="chipList"
-               [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-               (matChipInputTokenEnd)="addTag(tagInput.value, $event)">
-      <mat-error>{{ matErrorMessage('tags', 'Project tags') }}</mat-error>
+      <input placeholder="{{ 'projects_form.placeholder_tags' | translate }}" #tagInput [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+             (matChipInputTokenEnd)="addTag(tagInput.value, $event)">
     </mat-form-field>
+    <div class="col-12 section-block">
+    <mat-divider class="mb-3"></mat-divider>
+      <h2 class="text-center" *ngIf="projectSectionBlocksFormArray.controls.length > 0">{{ 'projects_form.section_title' | translate }}</h2>
+      <ng-container formArrayName="projectSectionBlocks" *ngFor="let section of projectSectionBlocksFormArray.controls; index as s">
+        <ng-container [formGroupName]="s">
+          <mat-form-field class="col-12" >
+            <mat-label>{{ 'projects_form.label_section_title' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'projects_form.placeholder_section_title' | translate }}" formControlName="title">
+            <button mat-icon-button matSuffix matTooltip="Remove this section" (click)="removeProjectSectionBlock(s)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <mat-error>{{ matErrorMessage('title', ('projects_form.field_names.section_title' | translate), true, s) }}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-12">
+            <mat-label>{{ 'projects_form.label_section_description' | translate }}</mat-label>
+            <textarea matInput class="resize-none white-space-pre" placeholder="{{ 'projects_form.placeholder_section_description' | translate }}"
+                      formControlName="description"></textarea>
+            <mat-error>{{ matErrorMessage('description', ('projects_form.field_names.section_description' | translate), true, s) }}</mat-error>
+          </mat-form-field>
+        </ng-container><!--formArrayGroupName-->
+      </ng-container><!--formArray-->
+      <button mat-raised-button color="primary" type="button" class="my-3" (click)="addProjectSectionBlock()">
+        <mat-icon>add</mat-icon>
+        {{ 'projects_form.btn_add_section' | translate }}
+      </button>
+    </div><!--col-->
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">
     <button mat-raised-button color="primary" type="submit">
-      <mat-icon *ngIf="isDisabledForm"><mat-spinner color="accent" diameter="18"></mat-spinner></mat-icon>
+      <mat-icon *ngIf="isDisabledForm">
+        <mat-spinner color="accent" diameter="18"></mat-spinner>
+      </mat-icon>
       <mat-icon *ngIf="!isDisabledForm">save</mat-icon>
       {{ 'projects_form.btn_save' | translate }}
     </button>
-    <button mat-raised-button color="primary" type="button" mat-dialog-close>{{ 'projects_form.btn_cancel' | translate }}</button>
+    <button mat-raised-button color="primary" type="button"
+            mat-dialog-close>{{ 'projects_form.btn_cancel' | translate }}</button>
   </mat-dialog-actions>
 </form>

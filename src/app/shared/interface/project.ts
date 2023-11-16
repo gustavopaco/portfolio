@@ -1,3 +1,5 @@
+import {ProjectSectionBlock} from "./project-section-block";
+
 export interface Project {
   id: number;
   name: string;
@@ -7,4 +9,5 @@ export interface Project {
   pictureOrientation: string;
   status: string;
   tags: string[];
+  projectSectionBlocks: ProjectSectionBlock[];
 }

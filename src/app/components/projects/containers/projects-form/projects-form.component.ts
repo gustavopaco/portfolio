@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
@@ -30,6 +30,9 @@ import {Project} from "../../../../shared/interface/project";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
+import {ProjectSectionBlock} from "../../../../shared/interface/project-section-block";
+import {MatDividerModule} from "@angular/material/divider";
+import {FormularioDebugComponent} from "../../../../shared/components/formulario-debug/formulario-debug.component";
 
 export interface ProjectData {
   newProject: boolean;
@@ -40,7 +43,7 @@ export interface ProjectData {
 @Component({
   selector: 'app-projects-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, TranslateModule, MatChipsModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, StatusProjectPipe, MatRippleModule, MatTooltipModule, MatProgressSpinnerModule, MatToolbarModule, TranslateModule, MatChipsModule, MatDividerModule, FormularioDebugComponent],
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.scss']
 })
@@ -55,6 +58,7 @@ export class ProjectsFormComponent implements OnInit {
     pictureOrientation: new FormControl<string | null>(null),
     status: ['', [Validators.required]],
     tags: new FormControl<string[]>([]),
+    projectSectionBlocks: this.fb.array([]),
     tempImage: new FormControl<string | null>(null)
   });
 
@@ -103,7 +107,10 @@ export class ProjectsFormComponent implements OnInit {
       });
       this.data.projectToEdit.tags.forEach((tag) => {
         this.tags?.push(tag);
-      })
+      });
+      this.data.projectToEdit.projectSectionBlocks.forEach((projectSectionBlock) => {
+        this.addProjectSectionBlock(projectSectionBlock);
+      });
     }
   }
 
@@ -264,7 +271,25 @@ export class ProjectsFormComponent implements OnInit {
     return this.form.get('tags')?.value;
   }
 
-  matErrorMessage(formControlName: string, fieldName: string) {
+  get projectSectionBlocksFormArray() {
+    return this.form.get('projectSectionBlocks') as FormArray;
+  }
+
+  addProjectSectionBlock(projectSectionBlock?: ProjectSectionBlock) {
+    let projectSectionBlockForm = this.fb.group({
+      id: projectSectionBlock?.id,
+      title: [projectSectionBlock?.title, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      description: [projectSectionBlock?.description, [Validators.required]],
+    });
+    this.projectSectionBlocksFormArray.push(projectSectionBlockForm);
+  }
+
+  removeProjectSectionBlock(index: number) {
+    this.projectSectionBlocksFormArray.removeAt(index);
+  }
+
+  matErrorMessage(formControlName: string, fieldName: string, isFormArray: boolean = false, index: number = 0) {
+    if (isFormArray) return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl>this.projectSectionBlocksFormArray.controls[index].get(formControlName), fieldName);
     return FormValidator.validateSmallI18nGenericInterpolation(this.translateService, <FormControl>this.form.get(formControlName), fieldName);
   }
 

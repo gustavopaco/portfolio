@@ -14,13 +14,19 @@
     </div><!--project-wrapper-->
   </div><!--col-->
   <div class="col-12">
-    <mat-chip-listbox *ngIf="data.project.tags.length > 0">
-        <mat-chip color="primary" highlighted *ngFor="let tag of data.project.tags">
-          {{ tag }}
-        </mat-chip>
+    <mat-chip-listbox class="mb-3" *ngIf="data.project?.tags && data.project.tags.length > 0">
+      <mat-chip color="primary" highlighted *ngFor="let tag of data.project.tags">
+        {{ tag }}
+      </mat-chip>
     </mat-chip-listbox>
-    <h2 class="text-center">{{ data.project.name }}</h2>
+    <h1 class="text-center">{{ data.project.name }}</h1>
     <p class="text-center">{{ data.project.description }}</p>
+    <ng-container *ngFor="let section of data.project.projectSectionBlocks">
+      <mat-toolbar class="mb-3 toolbar-section">
+        <mat-icon class="d-flex justify-content-center align-items-center">fiber_manual_record</mat-icon><h3> {{ section.title }}</h3>
+      </mat-toolbar>
+      <p class="white-space-pre">{{ section.description }}</p>
+    </ng-container>
   </div><!--col-->
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="isDesktop">

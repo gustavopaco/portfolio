@@ -118,7 +118,8 @@ export class ProjectsListComponent {
       pictureUrl: 'assets/backgrounds/under-construction.jpg',
       url: 'https://www.google.com',
       pictureOrientation: 'LANDSCAPE',
-      tags: ['teste', 'teste2']
+      tags: ['teste', 'teste2'],
+      projectSectionBlocks: []
     })
     setTimeout(() => {
     this.swiperRef?.nativeElement.swiper.update();

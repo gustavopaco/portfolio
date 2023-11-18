@@ -35,17 +35,17 @@
     </div><!--col__cropped-image-wrapper-->
     <mat-form-field class="col-lg-6">
       <mat-label>{{ 'projects_form.label_name' | translate }}</mat-label>
-      <input matInput placeholder="{{ 'projects_form.placeholder_name' | translate }}" formControlName="name">
+      <input matInput [placeholder]="'projects_form.placeholder_name' | translate" formControlName="name">
       <mat-error>{{ matErrorMessage('name', ('projects_form.field_names.name' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-lg-6">
       <mat-label>{{ 'projects_form.label_website' | translate }}</mat-label>
-      <input matInput placeholder="{{ 'projects_form.placeholder_website' | translate }}" formControlName="url">
+      <input matInput [placeholder]="'projects_form.placeholder_website' | translate" formControlName="url">
       <mat-error>{{ matErrorMessage('url', ('projects_form.field_names.website' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field class="col-12">
       <mat-label>{{ 'projects_form.label_description' | translate }}</mat-label>
-      <textarea matInput class="resize-none" placeholder="{{ 'projects_form.placeholder_description' | translate }}"
+      <textarea matInput class="resize-none" [placeholder]="'projects_form.placeholder_description' | translate"
                 formControlName="description"></textarea>
       <mat-error>{{ matErrorMessage('description', ('projects_form.field_names.description' | translate)) }}</mat-error>
     </mat-form-field>
@@ -64,7 +64,7 @@
           {{ tag }}
         </mat-chip>
       </mat-chip-grid>
-      <input placeholder="{{ 'projects_form.placeholder_tags' | translate }}" #tagInput [matChipInputFor]="chipList"
+      <input [placeholder]="'projects_form.placeholder_tags' | translate" #tagInput [matChipInputFor]="chipList"
              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
              (matChipInputTokenEnd)="addTag(tagInput.value, $event)">
     </mat-form-field>
@@ -73,26 +73,23 @@
       <h2 class="text-center" *ngIf="projectSectionBlocksFormArray.controls.length > 0">{{ 'projects_form.section_title' | translate }}</h2>
       <ng-container formArrayName="projectSectionBlocks" *ngFor="let section of projectSectionBlocksFormArray.controls; index as s">
         <ng-container [formGroupName]="s">
-          <mat-form-field class="col-12" >
+          <mat-form-field class="col-12">
             <mat-label>{{ 'projects_form.label_section_title' | translate }}</mat-label>
-            <input matInput placeholder="{{ 'projects_form.placeholder_section_title' | translate }}" formControlName="title">
-            <button mat-icon-button matSuffix matTooltip="Remove this section" (click)="removeProjectSectionBlock(s)">
+            <input matInput [placeholder]="'projects_form.placeholder_section_title' | translate" formControlName="title">
+            <button mat-icon-button matSuffix [matTooltip]="'projects_form.tooltip_section_remove' | translate" (click)="removeProjectSectionBlock(s)">
               <mat-icon>delete</mat-icon>
             </button>
             <mat-error>{{ matErrorMessage('title', ('projects_form.field_names.section_title' | translate), true, s) }}</mat-error>
           </mat-form-field>
           <mat-form-field class="col-12">
             <mat-label>{{ 'projects_form.label_section_description' | translate }}</mat-label>
-            <textarea matInput class="resize-none white-space-pre" placeholder="{{ 'projects_form.placeholder_section_description' | translate }}"
+            <textarea matInput class="resize-none white-space-pre" [placeholder]="'projects_form.placeholder_section_description'| translate"
                       formControlName="description"></textarea>
             <mat-error>{{ matErrorMessage('description', ('projects_form.field_names.section_description' | translate), true, s) }}</mat-error>
           </mat-form-field>
         </ng-container><!--formArrayGroupName-->
       </ng-container><!--formArray-->
-      <button mat-raised-button color="primary" type="button" class="my-3" (click)="addProjectSectionBlock()">
-        <mat-icon>add</mat-icon>
-        {{ 'projects_form.btn_add_section' | translate }}
-      </button>
+      <button mat-raised-button color="primary" type="button" class="my-3" (click)="addProjectSectionBlock()"><mat-icon>add</mat-icon>{{ 'projects_form.btn_add_section' | translate }}</button>
     </div><!--col-->
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mx-3">

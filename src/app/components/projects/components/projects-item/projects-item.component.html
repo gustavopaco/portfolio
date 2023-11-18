@@ -13,14 +13,18 @@
       <img [src]="setProjectImage()" alt="Project Image">
     </div><!--project-wrapper-->
   </div><!--col-->
-  <div class="col-12">
-    <mat-chip-listbox class="mb-3" *ngIf="data.project?.tags && data.project.tags.length > 0">
+  <div class="col-12 mb-3">
+    <mat-chip-listbox *ngIf="data.project?.tags && data.project.tags.length > 0">
       <mat-chip color="primary" highlighted *ngFor="let tag of data.project.tags">
         {{ tag }}
       </mat-chip>
     </mat-chip-listbox>
+  </div><!--col-->
+  <div class="col-12">
     <h1 class="text-center">{{ data.project.name }}</h1>
     <p class="text-center">{{ data.project.description }}</p>
+  </div><!--col-->
+  <div class="col-12">
     <ng-container *ngFor="let section of data.project.projectSectionBlocks">
       <mat-toolbar class="mb-3 toolbar-section">
         <mat-icon class="d-flex justify-content-center align-items-center">fiber_manual_record</mat-icon><h3> {{ section.title }}</h3>

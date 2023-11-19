@@ -21,7 +21,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 })
 export class ProfileComponent {
 
-  links = ['skills', 'projects']
+  links = ['skills', 'projects', 'courses']
   activeLink?: string;
 
   constructor(private router: Router,

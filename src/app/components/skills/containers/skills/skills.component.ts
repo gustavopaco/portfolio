@@ -116,6 +116,8 @@ export class SkillsComponent implements OnInit {
           this.onEditSkill();
         } else if (result?.action === 'delete') {
           this.onDeleteSkill(this.skillIdSelected);
+        } else if (result?.action == undefined) {
+          this.resetSkillSelected();
         }
       })
   }

@@ -1,0 +1,12 @@
+<ng-template #noCourses>
+  <div class="alert alert-light text-center" role="alert" #alertEl>
+    <strong class="alert-heading">{{ 'courses_form.no_courses_title' | translate }}</strong>
+    <p>{{ 'courses_form.no_courses_description' | translate }}</p>
+    <button mat-raised-button color="primary" type="button" (click)="alertEl.hidden = true">
+      <mat-icon>add</mat-icon>
+      {{ 'courses_form.btn_add_course' | translate }}
+    </button>
+  </div><!--alert-->
+</ng-template>
+<ng-container  *ngIf="courses.length > 0; else noCourses">
+</ng-container>

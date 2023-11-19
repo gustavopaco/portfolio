@@ -1,0 +1,21 @@
+<mat-spinner class="mx-auto my-5" *ngIf="isLoadingCourses; else loadedCourses"></mat-spinner>
+<ng-template #loadedCourses>
+  <ng-container *ngIf="!isErrorOnLoadingCourses; else failedToLoadCourses">
+    <div class="row">
+        <div class="col-12 my-4">
+          <app-courses-form [courses]="courses"></app-courses-form>
+        </div><!--col-->
+    </div><!--row-->
+  </ng-container>
+  <ng-template #failedToLoadCourses>
+    <div class="row">
+      <div class="col-12 my-4">
+        <div class="alert alert-danger text-center" role="alert">
+          <strong class="alert-heading">{{ 'courses.failed_to_load_courses_title' | translate }}</strong>
+          <p class="mb-0">{{ 'courses.failed_to_load_courses_description' | translate }}</p>
+        </div><!--alert-->
+      </div><!--col-->
+    </div><!--row-->
+  </ng-template>
+</ng-template>
+

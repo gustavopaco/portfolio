@@ -189,6 +189,15 @@
       "not_available": "Site not available"
     }
   },
+  "courses": {
+    "failed_to_load_courses_title": "Failed to load courses",
+    "failed_to_load_courses_description": "Something went wrong while loading courses. Please try again later."
+  },
+  "courses_form": {
+    "no_courses_title": "No courses found",
+    "no_courses_description": "Click the button below to create a new course.",
+    "btn_add_course": "Add Course"
+  },
   "required": "*{{fieldName}} is required.",
   "mask": "*Invalid {{fieldName}}.",
   "minlength": "*Minimum {{fieldName}} characters: {{requiredLength}}.",

@@ -6,6 +6,7 @@ import {API_USER} from "../constants/api";
 import {Skill} from "../interface/skill";
 import {Project} from "../interface/project";
 import {Bio} from "../interface/bio";
+import {Course} from "../interface/course";
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class UserService extends CrudService<User> {
 
   getBioRecord() {
     return this.httpClient.get<Bio>(`${API_USER}/bio`);
+  }
+
+  getCourseRecords(params: HttpParams) {
+    return this.httpClient.get<Course[]>(`${API_USER}/course`, {params});
   }
 
   saveSkillRecord(form: any) {

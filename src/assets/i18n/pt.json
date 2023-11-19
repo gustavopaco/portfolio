@@ -206,6 +206,15 @@
       "not_available": "Site não disponível"
     }
   },
+  "courses": {
+    "failed_to_load_courses_title": "Falha ao carregar cursos",
+    "failed_to_load_courses_description": "Algo deu errado ao carregar os cursos. Por favor, tente novamente mais tarde."
+  },
+  "courses_form": {
+    "no_courses_title": "Nenhum curso foi encontrado.",
+    "no_courses_description": "Clique no botão abaixo para adicionar um novo curso.",
+    "btn_add_course": "Adicionar curso"
+  },
   "required": "*{{fieldName}} obrigatório.",
   "mask": "*{{fieldName}} inválido.",
   "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",

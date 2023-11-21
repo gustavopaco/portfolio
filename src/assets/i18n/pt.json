@@ -213,7 +213,17 @@
   "courses_form": {
     "no_courses_title": "Nenhum curso foi encontrado.",
     "no_courses_description": "Clique no botão abaixo para adicionar um novo curso.",
-    "btn_add_course": "Adicionar curso"
+    "btn_add_course": "Adicionar curso",
+    "btn_save": "Salvar",
+    "label_name": "Nome",
+    "placeholder_name": "Digite o nome do curso",
+    "label_issuer": "Emissor",
+    "placeholder_issuer": "Digite o emissor do curso",
+    "label_endDate": "Data de término",
+    "field_names": {
+      "name": "Nome",
+      "issuer": "Emissor"
+    }
   },
   "required": "*{{fieldName}} obrigatório.",
   "mask": "*{{fieldName}} inválido.",

@@ -196,7 +196,17 @@
   "courses_form": {
     "no_courses_title": "No courses found",
     "no_courses_description": "Click the button below to create a new course.",
-    "btn_add_course": "Add Course"
+    "btn_add_course": "Add Course",
+    "btn_save": "Save",
+    "label_name": "Name",
+    "placeholder_name": "Type the course name",
+    "label_issuer": "Issuer",
+    "placeholder_issuer": "Type the course issuer",
+    "label_endDate": "End date",
+    "field_names": {
+      "name": "Name",
+      "issuer": "Issuer"
+    }
   },
   "required": "*{{fieldName}} is required.",
   "mask": "*Invalid {{fieldName}}.",

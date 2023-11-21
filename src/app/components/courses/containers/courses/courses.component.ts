@@ -4,7 +4,7 @@ import {UserService} from "../../../../shared/services/user.service";
 import {HttpParams} from "@angular/common/http";
 import {AuthService} from "../../../../shared/services/default/auth.service";
 import {Course} from "../../../../shared/interface/course";
-import {delay, finalize, take} from "rxjs";
+import {finalize, take} from "rxjs";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
@@ -45,7 +45,6 @@ export class CoursesComponent implements OnInit {
     this.userService.getCourseRecords(this.paramsToRequest())
       .pipe(
         take(1),
-        delay(3000),
         finalize(() => this.isLoadingCourses = false)
       )
       .subscribe({

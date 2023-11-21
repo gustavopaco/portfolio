@@ -22,14 +22,16 @@
           <input matInput formControlName="issuer" placeholder="{{ 'courses_form.placeholder_issuer' | translate }}">
           <mat-error>{{ matErrorMessage('issuer', 'courses_form.field_names.issuer', i) }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="col-lg-6" floatLabel="always" (click)="picker.open()">
-          <mat-label>{{ 'courses_form.label_endDate' | translate }}</mat-label>
-          <input matInput formControlName="endDate" [matDatepicker]="picker"
-                 [max]="maxEndDate"
-                 readonly>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker touchUi startView="multi-year" color="primary" disabled="false"></mat-datepicker>
-        </mat-form-field>
+        <div class="col-lg-6">
+          <mat-form-field floatLabel="always" (click)="onDatePickerOpen(picker)">
+            <mat-label >{{ 'courses_form.label_endDate' | translate }}</mat-label>
+            <input matInput formControlName="endDate" [matDatepicker]="picker"
+                   [max]="maxEndDate"
+                   readonly>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker touchUi startView="multi-year" color="primary" disabled="false"></mat-datepicker>
+          </mat-form-field>
+        </div><!--col-->
       </ng-container><!--formArrayGroupName-->
       <div class="col-12">
       <mat-divider class="mb-3"></mat-divider>

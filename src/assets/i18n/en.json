@@ -203,9 +203,15 @@
     "label_issuer": "Issuer",
     "placeholder_issuer": "Type the course issuer",
     "label_endDate": "End date",
+    "btn_delete": "Remove",
     "field_names": {
       "name": "Name",
-      "issuer": "Issuer"
+      "issuer": "Issuer",
+      "endDate": "End date"
+    },
+    "messages": {
+      "success": "Courses saved successfully.",
+      "success_delete": "Course removed successfully."
     }
   },
   "required": "*{{fieldName}} is required.",

@@ -53,6 +53,7 @@
               "node_modules/hammerjs/hammer.min.js"
             ],
             "allowedCommonJsDependencies": [
+              "moment",
               "fast-xml-parser",
               "@aws-crypto/sha1-browser",
               "@aws-crypto/sha256-browser",

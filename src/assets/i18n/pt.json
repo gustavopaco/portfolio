@@ -220,9 +220,15 @@
     "label_issuer": "Emissor",
     "placeholder_issuer": "Digite o emissor do curso",
     "label_endDate": "Data de término",
+    "btn_delete": "Remover",
     "field_names": {
       "name": "Nome",
-      "issuer": "Emissor"
+      "issuer": "Emissor",
+      "endDate": "Data de término"
+    },
+    "messages": {
+      "success": "Cursos salvos com sucesso!",
+      "success_delete": "Curso removido com sucesso!"
     }
   },
   "required": "*{{fieldName}} obrigatório.",

@@ -9,33 +9,45 @@
   </div><!--alert-->
 </ng-template>
 <ng-container *ngIf="coursesFormArray.length > 0; else noCourses">
-  <form [formGroup]="form" class="row" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ng-container formArrayName="courses" *ngFor="let c of coursesFormArray.controls; index as i">
       <ng-container [formGroupName]="i">
-        <mat-form-field class="col-12">
-          <mat-label>{{ 'courses_form.label_name' | translate }}</mat-label>
-          <input matInput formControlName="name" placeholder="{{ 'courses_form.placeholder_name' | translate }}">
-          <mat-error>{{ matErrorMessage('name', 'courses_form.field_names.name', i) }}</mat-error>
-        </mat-form-field>
-        <mat-form-field class="col-lg-6">
-          <mat-label>{{ 'courses_form.label_issuer' | translate }}</mat-label>
-          <input matInput formControlName="issuer" placeholder="{{ 'courses_form.placeholder_issuer' | translate }}">
-          <mat-error>{{ matErrorMessage('issuer', 'courses_form.field_names.issuer', i) }}</mat-error>
-        </mat-form-field>
-        <div class="col-lg-6">
-          <mat-form-field floatLabel="always" (click)="onDatePickerOpen(picker)">
-            <mat-label >{{ 'courses_form.label_endDate' | translate }}</mat-label>
-            <input matInput formControlName="endDate" [matDatepicker]="picker"
-                   [max]="maxEndDate"
-                   readonly>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker touchUi startView="multi-year" color="primary" disabled="false"></mat-datepicker>
-          </mat-form-field>
-        </div><!--col-->
+          <mat-card class="mb-3">
+            <mat-card-content>
+              <div class="row">
+                <mat-form-field class="col-lg-6">
+                  <mat-label>{{ 'courses_form.label_name' | translate }}</mat-label>
+                  <input matInput formControlName="name" #inputCourseName placeholder="{{ 'courses_form.placeholder_name' | translate }}">
+                  <mat-hint align="end">{{ inputCourseName.value.length || 0 }}/ 50</mat-hint>
+                  <mat-error>{{ matErrorMessage('name', ('courses_form.field_names.name' | translate), i) }}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-lg-6">
+                  <mat-label>{{ 'courses_form.label_issuer' | translate }}</mat-label>
+                  <input matInput formControlName="issuer" #inputCourseIssuer placeholder="{{ 'courses_form.placeholder_issuer' | translate }}">
+                  <mat-hint align="end">{{ inputCourseIssuer.value.length || 0 }}/ 50</mat-hint>
+                  <mat-error>{{ matErrorMessage('issuer', ('courses_form.field_names.issuer' | translate), i) }}</mat-error>
+                </mat-form-field>
+                <div class="col-lg-6">
+                  <mat-form-field floatLabel="always" (click)="onDatePickerOpen(picker)">
+                    <mat-label >{{ 'courses_form.label_endDate' | translate }}</mat-label>
+                    <input matInput formControlName="endDate" [matDatepicker]="picker"
+                           [max]="maxEndDate"
+                           readonly>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker touchUi startView="multi-year" color="primary" disabled="false"></mat-datepicker>
+                    <mat-error>{{ matErrorMessage('endDate', ('courses_form.field_names.endDate' | translate), i) }}</mat-error>
+                  </mat-form-field>
+                </div><!--col-->
+              </div><!--row-->
+            </mat-card-content>
+            <mat-card-actions class="ps-3">
+                  <button mat-raised-button color="warn" type="button" (click)="removeCourse(i)">
+                    <mat-icon>delete</mat-icon>
+                    {{ 'courses_form.btn_delete' | translate }}
+                  </button>
+            </mat-card-actions>
+          </mat-card>
       </ng-container><!--formArrayGroupName-->
-      <div class="col-12">
-      <mat-divider class="mb-3"></mat-divider>
-      </div><!--col-->
     </ng-container><!--formArrayName-->
     <div class="col-12">
       <button mat-raised-button color="primary" type="button" class="me-lg-3" (click)="onAddNewCourse()">

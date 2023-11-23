@@ -5,7 +5,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {Course} from "../../../../shared/interface/course";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {FormValidator} from "../../../../shared/validator/form-validator";
 import {MatDatepicker, MatDatepickerIntl, MatDatepickerModule} from "@angular/material/datepicker";
@@ -18,11 +18,17 @@ import {
   MY_FORMATS
 } from "../../../../shared/external/angular-material/datepicker/custom-date-adapter";
 import {AuthService} from "../../../../shared/services/default/auth.service";
+import {MatCardModule} from "@angular/material/card";
+import {finalize, take} from "rxjs";
+import {UserService} from "../../../../shared/services/user.service";
+import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
+import {HttpValidator} from "../../../../shared/validator/http-validator";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-courses-form',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatMomentDateModule, FormularioDebugComponent, MatDividerModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatMomentDateModule, FormularioDebugComponent, MatDividerModule, MatCardModule],
   templateUrl: './courses-form.component.html',
   styleUrls: ['./courses-form.component.scss'],
   providers: [
@@ -40,24 +46,31 @@ export class CoursesFormComponent implements OnInit {
 
   maxEndDate = new Date();
 
+  isFormDisabled = false;
+
   constructor(private fb: FormBuilder,
               private translateService: TranslateService,
+              private userService: UserService,
               private authService: AuthService,
+              private matSnackBarService: MatSnackbarService,
               private _adapter: DateAdapter<any>,
               private _intl: MatDatepickerIntl,
-              @Inject(MAT_DATE_LOCALE) private _locale: string,) {
-    this.setDatePickerLocale();
+              @Inject(MAT_DATE_LOCALE) private _locale: string) {
+    this.loadLanguageSubscription();
   }
 
-  setDatePickerLocale() {
-    const defaultLanguage = this.authService.getDefaultLanguage();
-    if (defaultLanguage === 'en') {
-      this._locale = 'en-US';
-      this._adapter.setLocale(this._locale);
-    } else if (defaultLanguage === 'pt') {
-      this._locale = 'pt-BR';
-      this._adapter.setLocale(this._locale);
-    }
+  loadLanguageSubscription() {
+    this.authService.defaultLanguage$
+      .pipe(takeUntilDestroyed())
+      .subscribe((language: string) => {
+        if (language === 'en') {
+          this._locale = 'en-US';
+          this._adapter.setLocale(this._locale);
+        } else if (language === 'pt') {
+          this._locale = 'pt-BR';
+          this._adapter.setLocale(this._locale);
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -73,15 +86,32 @@ export class CoursesFormComponent implements OnInit {
   addCourse(course?: Course) {
     let coursesFormGroup = this.fb.group({
       id: new FormControl<number | undefined>(course?.id),
-      name: [course?.name],
-      issuer: [course?.issuer],
-      endDate: new FormControl<Date | undefined>(course?.endDate)
+      name: [course?.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      issuer: [course?.issuer, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      endDate: new FormControl<Date | undefined>(course?.endDate, [Validators.required])
     })
     this.coursesFormArray.push(coursesFormGroup);
   }
 
   removeCourse(index: number) {
-    this.coursesFormArray.removeAt(index);
+    const course = this.coursesFormArray.controls[index].value;
+    if (course.id) {
+      this.isFormDisabled = true;
+      this.userService.deleteCourseRecord(course.id)
+        .pipe(
+          take(1),
+          finalize(() => this.isFormDisabled = false)
+        )
+        .subscribe({
+          next: () => {
+            this.matSnackBarService.success(this.translateService.instant('courses_form.messages.success_delete'), this.translateService.instant('generic_messages.action_close'), 3000);
+            this.coursesFormArray.removeAt(index);
+          },
+          error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error))
+        })
+    } else {
+      this.coursesFormArray.removeAt(index);
+    }
   }
 
   get coursesFormArray() {
@@ -89,7 +119,24 @@ export class CoursesFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.form.valid && !this.isFormDisabled) {
+      this.saveCoursesRecords(this.coursesFormArray.value);
+    }
+  }
 
+  private saveCoursesRecords(courses: Course[]) {
+    this.isFormDisabled = true;
+    this.userService.saveCoursesRecords(courses)
+      .pipe(
+        take(1),
+        finalize(() => this.isFormDisabled = false)
+      )
+      .subscribe({
+        next: () => {
+          this.matSnackBarService.success(this.translateService.instant('courses_form.messages.success'), this.translateService.instant('generic_messages.action_close'), 3000);
+        },
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error))
+      })
   }
 
   matErrorMessage(formControlName: string, fieldName: string, index: number) {

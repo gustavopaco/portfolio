@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {API_AUTH, API_RESET_PASSWORD, API_RESET_PASSWORD_LINK, API_VALIDATE_TOKEN} from "../../constants/api";
 import {Router} from "@angular/router";
-import {take} from "rxjs";
+import {BehaviorSubject, take} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private defaultLanguage = new BehaviorSubject<string>('pt');
 
   constructor(private httpClient: HttpClient, private router: Router) {
   }
@@ -61,10 +63,15 @@ export class AuthService {
 
   saveDefaultLanguage(language: string): void {
     localStorage.setItem("defaultLanguage", language);
+    this.defaultLanguage.next(language);
   }
 
   getDefaultLanguage(): string {
     return localStorage.getItem("defaultLanguage") ?? "pt";
+  }
+
+  get defaultLanguage$() {
+    return this.defaultLanguage.asObservable();
   }
 
   getLat() {

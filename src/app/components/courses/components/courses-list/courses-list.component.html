@@ -1,0 +1,4 @@
+<div class="mb-4" *ngFor="let course of courses; index as i">
+  <h3><mat-icon class="d-flex justify-content-center align-items-center">fiber_manual_record</mat-icon>{{ course.name }}</h3>
+  <p><span class="fst-italic">{{ course.issuer }}</span> - {{ course.endDate | date : 'MM/YYYY' }}</p>
+</div>

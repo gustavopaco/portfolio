@@ -22,11 +22,12 @@ import {SocialService} from "../../shared/services/social.service";
 import {SocialComponent} from "../social/social.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CoursesListComponent} from "../courses/components/courses-list/courses-list.component";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule, MatProgressSpinnerModule, CoursesListComponent],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })

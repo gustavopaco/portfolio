@@ -57,6 +57,18 @@
         </div><!--row-->
       </div><!--container-->
     </section><!--skills-->
+    <section class="courses container-fluid deep-purple-a400 text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-5 mb-3">
+            <h1 class="text-center text-white">{{ 'portfolio.courses' | translate }}</h1>
+          </div><!--col-->
+          <div class="col-12">
+            <app-courses-list [courses]="user?.courses"></app-courses-list>
+          </div><!--col-->
+        </div><!--row-->
+      </div><!--container-->
+    </section><!--courses-->
     <section class="projects container-fluid">
       <div class="container">
         <div class="row">

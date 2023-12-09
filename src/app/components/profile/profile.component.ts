@@ -21,7 +21,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 })
 export class ProfileComponent {
 
-  links = ['skills', 'projects', 'courses']
+  links = ['skills', 'projects', 'courses', 'certificates']
   activeLink?: string;
 
   constructor(private router: Router,
@@ -49,7 +49,10 @@ export class ProfileComponent {
     if (link === 'projects') {
       return this.translate.instant('profile.title_projects');
     }
-    return this.translate.instant('profile.title_courses');
+    if (link === 'courses') {
+      return this.translate.instant('profile.title_courses');
+    }
+    return this.translate.instant('profile.title_certificates');
   }
 
   setMatTabTooltip(link: string) {
@@ -59,6 +62,9 @@ export class ProfileComponent {
     if (link === 'projects') {
       return this.translate.instant('profile.mat_tab_tooltip_projects');
     }
-    return this.translate.instant('profile.mat_tab_tooltip_courses');
+    if (link === 'courses') {
+      return this.translate.instant('profile.mat_tab_tooltip_courses');
+    }
+    return this.translate.instant('profile.mat_tab_tooltip_certificates');
   }
 }

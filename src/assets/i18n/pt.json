@@ -69,7 +69,9 @@
     "mat_tab_tooltip_projects": "Ver projetos",
     "title_projects": "Projetos",
     "mat_tab_tooltip_courses": "Ver cursos",
-    "title_courses": "Cursos"
+    "title_courses": "Cursos",
+    "mat_tab_tooltip_certificates": "Ver certificados",
+    "title_certificates": "Certificados"
   },
   "bio_form": {
     "toolbar_bio": "Biografia",

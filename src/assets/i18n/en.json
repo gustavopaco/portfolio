@@ -69,7 +69,9 @@
     "mat_tab_tooltip_projects": "Open Projects",
     "title_projects": "Projects",
     "mat_tab_tooltip_courses": "Open Courses",
-    "title_courses": "Courses"
+    "title_courses": "Courses",
+    "mat_tab_tooltip_certificates": "Open Certificates",
+    "title_certificates": "Certificates"
   },
   "bio_form": {
     "toolbar_bio": "Bio",

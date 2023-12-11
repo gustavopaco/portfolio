@@ -1,0 +1,17 @@
+<div class="drop-zone" dragAndDrop (onFileDropped)="onFileDrop($event)">
+    <div class="drop-zone__prompt">
+        <div class="drop-zone__prompt__icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <div class="drop-zone__prompt__text">
+            <span class="drop-zone__prompt__text__title">Drag & Drop</span>
+            <span class="drop-zone__prompt__text__subtitle">or</span>
+            <span class="drop-zone__prompt__text__subtitle">Click to Upload</span>
+        </div>
+    </div><!--drop-zone__prompt-->
+    <input type="file" name="file" class="drop-zone__input" multiple>
+    <div class="drop-zone__bar">
+        <div class="drop-zone__bar__fill"></div>
+    </div>
+    <div class="drop-zone__uploads"></div>
+</div><!--drop-zone-->

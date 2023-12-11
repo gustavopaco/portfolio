@@ -1,0 +1,47 @@
+.drop-zone {
+  border: 2px dashed #0087f7;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  .drop-zone__prompt {
+    align-items: center;
+    background-color: rgba(0, 135, 247, 0.1);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .drop-zone__input {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .drop-zone__icon {
+    height: 64px;
+    width: 64px;
+  }
+
+  .drop-zone__text {
+    color: #0087f7;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .drop-zone--over {
+    border-style: solid;
+  }
+}

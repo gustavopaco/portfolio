@@ -1,47 +1,67 @@
 .drop-zone {
   border: 2px dashed #0087f7;
   border-radius: 20px;
-  cursor: pointer;
   height: 200px;
   overflow: hidden;
-  position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 135, 247, 0.1);
 
   .drop-zone__prompt {
-    align-items: center;
-    background-color: rgba(0, 135, 247, 0.1);
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .drop-zone__input {
-    cursor: pointer;
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
-    z-index: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    mat-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 48px;
+      margin-right: 1rem;
+      color: #0087f7;
+    }
+    span {
+      font-size: 24px;
+      font-weight: 500;
+      color: rgb(140, 140, 140);
+      @media screen and (max-width: 992px) {
+        font-size: 16px;
+      }
+    }
+    @media screen and (max-width: 992px) {
+      flex-direction: column;
+      mat-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
   }
 
-  .drop-zone__icon {
-    height: 64px;
-    width: 64px;
-  }
+  .drop-zone__browse__files {
+    .drop-zone__browse__files__label {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 200px;
+      height: 40px;
+      border: 1px solid #0087f7;
+      border-radius: 4px;
+      background-color: #0087f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-  .drop-zone__text {
-    color: #0087f7;
-    font-size: 16px;
-    font-weight: 500;
-  }
-
-  .drop-zone--over {
-    border-style: solid;
+      .drop-zone__input {
+        display: none;
+      }
+      @media screen and (max-width: 992px) {
+        width: 120px;
+        height: 32px;
+      }
+    }
   }
 }

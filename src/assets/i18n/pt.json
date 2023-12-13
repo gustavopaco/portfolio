@@ -255,6 +255,11 @@
   "deleteButton": "Deletar",
   "editButton": "Editar",
   "saveButton": "Salvar",
+  "file_uploader": {
+    "file_already_selected": "Arquivo {{fileName}} já selecionado.",
+    "upload_file": "Upload de arquivo",
+    "remove_file": "Remover arquivo"
+  },
   "generic_messages": {
     "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
     "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde.",

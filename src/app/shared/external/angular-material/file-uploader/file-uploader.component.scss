@@ -1,13 +1,13 @@
 .drop-zone {
   border: 2px dashed #0087f7;
   border-radius: 20px;
-  height: 200px;
-  overflow: hidden;
+  min-height: 200px;
+  //overflow: hidden;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  //display: flex;
+  //flex-direction: column;
+  //justify-content: center;
+  //align-items: center;
   background-color: rgba(0, 135, 247, 0.1);
 
   .drop-zone__prompt {
@@ -15,6 +15,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    margin-top: 3rem;
     margin-bottom: 1rem;
     mat-icon {
       width: 48px;
@@ -40,7 +41,19 @@
     }
   }
 
+  .drop-zone__files {
+    max-width: 800px;
+    margin: 1rem auto;
+
+    mat-expansion-panel {
+      margin-bottom: 0.5rem;
+    }
+  }
+
   .drop-zone__browse__files {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
     .drop-zone__browse__files__label {
       color: #fff;
       font-size: 16px;

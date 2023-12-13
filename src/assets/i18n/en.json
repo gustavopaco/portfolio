@@ -238,6 +238,11 @@
   "deleteButton": "Delete",
   "editButton": "Edit",
   "saveButton": "Save",
+  "file_uploader": {
+    "file_already_selected": "File {{fileName}} already selected.",
+    "upload_file": "Upload file",
+    "remove_file": "Remove file"
+  },
   "generic_messages": {
     "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
     "failed_to_upload_image": "Failed to upload image. Please try again later.",

@@ -12,7 +12,7 @@
             <mat-icon>insert_drive_file</mat-icon>
             <span>{{fileObj.file.name}}</span>
           </mat-panel-title>
-        <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate" (click)="uploadFile(fileobj.file)"><mat-icon>upload</mat-icon></button>
+        <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate" (click)="uploadFile(fileObj.file)"><mat-icon>upload</mat-icon></button>
         <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_file' | translate" (click)="removeFile(i)"><mat-icon>close</mat-icon></button>
         </mat-expansion-panel-header>
       </mat-expansion-panel>

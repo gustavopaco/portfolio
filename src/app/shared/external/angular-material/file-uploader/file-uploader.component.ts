@@ -18,6 +18,14 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 export class FileUploaderComponent {
 
   @Input() translateService?: TranslateService;
+  @Input() config!: {
+    API_URL: string,
+    MAX_FILE_SIZE: number,
+    MIME_TYPES: string[],
+    MULTIPLE_FILES: boolean,
+    MAX_FILES: number,
+    data: any
+  };
   selectedFiles : {
     file: File,
     isUploadInProgress: boolean,

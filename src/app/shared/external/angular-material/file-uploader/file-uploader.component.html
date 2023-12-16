@@ -5,17 +5,29 @@
   </div><!--drop-zone__prompt-->
   <div class="drop-zone__files">
     <mat-accordion>
-      @for (fileObj of selectedFiles; track fileObj.file.name; let i = $index) {
-      <mat-expansion-panel hideToggle expanded="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>insert_drive_file</mat-icon>
-            <span>{{fileObj.file.name}}</span>
-          </mat-panel-title>
-        <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate" (click)="uploadFile(fileObj.file)"><mat-icon>upload</mat-icon></button>
-        <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_file' | translate" (click)="removeFile(i)"><mat-icon>close</mat-icon></button>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
+      @for (fileObj of selectedFiles;track fileObj.file.name;let i = $index) {
+        <mat-expansion-panel hideToggle expanded="false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>insert_drive_file</mat-icon>
+              <span>{{ fileObj.file.name }}</span>
+            </mat-panel-title>
+            <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate"
+                    (click)="uploadFile(fileObj.file)">
+              <mat-icon>upload</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_file' | translate"
+                    (click)="removeFile(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-expansion-panel-header>
+          @if (fileObj?.uploadResult && fileObj?.uploadResult == 'success') {
+            <p class="file_upload_success_text">{{ 'file_uploader.upload_file_success_description' | translate }}</p>
+          } @else if (fileObj?.uploadResult && fileObj?.uploadResult == 'error') {
+            <p class="file_upload_error_text">{{ 'file_uploader.upload_file_error_description' | translate }}</p>
+          }
+        </mat-expansion-panel>
+        <mat-progress-bar></mat-progress-bar>
       }
     </mat-accordion>
   </div>

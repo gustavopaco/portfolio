@@ -241,7 +241,13 @@
   "file_uploader": {
     "file_already_selected": "File {{fileName}} already selected.",
     "upload_file": "Upload file",
-    "remove_file": "Remove file"
+    "remove_file": "Remove file",
+    "uploading_file": "Uploading file...",
+    "uploading_file_description": "Please wait while the file is being uploaded.",
+    "upload_file_error": "Failed to upload file.",
+    "upload_file_error_description": "Something went wrong while uploading the file. Please try again later.",
+    "upload_file_success": "File uploaded successfully.",
+    "upload_file_success_description": "The file was uploaded successfully."
   },
   "generic_messages": {
     "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",

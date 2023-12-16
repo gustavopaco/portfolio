@@ -46,7 +46,14 @@
     margin: 1rem auto;
 
     mat-expansion-panel {
+      margin-bottom: 0;
+    }
+
+    mat-progress-bar {
       margin-bottom: 0.5rem;
+    }
+    ::ng-deep .mat-mdc-button-persistent-ripple {
+      border-radius: 0;
     }
   }
 
@@ -77,4 +84,15 @@
       }
     }
   }
+}
+
+
+.file_upload_success_text {
+  color: #00C853;
+  font-weight: normal;
+}
+
+.file_upload_error_text {
+  color: #F44336;
+  font-weight: normal;
 }

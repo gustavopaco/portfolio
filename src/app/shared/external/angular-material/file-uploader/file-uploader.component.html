@@ -33,7 +33,11 @@
   </div>
   <div class="drop-zone__browse__files">
     <label for="browseFiles" class="drop-zone__browse__files__label">Browse Files
-      <input type="file" name="file" id="browseFiles" class="drop-zone__input" multiple>
+      <input #fileInput
+             type="file" name="file" id="browseFiles" class="drop-zone__input"
+             [accept]="acceptedMimeType()"
+             [multiple]="_config.MULTIPLE_FILES"
+             (change)="onFileInputChange($event)">
     </label>
   </div><!--drop-zone__browse__files-->
 </div><!--drop-zone-->

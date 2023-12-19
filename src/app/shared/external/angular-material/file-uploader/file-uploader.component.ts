@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DragAndDropDirective} from "../../../diretivas/drag-and-drop.directive";
 import {MatIconModule} from "@angular/material/icon";
@@ -27,11 +27,8 @@ export class FileUploaderComponent implements OnInit{
     if (value.MIME_TYPES === undefined) value.MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
     this._config = value;
   }
-  private _config!: FileUploaderOptions;
-
-  get config(): FileUploaderOptions {
-    return this._config;
-  }
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  _config!: FileUploaderOptions;
 
   selectedFiles: {
     file: File,
@@ -43,14 +40,20 @@ export class FileUploaderComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.config)
+    console.log(this._config)
   }
 
   onFileDrop(fileList: File[]) {
-    const validateFileList = this.validateFile(fileList);
-    for (const file of validateFileList) {
-      this.addToQueue(file);
-    }
+    const validFileList = this.validateFile(fileList);
+    validFileList.forEach(file => this.addToQueue(file));
+  }
+
+  onFileInputChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    const validFileList = this.validateFile(Array.from(files));
+    validFileList.forEach(file => this.addToQueue(file));
+    target.value = '';
   }
 
   private addToQueue(file: File) {
@@ -118,5 +121,9 @@ export class FileUploaderComponent implements OnInit{
 
   isMaxFilesExceeded() {
     return this._config.MAX_FILES && this.selectedFiles.length >= this._config.MAX_FILES;
+  }
+
+  acceptedMimeType() {
+    return this._config.MIME_TYPES.join(' ');
   }
 }

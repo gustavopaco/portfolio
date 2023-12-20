@@ -43,8 +43,8 @@ export class FileUploaderComponent implements OnInit{
     console.log(this._config)
   }
 
-  onFileDrop(fileList: File[]) {
-    const validFileList = this.validateFile(fileList);
+  onFileDrop(fileList: FileList) {
+    const validFileList = this.validateFile(Array.from(fileList));
     validFileList.forEach(file => this.addToQueue(file));
   }
 
@@ -79,7 +79,7 @@ export class FileUploaderComponent implements OnInit{
     }
     //Validate Max Files
     if (this.isMaxFilesExceeded()) {
-      this.matSnackBarService.warning(this.translateService?.instant('file_uploader.max_files_exceeded', {maxFiles: this.config.MAX_FILES}), this.translateService?.instant('generic_messages.action_close'), 5000)
+      this.matSnackBarService.warning(this.translateService?.instant('file_uploader.max_files_exceeded', {maxFiles: this._config.MAX_FILES}), this.translateService?.instant('generic_messages.action_close'), 5000)
     }
 
     for (const file of files) {
@@ -91,12 +91,12 @@ export class FileUploaderComponent implements OnInit{
       }
       //Validate File Size in MB
       if (this.isFileSizeExceeded(file)) {
-        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {fileName: file.name, fileSize: this.config.MAX_FILE_SIZE}), this.translateService?.instant('generic_messages.action_close'), 5000)
+        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {fileName: file.name, fileSize: this._config.MAX_FILE_SIZE}), this.translateService?.instant('generic_messages.action_close'), 5000)
         files.splice(files.indexOf(file), 1);
       }
       //Validate File Type
-      if (this.isFileMimeTypeAllowed(file)) {
-        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_type_not_allowed', {fileName: file.name}), this.translateService?.instant('generic_messages.action_close'), 5000)
+      if (!this.isFileMimeTypeAllowed(file)) {
+        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_type_not_allowed', {fileName: file.name, allowedTypes: this.acceptedMimeType()}), this.translateService?.instant('generic_messages.action_close'), 5000)
         files.splice(files.indexOf(file), 1);
       }
     }

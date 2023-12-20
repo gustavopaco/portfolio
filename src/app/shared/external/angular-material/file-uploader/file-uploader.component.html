@@ -39,5 +39,13 @@
              [multiple]="_config.MULTIPLE_FILES"
              (change)="onFileInputChange($event)">
     </label>
+    @if (selectedFiles.length > 0) {
+    <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_all_files' | translate">
+      <mat-icon>upload</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
   </div><!--drop-zone__browse__files-->
 </div><!--drop-zone-->

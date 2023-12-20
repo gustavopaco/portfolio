@@ -60,6 +60,7 @@
   .drop-zone__browse__files {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 1rem;
     .drop-zone__browse__files__label {
       color: #fff;
@@ -74,6 +75,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-right: 0.5rem;
 
       .drop-zone__input {
         display: none;
@@ -81,6 +83,12 @@
       @media screen and (max-width: 992px) {
         width: 120px;
         height: 32px;
+      }
+    }
+    button {
+      margin-right: 0.5rem;
+      ::ng-deep .mat-mdc-button-persistent-ripple {
+        border-radius: 0;
       }
     }
   }

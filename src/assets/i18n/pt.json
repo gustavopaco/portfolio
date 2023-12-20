@@ -258,13 +258,19 @@
   "file_uploader": {
     "file_already_selected": "Arquivo {{fileName}} já selecionado.",
     "upload_file": "Upload de arquivo",
+    "upload_all_files": "Upload de todos os arquivos",
     "remove_file": "Remover arquivo",
+    "remove_all_files": "Remover todos os arquivos",
     "uploading_file": "Fazendo upload do arquivo...",
     "uploading_file_description": "Por favor, aguarde enquanto o arquivo está sendo carregado.",
     "upload_file_error": "Falha ao fazer upload do arquivo. Tente novamente mais tarde.",
     "upload_file_error_description": "Ocorreu um erro ao fazer upload do arquivo. Por favor, tente novamente mais tarde.",
     "upload_file_success": "Upload de arquivo bem sucedido.",
-    "upload_file_success_description": "O arquivo foi carregado com sucesso."
+    "upload_file_success_description": "O arquivo foi carregado com sucesso.",
+    "multiple_files_not_allowed": "Múltiplos arquivos não são permitidos.",
+    "max_files_exceeded": "Número máximo de arquivos excedido. Máximo: {{maxFiles}}.",
+    "file_size_exceeded": "Arquivo {{fileName}} excedeu o tamanho máximo. Máximo: {{fileSize}}.",
+    "file_type_not_allowed": "Formato do arquivo {{fileName}} não permitido. Formatos permitidos: {{allowedTypes}}."
   },
   "generic_messages": {
     "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",

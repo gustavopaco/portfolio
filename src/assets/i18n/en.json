@@ -241,13 +241,19 @@
   "file_uploader": {
     "file_already_selected": "File {{fileName}} already selected.",
     "upload_file": "Upload file",
+    "upload_all_files": "Upload all files",
     "remove_file": "Remove file",
+    "remove_all_files": "Remove all files",
     "uploading_file": "Uploading file...",
     "uploading_file_description": "Please wait while the file is being uploaded.",
     "upload_file_error": "Failed to upload file.",
     "upload_file_error_description": "Something went wrong while uploading the file. Please try again later.",
     "upload_file_success": "File uploaded successfully.",
-    "upload_file_success_description": "The file was uploaded successfully."
+    "upload_file_success_description": "The file was uploaded successfully.",
+    "multiple_files_not_allowed": "Multiple files are not allowed.",
+    "max_files_exceeded": "Maximum number of {{maxFiles}} files exceeded.",
+    "file_size_exceeded": "File {{fileName}} size exceeded. Maximum size: {{fileSize}}.",
+    "file_type_not_allowed": "File {{fileName}} type not allowed. Allowed types: {{allowedTypes}}."
   },
   "generic_messages": {
     "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",

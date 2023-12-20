@@ -4,13 +4,12 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
 @Injectable({
   providedIn: 'root'
 })
-export class MatSnackbarService implements OnDestroy {
+export class MatSnackbarService {
   private panelClass: string[] = ['toast-success'];
   private action = 'Fechar';
   private durationInSeconds = 3000;
   private horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
-  private timeouts: NodeJS.Timeout[] = [];
 
   constructor(private snakeBar: MatSnackBar) {
   }
@@ -43,15 +42,6 @@ export class MatSnackbarService implements OnDestroy {
   }
 
   openSnackBar(message: string, config: any, action?: string) {
-    const time = setTimeout(() => {
-      action = action ?? this.action;
       this.snakeBar.open(message, action, config);
-    }, config.duration);
-    this.timeouts.push(time);
   }
-
-  ngOnDestroy(): void {
-    this.timeouts.forEach(timeout => clearTimeout(timeout));
-  }
-
 }

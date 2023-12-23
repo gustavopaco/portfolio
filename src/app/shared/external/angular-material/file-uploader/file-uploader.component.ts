@@ -124,6 +124,14 @@ export class FileUploaderComponent implements OnInit{
     )
   }
 
+  uploadAll() {
+    this.selectedFiles.forEach(selectedFile => {
+      if (!selectedFile.isUploadInProgress) {
+        this.uploadFile(selectedFile.file);
+      }
+    })
+  }
+
   removeFile(index: number) {
     this.selectedFiles.splice(index, 1);
   }

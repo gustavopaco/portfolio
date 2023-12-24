@@ -78,24 +78,13 @@ export class FileUploaderComponent implements OnInit{
      this.uploadFile$ = this.fileUploaderService.uploadFile(formData, this._config.API_URL!!)
       .pipe(
         this.fileUploadInProgress((porcentagemAtual: number) => {
-          const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
-          if (selectedFile) {
-            selectedFile.isUploadInProgress = true;
-            selectedFile.uploadProgress = porcentagemAtual;
-          }
+         this.onFileUploadInProgress(file, porcentagemAtual);
         }),
         this.fileUploadProgressComplete((porcentagemAtual: number) => {
-          const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
-          if (selectedFile && porcentagemAtual === 100) {
-            selectedFile.isUploadInProgress = false;
-            selectedFile.uploadProgress = porcentagemAtual;
-          }
+         this.onFileUploadProgressComplete(file, porcentagemAtual);
         }),
         catchError((error: any) => {
-          const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
-          if (selectedFile) {
-            selectedFile.uploadResult = error;
-          }
+          this.onFileUploadError(file, error);
           return error;
         }
       ))
@@ -109,6 +98,14 @@ export class FileUploaderComponent implements OnInit{
     })
   }
 
+  onFileUploadInProgress(file: File, porcentagemAtual: number) {
+    const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
+    if (selectedFile) {
+      selectedFile.isUploadInProgress = true;
+      selectedFile.uploadProgress = porcentagemAtual;
+    }
+  }
+
   fileUploadProgressComplete = <T>(callback: (porcentagemAtual: number) => void) => {
     return tap((event: HttpEvent<T>) => {
       if (event.type === HttpEventType.Response) {
@@ -117,11 +114,26 @@ export class FileUploaderComponent implements OnInit{
     })
   }
 
+  onFileUploadProgressComplete(file: File, porcentagemAtual: number) {
+    const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
+    if (selectedFile && porcentagemAtual === 100) {
+      selectedFile.isUploadInProgress = false;
+      selectedFile.uploadProgress = porcentagemAtual;
+    }
+  }
+
   fileUploadHttEventToUploadResult = <T>() => {
     return pipe(
       filter((event: any) => event.type === HttpEventType.Response),
       map((response: HttpResponse<T>) => response.body)
     )
+  }
+
+  onFileUploadError(file: File, error: any) {
+    const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
+    if (selectedFile) {
+      selectedFile.uploadResult = error;
+    }
   }
 
   uploadAll() {

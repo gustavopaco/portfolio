@@ -27,7 +27,9 @@
             <p class="file_upload_error_text">{{ 'file_uploader.upload_file_error_description' | translate }}</p>
           }
         </mat-expansion-panel>
-        <mat-progress-bar></mat-progress-bar>
+        @if (fileObj?.isUploadInProgress) {
+          <mat-progress-bar [value]="fileObj?.uploadProgress"></mat-progress-bar>
+        }
       }
     </mat-accordion>
   </div>
@@ -40,13 +42,13 @@
              (change)="onFileInputChange($event)">
     </label>
     @if (selectedFiles.length > 0) {
-    <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_all_files' | translate"
-    (click)="uploadAll()">
-      <mat-icon>upload</mat-icon>
-    </button>
-    <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">
-      <mat-icon>close</mat-icon>
-    </button>
+      <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_all_files' | translate"
+              (click)="uploadAll()">
+        <mat-icon>upload</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">
+        <mat-icon>close</mat-icon>
+      </button>
     }
   </div><!--drop-zone__browse__files-->
 </div><!--drop-zone-->

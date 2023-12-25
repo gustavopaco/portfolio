@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DragAndDropDirective} from "../../../diretivas/drag-and-drop.directive";
 import {MatIconModule} from "@angular/material/icon";
@@ -12,6 +12,7 @@ import {FileUploaderOptions} from "./file-uploader-options";
 import {FileUploaderService} from "./file-uploader.service";
 import {HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
 import {catchError, filter, map, pipe, tap} from "rxjs";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-file-uploader',
@@ -30,6 +31,7 @@ export class FileUploaderComponent implements OnInit{
     if (value.MIME_TYPES === undefined) value.MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
     this._config = value;
   }
+  @Output() onUploadSuccess: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('fileInput') fileInput!: ElementRef;
   _config!: FileUploaderOptions;
 
@@ -39,8 +41,6 @@ export class FileUploaderComponent implements OnInit{
     uploadProgress: number,
     uploadResult: any,
   }[] = [];
-
-  uploadFile$: any;
 
   constructor(private matSnackBarService: MatSnackbarService,
               private fileUploaderService: FileUploaderService) {
@@ -72,22 +72,33 @@ export class FileUploaderComponent implements OnInit{
     });
   }
 
-  uploadFile(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-     this.uploadFile$ = this.fileUploaderService.uploadFile(formData, this._config.API_URL!!)
-      .pipe(
-        this.fileUploadInProgress((porcentagemAtual: number) => {
-         this.onFileUploadInProgress(file, porcentagemAtual);
-        }),
-        this.fileUploadProgressComplete((porcentagemAtual: number) => {
-         this.onFileUploadProgressComplete(file, porcentagemAtual);
-        }),
-        catchError((error: any) => {
-          this.onFileUploadError(file, error);
-          return error;
-        }
-      ))
+  uploadFiles() {
+    this.selectedFiles.forEach(selectedFile => {
+      if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
+        const file = selectedFile.file;
+        const formData = new FormData();
+        formData.append('file', file);
+        this.fileUploaderService.uploadFile(formData, this._config.API_URL!!)
+          .pipe(
+            takeUntilDestroyed(),
+            this.fileUploadInProgress((porcentagemAtual: number) => {
+              this.onFileUploadInProgress(file, porcentagemAtual);
+            }),
+            this.fileUploadProgressComplete((porcentagemAtual: number) => {
+              this.onFileUploadProgressComplete(file, porcentagemAtual);
+            }),
+            this.fileUploadHttEventToUploadResult()
+            ).subscribe({
+            next: (response: any) => {
+              this.onUploadSuccess.emit(response);
+            },
+            error: (error) => {
+              this.onFileUploadError(file, error);
+            }
+        });
+      }
+    })
+
   }
 
   fileUploadInProgress = <T>(callback: (porcentagemAtual: number) => void) => {
@@ -134,14 +145,6 @@ export class FileUploaderComponent implements OnInit{
     if (selectedFile) {
       selectedFile.uploadResult = error;
     }
-  }
-
-  uploadAll() {
-    this.selectedFiles.forEach(selectedFile => {
-      if (!selectedFile.isUploadInProgress) {
-        this.uploadFile(selectedFile.file);
-      }
-    })
   }
 
   removeFile(index: number) {

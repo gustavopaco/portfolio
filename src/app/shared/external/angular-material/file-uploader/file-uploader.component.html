@@ -43,7 +43,7 @@
     </label>
     @if (selectedFiles.length > 0) {
       <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_all_files' | translate"
-              (click)="uploadAll()">
+              (click)="uploadFiles()">
         <mat-icon>upload</mat-icon>
       </button>
       <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">

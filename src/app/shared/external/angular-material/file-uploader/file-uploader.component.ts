@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DragAndDropDirective} from "../../../diretivas/drag-and-drop.directive";
 import {MatIconModule} from "@angular/material/icon";
@@ -10,8 +10,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FileUploaderOptions} from "./file-uploader-options";
 import {FileUploaderService} from "./file-uploader.service";
-import {HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
-import {catchError, filter, map, pipe, tap} from "rxjs";
+import {catchError, forkJoin, of} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
@@ -73,40 +72,39 @@ export class FileUploaderComponent implements OnInit{
   }
 
   uploadFiles() {
-    this.selectedFiles.forEach(selectedFile => {
+    const uploadFiles$ = this.selectedFiles.map((selectedFile: any) => {
       if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
         const file = selectedFile.file;
-        const formData = new FormData();
-        formData.append('file', file);
-        this.fileUploaderService.uploadFile(formData, this._config.API_URL!!)
+        return this.fileUploaderService.uploadFile(file, this._config.API_URL!!)
           .pipe(
             takeUntilDestroyed(),
-            this.fileUploadInProgress((porcentagemAtual: number) => {
+            this.fileUploaderService.fileUploadInProgress((porcentagemAtual: number) => {
               this.onFileUploadInProgress(file, porcentagemAtual);
             }),
-            this.fileUploadProgressComplete((porcentagemAtual: number) => {
+            this.fileUploaderService.fileUploadProgressComplete((porcentagemAtual: number) => {
               this.onFileUploadProgressComplete(file, porcentagemAtual);
             }),
-            this.fileUploadHttEventToUploadResult()
-            ).subscribe({
-            next: (response: any) => {
-              this.onUploadSuccess.emit(response);
-            },
-            error: (error) => {
+            this.fileUploaderService.fileUploadHttEventToUploadResult(),
+            catchError((error: any) => {
               this.onFileUploadError(file, error);
-            }
-        });
+              return of(error);
+            })
+          );
       }
-    })
+      return null;
+    }).filter(Boolean);
 
-  }
-
-  fileUploadInProgress = <T>(callback: (porcentagemAtual: number) => void) => {
-    return tap((event: HttpEvent<T>) => {
-      if (event.type === HttpEventType.UploadProgress && event.total) {
-        callback(Math.round((event.loaded * 100) / event.total));
-      }
-    })
+    if (uploadFiles$.length > 0) {
+      forkJoin([uploadFiles$]).subscribe({
+        next: (response: any) => {
+          console.log(response)
+          this.onUploadSuccess.emit(response);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+    }
   }
 
   onFileUploadInProgress(file: File, porcentagemAtual: number) {
@@ -117,27 +115,12 @@ export class FileUploaderComponent implements OnInit{
     }
   }
 
-  fileUploadProgressComplete = <T>(callback: (porcentagemAtual: number) => void) => {
-    return tap((event: HttpEvent<T>) => {
-      if (event.type === HttpEventType.Response) {
-        callback(100);
-      }
-    })
-  }
-
   onFileUploadProgressComplete(file: File, porcentagemAtual: number) {
     const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
     if (selectedFile && porcentagemAtual === 100) {
       selectedFile.isUploadInProgress = false;
       selectedFile.uploadProgress = porcentagemAtual;
     }
-  }
-
-  fileUploadHttEventToUploadResult = <T>() => {
-    return pipe(
-      filter((event: any) => event.type === HttpEventType.Response),
-      map((response: HttpResponse<T>) => response.body)
-    )
   }
 
   onFileUploadError(file: File, error: any) {

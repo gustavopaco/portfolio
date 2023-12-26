@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {v4 as uuidv4} from 'uuid';
 import {DeleteObjectCommand, PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
+import {catchError, forkJoin, from, map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,26 @@ export class UtilAwsS3Service {
       }
     }
     return imageUrls;
+  }
+
+  uploadImagesToAwsS3Bucket$ (S3_BUCKET_NAME: string, files: Set<File>, folder: string) {
+    const imageUrls: string[] = [];
+    const uploads = Array.from(files).map(file => {
+      const command = new PutObjectCommand(this.s3BucketConfigCommandObject(S3_BUCKET_NAME, file, folder));
+      if (this.s3Client === undefined) {
+        throw new Error('S3 Client is not loaded');
+      }
+      return from(this.s3Client.send(command)).pipe(
+        map(() => {
+          const imageUrl = `https://${command.input.Bucket}.s3.amazonaws.com/${command.input.Key}`;
+          imageUrls.push(imageUrl);
+        }),
+        catchError((error: any) => {
+          throw error;
+        })
+      );
+    });
+    return forkJoin(uploads).pipe(map(() => imageUrls));
   }
 
   async uploadSingleImageToAwsS3Bucket(S3_BUCKET_NAME: string, file: File, folder: string) {

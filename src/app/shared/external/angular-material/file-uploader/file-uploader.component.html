@@ -4,32 +4,47 @@
     <span>Drag and drop the file(s) or click on "Browse Files".</span>
   </div><!--drop-zone__prompt-->
   <div class="drop-zone__files">
-    <mat-accordion>
-      @for (fileObj of selectedFiles;track fileObj.file.name;let i = $index) {
-        <mat-expansion-panel hideToggle expanded="false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon>insert_drive_file</mat-icon>
-              <span>{{ fileObj.file.name }}</span>
-            </mat-panel-title>
-            <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate"
-                    (click)="uploadFile(fileObj.file)">
-              <mat-icon>upload</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_file' | translate"
-                    (click)="removeFile(i)">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-expansion-panel-header>
-          @if (fileObj?.uploadResult && fileObj?.uploadResult == 'success') {
-            <p class="file_upload_success_text">{{ 'file_uploader.upload_file_success_description' | translate }}</p>
-          } @else if (fileObj?.uploadResult && fileObj?.uploadResult == 'error') {
-            <p class="file_upload_error_text">{{ 'file_uploader.upload_file_error_description' | translate }}</p>
+    <mat-accordion [multi]="true">
+      @for (selectedFile of selectedFiles; track selectedFile.file.name; let i = $index) {
+        <div class="mat-expansion-divider">
+          <mat-expansion-panel hideToggle [expanded]="existUploadResult(selectedFile)" [disabled]="isUploadResultNull(selectedFile)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span>{{ fileName(selectedFile) }}</span>
+              </mat-panel-title>
+              @if (isUploadResultNull(selectedFile)) {
+                <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate"
+                        (click)="uploadSelectedFile(selectedFile)">
+                  <mat-icon>upload</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_file' | translate"
+                        (click)="removeFile(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              }
+              @if (isUploadResultSuccess(selectedFile)) {
+                <button mat-icon-button [matTooltip]="'file_uploader.upload_file_success_description' | translate"
+                        class="upload_result">
+                  <mat-icon class="upload_success_color">{{ 'check_circle' }}</mat-icon>
+                </button>
+              } @else if (isUploadResultError(selectedFile)) {
+                <button mat-icon-button [matTooltip]="'file_uploader.upload_file_error_description' | translate"
+                        class="upload_result">
+                  <mat-icon class="upload_error_color">{{ 'error' }}</mat-icon>
+                </button>
+              }
+            </mat-expansion-panel-header>
+            @if (isUploadResultSuccess(selectedFile)) {
+              <p class="upload_success_text">{{ 'file_uploader.upload_file_success_description' | translate }}</p>
+            } @else if (isUploadResultError(selectedFile)) {
+              <p class="upload_error_text">{{ 'file_uploader.upload_file_error_description' | translate }}</p>
+            }
+          </mat-expansion-panel>
+          @if (isUploadResultInProgress(selectedFile)) {
+            <mat-progress-bar [value]="fileUploadProgress(selectedFile) || 0"></mat-progress-bar>
           }
-        </mat-expansion-panel>
-        @if (fileObj?.isUploadInProgress) {
-          <mat-progress-bar [value]="fileObj?.uploadProgress"></mat-progress-bar>
-        }
+        </div>
       }
     </mat-accordion>
   </div>
@@ -41,9 +56,9 @@
              [multiple]="_config.MULTIPLE_FILES"
              (change)="onFileInputChange($event)">
     </label>
-    @if (selectedFiles.length > 0) {
+    @if (selectedFiles.length > 1) {
       <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_all_files' | translate"
-              (click)="uploadFiles()">
+              (click)="uploadAllFiles()">
         <mat-icon>upload</mat-icon>
       </button>
       <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DragAndDropDirective} from "../../../diretivas/drag-and-drop.directive";
 import {MatIconModule} from "@angular/material/icon";
@@ -12,6 +12,7 @@ import {FileUploaderOptions} from "./file-uploader-options";
 import {FileUploaderService} from "./file-uploader.service";
 import {catchError, forkJoin, of} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {HttpParams} from "@angular/common/http";
 
 @Component({
   selector: 'app-file-uploader',
@@ -20,14 +21,14 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
   templateUrl: './file-uploader.component.html',
   styleUrl: './file-uploader.component.scss'
 })
-export class FileUploaderComponent implements OnInit{
+export class FileUploaderComponent {
 
   @Input() translateService?: TranslateService;
   @Input() set config(value: FileUploaderOptions) {
     if (value.MULTIPLE_FILES === undefined) value.MULTIPLE_FILES = true;
     if (value.MAX_FILES === undefined) value.MAX_FILES = 5;
-    if (value.MAX_FILE_SIZE === undefined) value.MAX_FILE_SIZE = 10;
-    if (value.MIME_TYPES === undefined) value.MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
+    if (value.MAX_FILE_SIZE_MB === undefined) value.MAX_FILE_SIZE_MB = 10;
+    if (value.ALLOWED_MIME_TYPES === undefined) value.ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
     this._config = value;
   }
   @Output() onUploadSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -41,12 +42,10 @@ export class FileUploaderComponent implements OnInit{
     uploadResult: any,
   }[] = [];
 
+  DESTROY_REF = inject(DestroyRef);
+
   constructor(private matSnackBarService: MatSnackbarService,
               private fileUploaderService: FileUploaderService) {
-  }
-
-  ngOnInit(): void {
-    console.log(this._config)
   }
 
   onFileDrop(fileList: FileList) {
@@ -71,40 +70,71 @@ export class FileUploaderComponent implements OnInit{
     });
   }
 
-  uploadFiles() {
+  upload$(file: File) {
+    let params = new HttpParams();
+    if (this.isS3Upload()) {
+      params = this.addS3Params(params);
+    }
+    return this.fileUploaderService.uploadFile(file, this._config.API_URL!!, params)
+      .pipe(
+        takeUntilDestroyed(this.DESTROY_REF),
+        this.fileUploaderService.fileUploadInProgress((porcentagemAtual: number) => {
+          this.onFileUploadInProgress(file, porcentagemAtual);
+        }),
+        this.fileUploaderService.fileUploadProgressComplete((porcentagemAtual: number) => {
+          this.onFileUploadProgressComplete(file, porcentagemAtual);
+        }),
+        this.fileUploaderService.fileUploadHttEventToUploadResult(),
+        catchError((error: any) => {
+          this.onFileUploadError(file, error);
+          return of(error);
+        })
+      );
+  }
+
+  uploadSelectedFile(selectedFile: any) {
+    if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
+      this.upload$(selectedFile.file).subscribe({
+        next: (response: any) => {
+          this.onUploadSuccess.emit(Array.of(response));
+        },
+        error: (error) => {
+          this.matSnackBarService.error(this.translateService?.instant('generic_messages.failed_to_upload_image'), this.translateService?.instant('generic_messages.action_close'), 5000);
+        }
+      });
+    }
+  }
+
+  uploadAllFiles() {
     const uploadFiles$ = this.selectedFiles.map((selectedFile: any) => {
       if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
         const file = selectedFile.file;
-        return this.fileUploaderService.uploadFile(file, this._config.API_URL!!)
-          .pipe(
-            takeUntilDestroyed(),
-            this.fileUploaderService.fileUploadInProgress((porcentagemAtual: number) => {
-              this.onFileUploadInProgress(file, porcentagemAtual);
-            }),
-            this.fileUploaderService.fileUploadProgressComplete((porcentagemAtual: number) => {
-              this.onFileUploadProgressComplete(file, porcentagemAtual);
-            }),
-            this.fileUploaderService.fileUploadHttEventToUploadResult(),
-            catchError((error: any) => {
-              this.onFileUploadError(file, error);
-              return of(error);
-            })
-          );
+        return this.upload$(file);
       }
       return null;
     }).filter(Boolean);
 
     if (uploadFiles$.length > 0) {
-      forkJoin([uploadFiles$]).subscribe({
+      forkJoin(uploadFiles$).subscribe({
         next: (response: any) => {
-          console.log(response)
           this.onUploadSuccess.emit(response);
         },
         error: (error) => {
-          console.log(error);
+          this.matSnackBarService.error(this.translateService?.instant('generic_messages.failed_to_upload_image'), this.translateService?.instant('generic_messages.action_close'), 5000);
         }
       });
     }
+  }
+
+  isS3Upload() {
+    return this._config.S3_OPTIONS !== undefined;
+  }
+
+  addS3Params(params: HttpParams) {
+      if (this._config.S3_OPTIONS!.folder) {
+        params = params.set('folder', this._config.S3_OPTIONS!.folder);
+      }
+    return params;
   }
 
   onFileUploadInProgress(file: File, porcentagemAtual: number) {
@@ -120,6 +150,7 @@ export class FileUploaderComponent implements OnInit{
     if (selectedFile && porcentagemAtual === 100) {
       selectedFile.isUploadInProgress = false;
       selectedFile.uploadProgress = porcentagemAtual;
+      selectedFile.uploadResult = 'success'
     }
   }
 
@@ -153,7 +184,7 @@ export class FileUploaderComponent implements OnInit{
       }
       //Validate File Size in MB
       if (this.isFileSizeExceeded(file)) {
-        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {fileName: file.name, fileSize: this._config.MAX_FILE_SIZE}), this.translateService?.instant('generic_messages.action_close'), 5000)
+        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {fileName: file.name, fileSize: this._config.MAX_FILE_SIZE_MB}), this.translateService?.instant('generic_messages.action_close'), 5000)
         files.splice(files.indexOf(file), 1);
       }
       //Validate File Type
@@ -170,11 +201,11 @@ export class FileUploaderComponent implements OnInit{
   }
 
   isFileSizeExceeded(file: File) {
-    return file.size > this._config.MAX_FILE_SIZE * 1024 * 1024;
+    return file.size > this._config.MAX_FILE_SIZE_MB * 1024 * 1024;
   }
 
   isFileMimeTypeAllowed(file: File) {
-    return this._config.MIME_TYPES.includes(file.type);
+    return this._config.ALLOWED_MIME_TYPES.includes(file.type);
   }
 
   isMultipleFilesAllowed(files: File[]) {
@@ -186,6 +217,34 @@ export class FileUploaderComponent implements OnInit{
   }
 
   acceptedMimeType() {
-    return this._config.MIME_TYPES.join(' ');
+    return this._config.ALLOWED_MIME_TYPES.join(' ');
+  }
+
+  fileName(selectedFile: any) {
+    return selectedFile.file.name;
+  }
+
+  fileUploadProgress(selectedFile: any) {
+    return selectedFile.uploadProgress;
+  }
+
+  existUploadResult(selectedFile: any) {
+    return selectedFile?.uploadResult;
+  }
+
+  isUploadResultInProgress(selectedFile: any) {
+    return selectedFile.isUploadInProgress;
+  }
+
+  isUploadResultNull(selectedFile: any) {
+    return selectedFile?.uploadResult === null;
+  }
+
+  isUploadResultSuccess(selectedFile: any) {
+    return selectedFile?.uploadResult && selectedFile?.uploadResult == 'success';
+  }
+
+  isUploadResultError(selectedFile: any) {
+    return selectedFile?.uploadResult && selectedFile?.uploadResult != 'error';
   }
 }

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpResponse} from "@angular/common/http";
 import {filter, map, pipe, tap} from "rxjs";
 
 @Injectable({
@@ -9,9 +9,9 @@ export class FileUploaderService {
 
   constructor(private httpClient: HttpClient) { }
 
-  uploadFile(file: File, url: string) {
+  uploadFile(file: File, url: string, params?: HttpParams) {
     const formData = this.createFormData(file);
-    return this.httpClient.post(url, formData, {reportProgress: true, observe: 'events'});
+    return this.httpClient.post(url, formData, {reportProgress: true, observe: 'events', params: params, responseType: 'text'});
   }
 
   private createFormData(file: File) {

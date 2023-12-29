@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {CrudService} from "./default/crud.service";
 import {User} from "../interface/user";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {API_USER} from "../constants/api";
+import {API_CERTIFICATE, API_USER} from "../constants/api";
 import {Skill} from "../interface/skill";
 import {Project} from "../interface/project";
 import {Bio} from "../interface/bio";
 import {Course} from "../interface/course";
+import {Certificate} from "../interface/certificate";
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,11 @@ export class UserService extends CrudService<User> {
 
   saveCoursesRecords(courses: Course[]) {
     return this.httpClient.put(`${API_USER}/course`, courses);
+  }
+
+  saveCertificates(certificates: Certificate[]) {
+    console.log(certificates)
+    return this.httpClient.post(`${API_CERTIFICATE}`, certificates);
   }
 
   deleteSkillRecord(id: number) {

@@ -263,7 +263,7 @@
     "remove_all_files": "Remover todos os arquivos",
     "uploading_file": "Fazendo upload do arquivo...",
     "uploading_file_description": "Por favor, aguarde enquanto o arquivo está sendo carregado.",
-    "upload_file_error": "Falha ao fazer upload do arquivo. Tente novamente mais tarde.",
+    "upload_file_error": "Falha ao fazer upload do arquivo.",
     "upload_file_error_description": "Ocorreu um erro ao fazer upload do arquivo. Por favor, tente novamente mais tarde.",
     "upload_file_success": "Upload de arquivo bem sucedido.",
     "upload_file_success_description": "O arquivo foi carregado com sucesso.",

@@ -1,1 +1,4 @@
+@if (certificates$ | async; as certificates) {
+<app-certificates-list [certificates]="certificates"></app-certificates-list>
+}
 <app-file-uploader [translateService]="translateService" [config]="config" (onUploadSuccess)="onUploadSuccess($event)"></app-file-uploader>

@@ -50,6 +50,10 @@ export class UserService extends CrudService<User> {
     return this.httpClient.get<Course[]>(`${API_USER}/course`, {params});
   }
 
+  getCertificates(params: HttpParams) {
+    return this.httpClient.get<Certificate[]>(`${API_CERTIFICATE}`, {params});
+  }
+
   saveSkillRecord(form: any) {
     if (form.id) return this.httpClient.put(`${API_USER}/skill/${form.id}`, form);
     return this.httpClient.post(`${API_USER}/skill`, form);

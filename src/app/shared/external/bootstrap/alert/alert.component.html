@@ -1,0 +1,7 @@
+<div class="alert text-center" role="alert" [ngClass]="'alert-' + type">
+  @if (i18nMessage) {
+    <strong>{{ i18nMessage | translate }}</strong>
+  } @else {
+    <strong>{{ message }}</strong>
+  }
+</div><!--alert-->

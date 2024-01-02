@@ -3,6 +3,14 @@
     <p>{{ data.message }}</p>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-raised-button [color]="data.confirmColor" (click)="onConfirm(true)"><mat-icon *ngIf="data.confirmIcon">{{ data.confirmIcon }}</mat-icon>{{ data.btnConfirmLabel ? data.btnConfirmLabel : 'Sim' }}</button>
-    <button mat-raised-button [color]="data.cancelColor" (click)="onConfirm(false)"><mat-icon *ngIf="data.cancelIcon">{{ data.cancelIcon }}</mat-icon>{{ data.btnCancelLabel ? data.btnCancelLabel : 'Não' }}</button>
+    <button mat-raised-button [color]="data.confirmColor ?? 'warn'" (click)="onConfirm(true)">
+      <mat-icon>{{ data.confirmIcon ?? 'delete' }}</mat-icon>
+      {{ data.btnConfirmLabel ?? 'Remover' }}
+    </button>
+    <button mat-raised-button [color]="data.cancelColor ?? 'primary'" (click)="onConfirm(false)">
+      @if (data.cancelIcon) {
+        <mat-icon>{{ data.cancelIcon }}</mat-icon>
+      }
+      {{ data.btnCancelLabel ?? 'Cancelar' }}
+    </button>
   </mat-dialog-actions>

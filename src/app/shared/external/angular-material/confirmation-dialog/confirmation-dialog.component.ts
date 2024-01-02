@@ -5,15 +5,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {ThemePalette} from "@angular/material/core";
 import {MatIconModule} from "@angular/material/icon";
 
-export interface DialogData {
+export interface ConfirmationDialogData {
   title: string;
   message: string;
-  btnConfirmLabel: string ;
-  confirmColor: ThemePalette;
-  confirmIcon: string;
-  btnCancelLabel: string;
-  cancelColor: ThemePalette;
-  cancelIcon: string;
+  btnConfirmLabel?: string ;
+  confirmColor?: ThemePalette;
+  confirmIcon?: string;
+  btnCancelLabel?: string;
+  cancelColor?: ThemePalette;
+  cancelIcon?: string;
 }
 
 @Component({
@@ -26,7 +26,7 @@ export interface DialogData {
 export class ConfirmationDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+              @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData) {
   }
 
   onConfirm(result: boolean): void {

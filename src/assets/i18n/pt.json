@@ -234,6 +234,17 @@
       "success_delete": "Curso removido com sucesso!"
     }
   },
+  "certificates": {
+    "failed_to_load_certificates_title": "Falha ao carregar certificados",
+    "failed_to_load_certificates_description": "Algo deu errado ao carregar os certificados. Por favor, tente novamente mais tarde.",
+    "no_certificates_title": "Nenhum certificado foi encontrado.",
+    "view_certificate": "Ver certificado",
+    "remove_certificate": "Remover certificado",
+    "delete_certificate_title": "Deletar certificado",
+    "delete_certificate_message": "Deseja realmente deletar o certificado \"{{certificateName}}\"?",
+    "delete_certificate_confirm": "Deletar",
+    "delete_certificate_cancel": "Cancelar"
+  },
   "required": "*{{fieldName}} obrigatório.",
   "mask": "*{{fieldName}} inválido.",
   "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",

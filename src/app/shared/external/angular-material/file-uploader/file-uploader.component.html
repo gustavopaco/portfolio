@@ -7,11 +7,11 @@
     <mat-accordion [multi]="true">
       @for (selectedFile of selectedFiles; track selectedFile.file.name; let i = $index) {
         <div class="mat-expansion-divider">
-          <mat-expansion-panel hideToggle [expanded]="existUploadResult(selectedFile)" [disabled]="isUploadResultNull(selectedFile)">
+          <mat-expansion-panel hideToggle [expanded]="false" [disabled]="isUploadResultNull(selectedFile)">
             <mat-expansion-panel-header>
-              <mat-panel-title>
+              <mat-panel-title [matTooltip]="fileName(selectedFile)">
                 <mat-icon>insert_drive_file</mat-icon>
-                <span>{{ fileName(selectedFile) }}</span>
+                <span>{{ shortFileName(selectedFile) }}</span>
               </mat-panel-title>
               @if (isUploadResultNull(selectedFile)) {
                 <button mat-icon-button color="primary" [matTooltip]="'file_uploader.upload_file' | translate"
@@ -24,11 +24,13 @@
                 </button>
               }
               @if (isUploadResultSuccess(selectedFile)) {
+                <mat-panel-description class="upload_success_color">{{ 'file_uploader.upload_file_success' | translate }}</mat-panel-description>
                 <button mat-icon-button [matTooltip]="'file_uploader.upload_file_success_description' | translate"
                         class="upload_result">
                   <mat-icon class="upload_success_color">{{ 'check_circle' }}</mat-icon>
                 </button>
               } @else if (isUploadResultError(selectedFile)) {
+                <mat-panel-description class="upload_error_color">{{ 'file_uploader.upload_file_error' | translate }}</mat-panel-description>
                 <button mat-icon-button [matTooltip]="'file_uploader.upload_file_error_description' | translate"
                         class="upload_result">
                   <mat-icon class="upload_error_color">{{ 'error' }}</mat-icon>
@@ -61,7 +63,8 @@
               (click)="uploadAllFiles()">
         <mat-icon>upload</mat-icon>
       </button>
-      <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate">
+      <button mat-icon-button color="warn" [matTooltip]="'file_uploader.remove_all_files' | translate"
+      (click)="removeAllFiles()">
         <mat-icon>close</mat-icon>
       </button>
     }

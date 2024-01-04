@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DragAndDropDirective} from "../../../diretivas/drag-and-drop.directive";
 import {MatIconModule} from "@angular/material/icon";
@@ -10,7 +10,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FileUploaderOptions} from "./file-uploader-options";
 import {FileUploaderService} from "./file-uploader.service";
-import {catchError, forkJoin, of} from "rxjs";
+import {catchError, forkJoin, of, throwError} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {HttpParams} from "@angular/common/http";
 
@@ -24,6 +24,7 @@ import {HttpParams} from "@angular/common/http";
 export class FileUploaderComponent {
 
   @Input() translateService?: TranslateService;
+
   @Input() set config(value: FileUploaderOptions) {
     if (value.MULTIPLE_FILES === undefined) value.MULTIPLE_FILES = true;
     if (value.MAX_FILES === undefined) value.MAX_FILES = 5;
@@ -31,6 +32,7 @@ export class FileUploaderComponent {
     if (value.ALLOWED_MIME_TYPES === undefined) value.ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
     this._config = value;
   }
+
   @Output() onUploadSuccess: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('fileInput') fileInput!: ElementRef;
   _config!: FileUploaderOptions;
@@ -70,7 +72,7 @@ export class FileUploaderComponent {
     });
   }
 
-  upload$(file: File) {
+  upload$(file: File, multipleFiles: boolean = false) {
     let params = new HttpParams();
     if (this.isS3Upload()) {
       params = this.addS3Params(params);
@@ -86,8 +88,11 @@ export class FileUploaderComponent {
         }),
         this.fileUploaderService.fileUploadHttEventToUploadResult(),
         catchError((error: any) => {
-          this.onFileUploadError(file, error);
-          return of(error);
+          this.onFileUploadError(file);
+          if (multipleFiles) {
+            return of(null);  // Returning null value to keep ForkJoin working while uploading multiple files
+          }
+          return throwError(() => error); // Default behavior
         })
       );
   }
@@ -96,9 +101,9 @@ export class FileUploaderComponent {
     if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
       this.upload$(selectedFile.file).subscribe({
         next: (response: any) => {
-          this.onUploadSuccess.emit(Array.of(response));
+          this.onUploadSuccess.emit(Array.of(response));  // Emit Array to keep the same behavior of uploadAllFiles
         },
-        error: (error) => {
+        error: () => {
           this.matSnackBarService.error(this.translateService?.instant('generic_messages.failed_to_upload_image'), this.translateService?.instant('generic_messages.action_close'), 5000);
         }
       });
@@ -106,20 +111,20 @@ export class FileUploaderComponent {
   }
 
   uploadAllFiles() {
-    const uploadFiles$ = this.selectedFiles.map((selectedFile: any) => {
-      if (!selectedFile.isUploadInProgress && !selectedFile.uploadResult) {
+    const uploadFiles$ = this.selectedFiles
+      .filter((selectedFile: any) => !selectedFile.isUploadInProgress && !selectedFile.uploadResult)
+      .map((selectedFile: any) => {
         const file = selectedFile.file;
-        return this.upload$(file);
-      }
-      return null;
-    }).filter(Boolean);
+        return this.upload$(file, true);
+      })
 
     if (uploadFiles$.length > 0) {
       forkJoin(uploadFiles$).subscribe({
         next: (response: any) => {
-          this.onUploadSuccess.emit(response);
+          response = response.filter(Boolean); // Remove null values from catchError in upload$
+          this.onUploadSuccess.emit(response);  // Emit Array to keep the same behavior of uploadAllFiles
         },
-        error: (error) => {
+        error: () => {
           this.matSnackBarService.error(this.translateService?.instant('generic_messages.failed_to_upload_image'), this.translateService?.instant('generic_messages.action_close'), 5000);
         }
       });
@@ -131,9 +136,9 @@ export class FileUploaderComponent {
   }
 
   addS3Params(params: HttpParams) {
-      if (this._config.S3_OPTIONS!.folder) {
-        params = params.set('folder', this._config.S3_OPTIONS!.folder);
-      }
+    if (this._config.S3_OPTIONS!.folder) {
+      params = params.set('folder', this._config.S3_OPTIONS!.folder);
+    }
     return params;
   }
 
@@ -154,15 +159,11 @@ export class FileUploaderComponent {
     }
   }
 
-  onFileUploadError(file: File, error: any) {
+  onFileUploadError(file: File) {
     const selectedFile = this.selectedFiles.find(selectedFile => selectedFile.file.name === file.name);
     if (selectedFile) {
-      selectedFile.uploadResult = error;
+      selectedFile.uploadResult = 'error';
     }
-  }
-
-  removeFile(index: number) {
-    this.selectedFiles.splice(index, 1);
   }
 
   validateFile(files: File[]) {
@@ -184,12 +185,18 @@ export class FileUploaderComponent {
       }
       //Validate File Size in MB
       if (this.isFileSizeExceeded(file)) {
-        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {fileName: file.name, fileSize: this._config.MAX_FILE_SIZE_MB}), this.translateService?.instant('generic_messages.action_close'), 5000)
+        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_size_exceeded', {
+          fileName: file.name,
+          fileSize: this._config.MAX_FILE_SIZE_MB
+        }), this.translateService?.instant('generic_messages.action_close'), 5000)
         files.splice(files.indexOf(file), 1);
       }
       //Validate File Type
       if (!this.isFileMimeTypeAllowed(file)) {
-        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_type_not_allowed', {fileName: file.name, allowedTypes: this.acceptedMimeType()}), this.translateService?.instant('generic_messages.action_close'), 5000)
+        this.matSnackBarService.warning(this.translateService?.instant('file_uploader.file_type_not_allowed', {
+          fileName: file.name,
+          allowedTypes: this.acceptedMimeType()
+        }), this.translateService?.instant('generic_messages.action_close'), 5000)
         files.splice(files.indexOf(file), 1);
       }
     }
@@ -224,6 +231,10 @@ export class FileUploaderComponent {
     return selectedFile.file.name;
   }
 
+  shortFileName(selectedFile: any) {
+    return selectedFile.file.name.length > 20 ? selectedFile.file.name.substring(0, 20) + '...' : selectedFile.file.name;
+  }
+
   fileUploadProgress(selectedFile: any) {
     return selectedFile.uploadProgress;
   }
@@ -246,5 +257,14 @@ export class FileUploaderComponent {
 
   isUploadResultError(selectedFile: any) {
     return selectedFile?.uploadResult && selectedFile?.uploadResult != 'error';
+  }
+
+  removeFile(index: number) {
+    const file = this.selectedFiles[index];
+    this.selectedFiles.splice(index, 1);
+  }
+
+  removeAllFiles() {
+    this.selectedFiles = [];
   }
 }

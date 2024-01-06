@@ -3,22 +3,24 @@ import {CommonModule} from '@angular/common';
 import {
   FileUploaderComponent
 } from "../../../../shared/external/angular-material/file-uploader/file-uploader.component";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {FileUploaderOptions} from "../../../../shared/external/angular-material/file-uploader/file-uploader-options";
 import {API_UPLOAD, S3_CERTIFICATES_FOLDER} from "../../../../shared/constants/api";
 import {UserService} from "../../../../shared/services/user.service";
-import {catchError, defaultIfEmpty, finalize, map, Observable, of, startWith, take} from "rxjs";
+import {catchError, Observable, Subject, take, throwError} from "rxjs";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
 import {HttpParams} from "@angular/common/http";
 import {AuthService} from "../../../../shared/services/default/auth.service";
 import {Certificate} from "../../../../shared/interface/certificate";
 import {CertificatesListComponent} from "../../components/certificates-list/certificates-list.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AlertComponent} from "../../../../shared/external/bootstrap/alert/alert.component";
 
 @Component({
   selector: 'app-certificates',
   standalone: true,
-  imports: [CommonModule, FileUploaderComponent, CertificatesListComponent],
+  imports: [CommonModule, FileUploaderComponent, CertificatesListComponent, MatProgressSpinnerModule, TranslateModule, AlertComponent],
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.scss'
 })
@@ -38,7 +40,7 @@ export class CertificatesComponent implements OnInit {
   }
 
   certificates$: Observable<Certificate[]>;
-  isCertificatesLoading = true;
+  certificatesError$: Subject<boolean> = new Subject<boolean>();
 
   constructor(public translateService: TranslateService,
               private userService: UserService,
@@ -60,13 +62,15 @@ export class CertificatesComponent implements OnInit {
   loadCertificates() {
     return this.userService.getCertificates(this.paramsToRequest())
       .pipe(
-        finalize(() => this.isCertificatesLoading = false),
+        // finalize(() => this.isCertificatesLoading = false), // Nâo necessário pois o pipe async já faz isso
         catchError((error: any) => {
           this.matSnackBarService.error(
             HttpValidator.validateResponseErrorMessage(error),
             this.translateService.instant('generic_messages.action_close'),
             3000)
-          return of([])
+          this.certificatesError$.next(true);   // Emitindo valor para o Subject, para que alerta de erro seja exibido
+          // return of([]); // Retornando um Observable que emite um array vazio para que o componente não quebre
+          return throwError(() => error); // Retornando um Observable que emite um erro para que o componente não quebre
         }),
       )
   }
@@ -91,6 +95,23 @@ export class CertificatesComponent implements OnInit {
         take(1)
       )
       .subscribe({
+        next: () => this.certificates$ = this.loadCertificates(),
+        error: (error: any) => {
+          this.matSnackBarService.error(
+            HttpValidator.validateResponseErrorMessage(error),
+            this.translateService.instant('generic_messages.action_close'),
+            3000)
+        }
+      })
+  }
+
+  onDeleteCertificate(id: number) {
+    this.userService.deleteCertificate(id)
+      .pipe(
+        take(1)
+      )
+      .subscribe({
+        next: () => this.certificates$ = this.loadCertificates(),
         error: (error: any) => {
           this.matSnackBarService.error(
             HttpValidator.validateResponseErrorMessage(error),

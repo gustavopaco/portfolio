@@ -1,4 +1,18 @@
 @if (certificates$ | async; as certificates) {
-<app-certificates-list [certificates]="certificates"></app-certificates-list>
+  <app-certificates-list [certificates]="certificates"
+  (onDeleteCertificate)="onDeleteCertificate($event)"></app-certificates-list>
+} @else if (certificatesError$ | async) {
+  <div class="col-12 my-5">
+    <app-alert [type]="'danger'" [i18nMessage]="'certificates.failed_to_load_certificates_description'"></app-alert>
+  </div><!--col-->
+} @else {
+  <div class="row justify-content-center">
+    <div class="col-auto my-5">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div><!--col-->
+  </div><!--row-->
 }
-<app-file-uploader [translateService]="translateService" [config]="config" (onUploadSuccess)="onUploadSuccess($event)"></app-file-uploader>
+<app-file-uploader [translateService]="translateService"
+                   [config]="config"
+                   (onUploadSuccess)="onUploadSuccess($event)">
+</app-file-uploader>

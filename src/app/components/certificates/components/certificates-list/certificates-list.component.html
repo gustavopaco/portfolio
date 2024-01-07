@@ -1,27 +1,29 @@
-<div class="row">
-  @for (cert of certificates; track cert.id) {
-    <div class="col-md-3 col-6 mt-4 mb-3 d-flex flex-column align-items-center justify-content-center">
-      <div class="d-flex flex-column align-items-center justify-content-center"
-           [matTooltip]="fullFileName(cert.url)">
-        <img src="assets/icons/pdf-96.png" alt="Certificate">
-        <p class="mb-0 text-center">{{ shortFileName(cert.url) }}</p>
-      </div>
-      <div class="actions">
-        <button mat-icon-button (click)="openCertificate(cert.url)" color="primary"
-                [matTooltip]="'certificates.view_certificate' | translate">
-          <mat-icon>visibility</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteCertificate(cert.id)" color="warn"
-                [matTooltip]="'certificates.remove_certificate' | translate">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div><!--actions-->
-    </div><!--col-->
-  } @empty {
-    <div class="col-12">
-      <div class="alert alert-light text-center" role="alert">
-        <strong>{{ 'certificates.no_certificates_title' | translate }}</strong>
-      </div><!--alert-->
-    </div><!--col-->
-  }
-</div><!--row-->
+@if (isEditable) {
+  <div class="row">
+    @for (cert of certificates; track cert.id) {
+      <div class="col-md-3 col-6 mt-4 mb-3 d-flex flex-column align-items-center justify-content-center">
+        <div class="d-flex flex-column align-items-center justify-content-center"
+             [matTooltip]="fullFileName(cert.url)">
+          <img src="assets/icons/pdf-96.png" alt="Certificate">
+          <p class="mb-0 text-center">{{ shortFileName(cert.url) }}</p>
+        </div>
+        <div class="actions">
+          <button mat-icon-button (click)="openCertificate(cert.url)" color="primary"
+                  [matTooltip]="'certificates.view_certificate' | translate">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteCertificate(cert.id)" color="warn"
+                  [matTooltip]="'certificates.remove_certificate' | translate">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div><!--actions-->
+      </div><!--col-->
+    } @empty {
+      <div class="col-12">
+        <div class="alert alert-light text-center" role="alert">
+          <strong>{{ 'certificates.no_certificates_title' | translate }}</strong>
+        </div><!--alert-->
+      </div><!--col-->
+    }
+  </div><!--row-->
+}

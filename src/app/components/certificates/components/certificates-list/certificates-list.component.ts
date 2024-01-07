@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Certificate} from "../../../../shared/interface/certificate";
 import {MatButtonModule} from "@angular/material/button";
@@ -19,25 +19,33 @@ import {
   templateUrl: './certificates-list.component.html',
   styleUrl: './certificates-list.component.scss'
 })
-export class CertificatesListComponent {
+export class CertificatesListComponent implements OnInit {
 
   @Input() certificates: Certificate[] = [];
   @Output() onDeleteCertificate: EventEmitter<number> = new EventEmitter<number>
+  @Input() isEditable: boolean = false;
 
   constructor(private matDialog: MatDialog,
               private sanitizer: DomSanitizer,
               private translateService: TranslateService) {
   }
 
+  ngOnInit(): void {
+
+  }
+
+
   openCertificate(pdf: string) {
     const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pdf);
     this.matDialog.open(PdfDialogComponent, {
       width: '80%',
       height: '800px',
-      data: {
-        url: safeUrl,
-        title: 'Certificate'
-      }
+      data: [
+        {
+          url: safeUrl,
+          title: 'Certificate'
+        }
+      ]
     })
   }
 
@@ -69,7 +77,7 @@ export class CertificatesListComponent {
   }
 
   decodeUrl(url: string) {
-    let fileName =  url.split('_')[1].replace('.pdf', '')
+    let fileName = url.split('_')[1].replace('.pdf', '')
     return decodeURIComponent(fileName);
   }
 

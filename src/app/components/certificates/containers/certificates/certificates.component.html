@@ -1,6 +1,5 @@
 @if (certificates$ | async; as certificates) {
   <app-certificates-list [certificates]="certificates"
-                         [isEditable]="true"
   (onDeleteCertificate)="onDeleteCertificate($event)"></app-certificates-list>
 } @else if (certificatesError$ | async) {
   <div class="col-12 my-5">

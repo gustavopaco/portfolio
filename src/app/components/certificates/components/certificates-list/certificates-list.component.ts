@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Certificate} from "../../../../shared/interface/certificate";
 import {MatButtonModule} from "@angular/material/button";
@@ -9,7 +9,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {
-  ConfirmationDialogComponent, ConfirmationDialogData
+  ConfirmationDialogComponent,
+  ConfirmationDialogData
 } from "../../../../shared/external/angular-material/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
@@ -19,34 +20,26 @@ import {
   templateUrl: './certificates-list.component.html',
   styleUrl: './certificates-list.component.scss'
 })
-export class CertificatesListComponent implements OnInit {
+export class CertificatesListComponent {
 
   @Input() certificates: Certificate[] = [];
   @Output() onDeleteCertificate: EventEmitter<number> = new EventEmitter<number>
-  @Input() isEditable: boolean = false;
 
   constructor(private matDialog: MatDialog,
               private sanitizer: DomSanitizer,
               private translateService: TranslateService) {
   }
 
-  ngOnInit(): void {
-
-  }
-
-
-  openCertificate(pdf: string) {
-    const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pdf);
+  openCertificate(url: string) {
+    const pdfDialogData = {
+      url: this.sanitizeUrl(url),
+      title: this.translateService.instant('portfolio.certificates')
+    }
     this.matDialog.open(PdfDialogComponent, {
       width: '80%',
       height: '800px',
-      data: [
-        {
-          url: safeUrl,
-          title: 'Certificate'
-        }
-      ]
-    })
+      data: pdfDialogData
+    });
   }
 
   deleteCertificate(id: number) {
@@ -88,5 +81,9 @@ export class CertificatesListComponent implements OnInit {
   shortFileName(url: string) {
     let fileName = this.decodeUrl(url);
     return fileName.length > 10 ? fileName.substring(0, 10) + '...' : fileName;
+  }
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

@@ -57,6 +57,23 @@
         </div><!--row-->
       </div><!--container-->
     </section><!--skills-->
+    @if (user?.certificates && user!.certificates.length > 0) {
+      <section class="certificate container-fluid">
+        <div class="container">
+          <div class="row flex-column">
+            <div class="col-12 mt-5 mb-3">
+              <h1 class="text-center text-muted">{{ 'portfolio.certificates' | translate }}</h1>
+            </div><!--col-->
+            <div class="col-auto mt-3 text-center">
+              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()">
+                <mat-icon iconPositionEnd>visibility</mat-icon>
+                {{ 'portfolio.open_certificate' | translate }}
+              </button>
+            </div><!--col-->
+          </div><!--row-->
+        </div><!--container-->
+      </section><!--certificates-->
+    }
     <section class="courses container-fluid deep-purple-a400 text-white">
       <div class="container">
         <div class="row">

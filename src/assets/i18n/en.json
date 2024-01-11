@@ -4,6 +4,8 @@
     "user_bio_data_missing": "Sorry, but the user bio is missing some required information. Please login and update your profile.",
     "about_me": "About Me",
     "skills": "Skills",
+    "certificates": "Certificates",
+    "open_certificate": "Open certificates",
     "projects": "Projects",
     "courses": "Courses",
     "contact": "Contact",

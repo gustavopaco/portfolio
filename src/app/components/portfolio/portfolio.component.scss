@@ -92,7 +92,7 @@ section.skills {
   }
 }
 
-section.skills, section.courses, section.projects, section.about-me, section.contact {
+section.skills, section.courses, section.projects, section.about-me, section.contact, section.certificate {
   h1 {
     font-weight: lighter;
     font-size: 50px;
@@ -132,5 +132,13 @@ section.bio-data-missing {
     @media screen and (max-width: 992px) {
       font-size: 14px;
     }
+  }
+}
+
+section.certificate {
+  min-height: 300px;
+
+  .container, .row {
+    min-height: inherit;
   }
 }

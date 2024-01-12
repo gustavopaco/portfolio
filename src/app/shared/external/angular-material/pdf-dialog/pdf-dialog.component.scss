@@ -12,3 +12,19 @@ iframe {
   height: 800px;
   border: none;
 }
+
+button.previous_pdf {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -20%);
+  z-index: 1;
+}
+
+button.next_pdf {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translate(-50%, -10%);
+  z-index: 1;
+}

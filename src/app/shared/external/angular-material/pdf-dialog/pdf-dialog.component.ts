@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogContent} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 export interface PdfDialogData {
   url: string;
@@ -10,7 +12,7 @@ export interface PdfDialogData {
 @Component({
   selector: 'app-pdf-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogContent],
+  imports: [CommonModule, MatDialogContent, MatButtonModule, MatIconModule],
   templateUrl: './pdf-dialog.component.html',
   styleUrl: './pdf-dialog.component.scss'
 })

@@ -1,3 +1,15 @@
 <mat-dialog-content>
   <iframe [src]="iframeSrc" [title]="title"></iframe>
+  @if (totalElements > 1) {
+    <button mat-icon-button class="previous_pdf"
+            (click)="previous()"
+            [disabled]="isFirst()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button class="next_pdf"
+            (click)="next()"
+            [disabled]="isLast()">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  }
 </mat-dialog-content>

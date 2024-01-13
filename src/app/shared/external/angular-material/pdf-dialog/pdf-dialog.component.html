@@ -1,14 +1,18 @@
 <mat-dialog-content>
-  <iframe [src]="iframeSrc" [title]="title"></iframe>
+  <swiper-container swiper [config]="swiperConfig" init="false" #swiperRef>
+    @for (pdf of data; track $index) {
+      <swiper-slide>
+        <iframe [src]="pdf.url" [title]="pdf.title"></iframe>
+      </swiper-slide>
+    }
+  </swiper-container>
   @if (totalElements > 1) {
-    <button mat-icon-button class="previous_pdf"
-            (click)="previous()"
-            [disabled]="isFirst()">
+    <button mat-icon-button class="previous_pdf swiper-button-prev"
+    [ngClass]="{'active_btn': !isFirst()}">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-icon-button class="next_pdf"
-            (click)="next()"
-            [disabled]="isLast()">
+    <button mat-icon-button class="next_pdf swiper-button-next"
+            [ngClass]="{'active_btn': !isLast()}">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   }

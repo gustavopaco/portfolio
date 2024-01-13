@@ -1,8 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogContent} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {SwiperDirective} from "../../../diretivas/swiper.directive";
+import {SwiperContainer} from "swiper/element";
+import {SwiperOptions} from "swiper/types";
 
 export interface PdfDialogData {
   url: string;
@@ -12,45 +15,46 @@ export interface PdfDialogData {
 @Component({
   selector: 'app-pdf-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogContent, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatDialogContent, MatButtonModule, MatIconModule, SwiperDirective],
   templateUrl: './pdf-dialog.component.html',
-  styleUrl: './pdf-dialog.component.scss'
+  styleUrl: './pdf-dialog.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class PdfDialogComponent implements OnInit {
+export class PdfDialogComponent {
 
-  iframeSrc: string = '';
   title: string = '';
   position: any;
   totalElements: any;
 
+  @ViewChild('swiperRef') swiperRef!: ElementRef<SwiperContainer>;
+
+  swiperConfig: SwiperOptions = {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    spaceBetween: 0,
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true,
+    },
+    pagination: {
+      enabled: true,
+      clickable: true,
+      dynamicBullets: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    on: {
+      slideChange: (swiper) => {
+        this.position = swiper.activeIndex
+      }
+    }
+  };
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: PdfDialogData[]) {
     this.position = 0;
     this.totalElements = data.length;
-  }
-
-  ngOnInit(): void {
-    this.start();
-  }
-
-  start() {
-    this.iframeSrc = this.data[this.position].url;
-    this.title = this.data[this.position].title;
-  }
-
-  next() {
-    if (this.position < this.totalElements - 1) {
-      this.position++;
-      this.iframeSrc = this.data[this.position].url;
-      this.title = this.data[this.position].title;
-    }
-  }
-
-  previous() {
-    if (this.position > 0) {
-      this.position--;
-      this.iframeSrc = this.data[this.position].url;
-      this.title = this.data[this.position].title;
-    }
   }
 
   isFirst() {

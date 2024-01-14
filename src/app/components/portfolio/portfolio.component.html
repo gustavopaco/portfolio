@@ -64,8 +64,11 @@
             <div class="col-12 mt-5 mb-3">
               <h1 class="text-center text-muted">{{ 'portfolio.certificates' | translate }}</h1>
             </div><!--col-->
-            <div class="col-auto mt-3 text-center">
-              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()">
+            <div class="col-12 mb-3 text-center certificate__wrapper position-relative d-flex
+            flex-column justify-content-center align-items-center">
+              <img src="assets/img/certificados.jpg" alt="Certificate">
+              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()"
+                      class="position-absolute start-50 top-50 translate-middle">
                 <mat-icon iconPositionEnd>visibility</mat-icon>
                 {{ 'portfolio.open_certificate' | translate }}
               </button>

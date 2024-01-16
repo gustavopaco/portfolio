@@ -20,17 +20,27 @@ button.previous_pdf, button.next_pdf {
 }
 
 .active_btn {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.8);
+  border: 2px solid #FFC107;
   mat-icon {
     color: #FFC107;
+  }
+  &:hover {
+    background-color: rgba(0,0,0,0.3);
+  }
+}
+
+button[disabled] {
+  mat-icon {
+    color: #424242;
   }
 }
 
 button.previous_pdf {
   position: absolute;
   top: 50%;
-  left: 20%;
-  transform: translate(-50%, -20%);
+  left: 15%;
+  transform: translate(-50%, -15%);
   z-index: 1;
 }
 

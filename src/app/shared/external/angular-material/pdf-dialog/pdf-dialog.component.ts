@@ -1,4 +1,4 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, ViewChild} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogContent} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
@@ -6,10 +6,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {SwiperDirective} from "../../../diretivas/swiper.directive";
 import {SwiperContainer} from "swiper/element";
 import {SwiperOptions} from "swiper/types";
+import {DomSanitizer} from "@angular/platform-browser";
 
 export interface PdfDialogData {
   url: string;
   title: string;
+  safeUrl?: any;
 }
 
 @Component({
@@ -36,11 +38,6 @@ export class PdfDialogComponent {
       enabled: true,
       onlyInViewport: true,
     },
-    pagination: {
-      enabled: true,
-      clickable: true,
-      dynamicBullets: true,
-    },
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
@@ -52,9 +49,13 @@ export class PdfDialogComponent {
     }
   };
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: PdfDialogData[]) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: PdfDialogData[],
+              private domSanitizer: DomSanitizer) {
     this.position = 0;
     this.totalElements = data.length;
+    this.data.map((pdfDialogData: PdfDialogData) => {
+      pdfDialogData.safeUrl = this.sanitizePdfUrl(pdfDialogData.url);
+    });
   }
 
   isFirst() {
@@ -71,5 +72,9 @@ export class PdfDialogComponent {
 
   isMultiple() {
     return this.totalElements > 1;
+  }
+
+  sanitizePdfUrl(url: string) {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

@@ -2,17 +2,15 @@
   <swiper-container swiper [config]="swiperConfig" init="false" #swiperRef>
     @for (pdf of data; track $index) {
       <swiper-slide>
-        <iframe [src]="pdf.url" [title]="pdf.title"></iframe>
+        <iframe [src]="pdf.safeUrl" [title]="pdf.title"></iframe>
       </swiper-slide>
     }
   </swiper-container>
   @if (totalElements > 1) {
-    <button mat-icon-button class="previous_pdf swiper-button-prev"
-    [ngClass]="{'active_btn': !isFirst()}">
+    <button mat-icon-button class="previous_pdf swiper-button-prev active_btn">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-icon-button class="next_pdf swiper-button-next"
-            [ngClass]="{'active_btn': !isLast()}">
+    <button mat-icon-button class="next_pdf swiper-button-next active_btn">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   }

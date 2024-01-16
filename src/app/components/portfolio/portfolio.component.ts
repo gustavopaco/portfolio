@@ -23,7 +23,6 @@ import {SocialComponent} from "../social/social.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CoursesListComponent} from "../courses/components/courses-list/courses-list.component";
-import {DomSanitizer} from "@angular/platform-browser";
 import {PdfDialogComponent} from "../../shared/external/angular-material/pdf-dialog/pdf-dialog.component";
 import {MatIconModule} from "@angular/material/icon";
 
@@ -41,6 +40,7 @@ export class PortfolioComponent implements OnInit {
 
   isLoadingUserData = true;
   isUserBioDataValid = false;
+  isPdfDialogOpened = false;
 
   constructor(private userService: UserService,
               private translateService: TranslateService,
@@ -49,8 +49,7 @@ export class PortfolioComponent implements OnInit {
               private router: Router,
               private matSnackBarService: MatSnackbarService,
               private uiService: UiService,
-              private matDialog: MatDialog,
-              private domSanitizer: DomSanitizer) {
+              private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -139,21 +138,25 @@ export class PortfolioComponent implements OnInit {
     }
   }
 
-  sanitizeUrl(url: string) {
-    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
   openPdfDialog() {
-    const pdfDialogData = this.user?.certificates.map(certificate => {
-      return {
-        url: this.sanitizeUrl(certificate.url),
-        title: this.translateService.instant('portfolio.certificates')
-      }
-    });
-    this.matDialog.open(PdfDialogComponent, {
-      width: '80%',
-      height: '800px',
-      data: pdfDialogData
-    });
+    if (!this.isPdfDialogOpened) {
+      this.isPdfDialogOpened = true;
+      const pdfDialogData = this.user?.certificates.map(certificate => {
+        return {
+          url: certificate.url,
+          title: this.translateService.instant('portfolio.certificates')
+        }
+      });
+      const pdfDialogRef = this.matDialog.open(PdfDialogComponent, {
+        width: '80%',
+        height: '800px',
+        data: pdfDialogData
+      });
+      pdfDialogRef.afterClosed()
+        .pipe(take(1))
+        .subscribe(() => {
+          this.isPdfDialogOpened = false;
+        });
+    }
   }
 }

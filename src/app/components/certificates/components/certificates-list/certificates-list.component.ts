@@ -4,7 +4,6 @@ import {Certificate} from "../../../../shared/interface/certificate";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialog, MatDialogContainer, MatDialogModule} from "@angular/material/dialog";
 import {PdfDialogComponent} from "../../../../shared/external/angular-material/pdf-dialog/pdf-dialog.component";
-import {DomSanitizer} from "@angular/platform-browser";
 import {MatIconModule} from "@angular/material/icon";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -26,13 +25,12 @@ export class CertificatesListComponent {
   @Output() onDeleteCertificate: EventEmitter<number> = new EventEmitter<number>
 
   constructor(private matDialog: MatDialog,
-              private sanitizer: DomSanitizer,
               private translateService: TranslateService) {
   }
 
-  openCertificate(url: string) {
+  openCertificate(certificateUrl: string) {
     const pdfDialogData = {
-      url: this.sanitizeUrl(url),
+      url: certificateUrl,
       title: this.translateService.instant('portfolio.certificates')
     }
     this.matDialog.open(PdfDialogComponent, {
@@ -81,9 +79,5 @@ export class CertificatesListComponent {
   shortFileName(url: string) {
     let fileName = this.decodeUrl(url);
     return fileName.length > 10 ? fileName.substring(0, 10) + '...' : fileName;
-  }
-
-  sanitizeUrl(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

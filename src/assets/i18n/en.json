@@ -73,7 +73,9 @@
     "mat_tab_tooltip_courses": "Open Courses",
     "title_courses": "Courses",
     "mat_tab_tooltip_certificates": "Open Certificates",
-    "title_certificates": "Certificates"
+    "title_certificates": "Certificates",
+    "mat_tab_tooltip_resume": "Open Resume",
+    "title_resume": "Resume"
   },
   "bio_form": {
     "toolbar_bio": "Bio",

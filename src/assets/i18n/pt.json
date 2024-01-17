@@ -73,7 +73,9 @@
     "mat_tab_tooltip_courses": "Ver cursos",
     "title_courses": "Cursos",
     "mat_tab_tooltip_certificates": "Ver certificados",
-    "title_certificates": "Certificados"
+    "title_certificates": "Certificados",
+    "mat_tab_tooltip_resume": "Ver currículo",
+    "title_resume": "Currículo"
   },
   "bio_form": {
     "toolbar_bio": "Biografia",

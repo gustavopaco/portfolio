@@ -21,7 +21,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 })
 export class ProfileComponent {
 
-  links = ['skills', 'projects', 'courses', 'certificates']
+  links = ['skills', 'projects', 'courses', 'certificates', 'resume']
   activeLink?: string;
 
   constructor(private router: Router,
@@ -43,28 +43,32 @@ export class ProfileComponent {
   }
 
   setMatTabTitle(link: string) {
-    if (link === 'skills') {
-      return this.translate.instant('profile.title_skills');
+    switch (link) {
+      case 'skills':
+        return this.translate.instant('profile.title_skills');
+      case 'projects':
+        return this.translate.instant('profile.title_projects');
+      case 'courses':
+        return this.translate.instant('profile.title_courses');
+      case 'certificates':
+        return this.translate.instant('profile.title_certificates');
+      default:
+        return this.translate.instant('profile.title_resume');
     }
-    if (link === 'projects') {
-      return this.translate.instant('profile.title_projects');
-    }
-    if (link === 'courses') {
-      return this.translate.instant('profile.title_courses');
-    }
-    return this.translate.instant('profile.title_certificates');
   }
 
   setMatTabTooltip(link: string) {
-    if (link === 'skills') {
-      return this.translate.instant('profile.mat_tab_tooltip_skills');
+    switch (link) {
+      case 'skills':
+        return this.translate.instant('profile.mat_tab_tooltip_skills');
+      case 'projects':
+        return this.translate.instant('profile.mat_tab_tooltip_projects');
+      case 'courses':
+        return this.translate.instant('profile.mat_tab_tooltip_courses');
+      case 'certificates':
+        return this.translate.instant('profile.mat_tab_tooltip_certificates');
+      default:
+        return this.translate.instant('profile.mat_tab_tooltip_resume');
     }
-    if (link === 'projects') {
-      return this.translate.instant('profile.mat_tab_tooltip_projects');
-    }
-    if (link === 'courses') {
-      return this.translate.instant('profile.mat_tab_tooltip_courses');
-    }
-    return this.translate.instant('profile.mat_tab_tooltip_certificates');
   }
 }

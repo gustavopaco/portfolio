@@ -45,19 +45,21 @@
           <h2 class="text-center text-white mx-auto">{{ user?.bio?.testimonial }}</h2>
       </div><!--container-->
     </section><!--about-me-->
-    <section class="skills container-fluid mat-primary-bg position-relative">
-      <div class="overlay"></div>
-      <div class="container position-relative z-1">
-        <div class="row">
-          <div class="col-12 mt-5 mb-3">
-            <h1 class="text-center text-white">{{ 'portfolio.skills' | translate }}</h1>
-          </div><!--col-->
-          <div class="col-12">
-            <app-skills-list [skills]="user?.skills"></app-skills-list>
-          </div><!--col-->
-        </div><!--row-->
-      </div><!--container-->
-    </section><!--skills-->
+    @if (user?.skills && user!.skills.length > 0) {
+      <section class="skills container-fluid mat-primary-bg position-relative">
+        <div class="overlay"></div>
+        <div class="container position-relative z-1">
+          <div class="row">
+            <div class="col-12 mt-5 mb-3">
+              <h1 class="text-center text-white">{{ 'portfolio.skills' | translate }}</h1>
+            </div><!--col-->
+            <div class="col-12">
+              <app-skills-list [skills]="user!.skills"></app-skills-list>
+            </div><!--col-->
+          </div><!--row-->
+        </div><!--container-->
+      </section><!--skills-->
+    }
     @if (user?.certificates && user!.certificates.length > 0) {
       <section class="certificate container-fluid">
         <div class="container">
@@ -75,31 +77,35 @@
         </div><!--container-->
       </section><!--certificates-->
     }
-    <section class="courses container-fluid deep-purple-a400 text-white">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mt-5 mb-3">
-            <h1 class="text-center text-white">{{ 'portfolio.courses' | translate }}</h1>
-          </div><!--col-->
-          <div class="col-12">
-            <app-courses-list [courses]="user?.courses"></app-courses-list>
-          </div><!--col-->
-        </div><!--row-->
-      </div><!--container-->
-    </section><!--courses-->
-    <section class="projects container-fluid">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mt-5 mb-3">
-            <h1 class="text-center text-muted">{{ 'portfolio.projects' | translate }}</h1>
-          </div><!--col-->
-          <div class="col-12">
-            <app-projects-list [projects]="user?.projects"
-                               (projectClicked)="onProjectClicked($event)"></app-projects-list>
-          </div><!--col-->
-        </div><!--row-->
-      </div><!--container-->
-    </section><!--projects-->
+    @if (user?.courses && user!.courses.length > 0) {
+      <section class="courses container-fluid deep-purple-a400 text-white">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 mt-5 mb-3">
+              <h1 class="text-center text-white">{{ 'portfolio.courses' | translate }}</h1>
+            </div><!--col-->
+            <div class="col-12">
+              <app-courses-list [courses]="user!.courses"></app-courses-list>
+            </div><!--col-->
+          </div><!--row-->
+        </div><!--container-->
+      </section><!--courses-->
+    }
+    @if (user?.projects && user!.projects.length > 0) {
+      <section class="projects container-fluid">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 mt-5 mb-3">
+              <h1 class="text-center text-muted">{{ 'portfolio.projects' | translate }}</h1>
+            </div><!--col-->
+            <div class="col-12">
+              <app-projects-list [projects]="user!.projects"
+                                 (projectClicked)="onProjectClicked($event)"></app-projects-list>
+            </div><!--col-->
+          </div><!--row-->
+        </div><!--container-->
+      </section><!--projects-->
+    }
     <section class="contact position-relative" id="contact">
       <div class="overlay"></div>
       <div class="container">

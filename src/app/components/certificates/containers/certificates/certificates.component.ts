@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   FileUploaderComponent
@@ -24,7 +24,7 @@ import {AlertComponent} from "../../../../shared/external/bootstrap/alert/alert.
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.scss'
 })
-export class CertificatesComponent implements OnInit {
+export class CertificatesComponent {
 
   config: FileUploaderOptions = {
     API_URL: API_UPLOAD,
@@ -48,10 +48,6 @@ export class CertificatesComponent implements OnInit {
               private authService: AuthService) {
     this.config.S3_OPTIONS = this.s3Options;
     this.certificates$ = this.loadCertificates();
-  }
-
-  ngOnInit(): void {
-    this.loadCertificates();
   }
 
   paramsToRequest() {

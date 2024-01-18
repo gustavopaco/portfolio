@@ -232,6 +232,14 @@
     "delete_certificate_confirm": "Confirm",
     "delete_certificate_cancel": "Cancel"
   },
+  "resume": {
+    "failed_to_load_resume_title": "Failed to load resume",
+    "failed_to_load_resume_description": "Something went wrong while loading resume. Please try again later.",
+    "no_resume_title": "No resume found",
+    "no_resume_description": "None resume was found. Click the button below to upload your resume.",
+    "btn_upload_resume": "Upload resume",
+    "btn_delete_resume": "Delete resume"
+  },
 
   "required": "*{{fieldName}} is required.",
   "mask": "*Invalid {{fieldName}}.",

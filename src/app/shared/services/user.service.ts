@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {CrudService} from "./default/crud.service";
 import {User} from "../interface/user";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {API_CERTIFICATE, API_USER} from "../constants/api";
+import {API_CERTIFICATE, API_RESUME, API_USER} from "../constants/api";
 import {Skill} from "../interface/skill";
 import {Project} from "../interface/project";
 import {Bio} from "../interface/bio";
 import {Course} from "../interface/course";
 import {Certificate} from "../interface/certificate";
+import {Resume} from "../interface/resume";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,10 @@ export class UserService extends CrudService<User> {
     return this.httpClient.get<Certificate[]>(`${API_CERTIFICATE}`, {params});
   }
 
+  getResumeRecord() {
+    return this.httpClient.get<Resume>(API_RESUME);
+  }
+
   saveSkillRecord(form: any) {
     if (form.id) return this.httpClient.put(`${API_USER}/skill/${form.id}`, form);
     return this.httpClient.post(`${API_USER}/skill`, form);
@@ -83,8 +88,11 @@ export class UserService extends CrudService<User> {
   }
 
   saveCertificates(certificates: Certificate[]) {
-    console.log(certificates)
     return this.httpClient.post(`${API_CERTIFICATE}`, certificates);
+  }
+
+  saveResumeRecord(resume: Partial<Resume>) {
+    return this.httpClient.post(`${API_RESUME}`, resume);
   }
 
   deleteSkillRecord(id: number) {

@@ -11,5 +11,7 @@ export const S3_SKILLS_FOLDER = `${environment.s3}/skills`;
 export const S3_PROJECTS_FOLDER = `${environment.s3}/projects`;
 export const S3_AVATAR_FOLDER = `${environment.s3}/avatar`;
 export const S3_CERTIFICATES_FOLDER = `${environment.s3}/certificates`;
+export const S3_RESUME_FOLDER = `${environment.s3}/resume`;
 export const API_UPLOAD = `${environment.API}/upload`;
 export const API_CERTIFICATE = `${API_USER}/certificate`;
+export const API_RESUME = `${API_USER}/resume`;

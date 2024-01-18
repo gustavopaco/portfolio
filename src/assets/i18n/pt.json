@@ -249,6 +249,14 @@
     "delete_certificate_confirm": "Deletar",
     "delete_certificate_cancel": "Cancelar"
   },
+  "resume": {
+    "failed_to_load_resume_title": "Falha ao carregar currículo",
+    "failed_to_load_resume_description": "Algo deu errado ao carregar o currículo. Por favor, tente novamente mais tarde.",
+    "no_resume_title": "Nenhum currículo foi encontrado.",
+    "no_resume_description": "Nenhum currículo foi encontrado. Clique no botão abaixo para carregar seu currículo.",
+    "btn_upload_resume": "Carregar currículo",
+    "btn_delete_resume": "Deletar currículo"
+  },
   "required": "*{{fieldName}} obrigatório.",
   "mask": "*{{fieldName}} inválido.",
   "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",

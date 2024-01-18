@@ -1,1 +1,20 @@
-<p>resume works!</p>
+<div class="row">
+  @if (resume$ | async; as resume) {
+    <div class="col-12 my-5">
+      <app-resume-item [resume]="resume"></app-resume-item>
+    </div><!--col-->
+  } @else if (resumeNotFound$ | async) {
+    <div class="col-12 my-5 resume_input d-flex flex-column justify-content-center align-items-center">
+     <app-alert [type]="'info'" [i18nMessage]="resumeErrorMessage"></app-alert>
+        <input type="file" class="d-none" #fileInput (change)="onFileInputChange($event)">
+        <button mat-raised-button type="button" color="accent" (click)="fileInput.click()">
+          <mat-icon>upload</mat-icon>
+          {{ 'resume.btn_upload_resume' | translate }}
+        </button>
+    </div><!--col-->
+  } @else {
+    <div class="col-12 my-4">
+      <mat-progress-spinner mode="indeterminate" class="mx-auto"></mat-progress-spinner>
+    </div>
+  }
+</div><!--row-->

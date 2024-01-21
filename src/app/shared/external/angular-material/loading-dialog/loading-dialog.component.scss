@@ -3,5 +3,14 @@ mat-card-header {
 }
 
 mat-spinner {
-  margin: 0 auto;
+  margin: 12px auto;
+}
+
+/** Remove background color from dialog - Default is white **/
+::ng-deep .basic-loading-dialog {
+  background-color: transparent !important;
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
 }

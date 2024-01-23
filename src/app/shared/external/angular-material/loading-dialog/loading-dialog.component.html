@@ -1,20 +1,20 @@
-@if (data?.mode === 'card') {
+@if (data.mode === 'card') {
   <mat-card-header>
     <mat-card-title [ngStyle]="{'color': setTitleClassColor()}">
-      <h2>{{ data?.title }}</h2>
+      <h2>{{ data.title }}</h2>
     </mat-card-title>
     <mat-card-subtitle [ngStyle]="{'color': setMessageClassColor()}">
-      <h3>{{ data?.message }}</h3>
+      <h3>{{ data.message }}</h3>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <mat-spinner color="accent"></mat-spinner>
   </mat-card-content>
-} @else if (data?.mode === 'spinner-text') {
+} @else if (data.mode === 'spinner-text') {
   <mat-card-content>
     <mat-spinner color="accent"></mat-spinner>
     <mat-card-subtitle [ngStyle]="{'color': setMessageClassColor()}">
-      <h3>{{ data?.message }}</h3>
+      <h3>{{ data.message }}</h3>
     </mat-card-subtitle>
   </mat-card-content>
 } @else {

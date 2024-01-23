@@ -137,7 +137,7 @@ export class FileUploaderComponent {
 
   addS3Params(params: HttpParams) {
     if (this._config.S3_OPTIONS!.folder) {
-      params = params.set('folder', this._config.S3_OPTIONS!.folder);
+      params = params.set('path', this._config.S3_OPTIONS!.folder);
     }
     return params;
   }

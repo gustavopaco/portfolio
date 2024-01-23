@@ -87,12 +87,14 @@ export class UserService extends CrudService<User> {
     return this.httpClient.put(`${API_USER}/course`, courses);
   }
 
-  saveCertificates(certificates: Certificate[]) {
+  saveCertificates(certificates: Partial<Certificate[]>) {
     return this.httpClient.post(`${API_CERTIFICATE}`, certificates);
   }
 
-  saveResumeRecord(resume: Partial<Resume>) {
-    return this.httpClient.post(`${API_RESUME}`, resume);
+  saveResumeRecord(resume: File) {
+    const formData = new FormData();
+    formData.append('file', resume);
+    return this.httpClient.post(`${API_RESUME}`, formData);
   }
 
   deleteSkillRecord(id: number) {
@@ -109,5 +111,9 @@ export class UserService extends CrudService<User> {
 
   deleteCertificate(id: number) {
     return this.httpClient.delete(`${API_CERTIFICATE}/${id}`);
+  }
+
+  deleteResumeRecord(id: number) {
+    return this.httpClient.delete(`${API_RESUME}/${id}`);
   }
 }

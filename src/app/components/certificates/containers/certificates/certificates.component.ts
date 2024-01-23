@@ -52,7 +52,7 @@ export class CertificatesComponent {
 
   paramsToRequest() {
     return new HttpParams()
-      .set('nickname', this.authService.getNickname())
+      .set('nickname', this.authService.getNickname());
   }
 
   loadCertificates() {
@@ -79,10 +79,9 @@ export class CertificatesComponent {
   mapToCertificates(imageUrls: string[]) {
     return imageUrls.map(imageUrls => {
       return {
-        id: null,
         url: imageUrls
-      }
-    })
+      };
+    });
   }
 
   saveCertificates(certificates: any[]) {
@@ -98,7 +97,7 @@ export class CertificatesComponent {
             this.translateService.instant('generic_messages.action_close'),
             3000)
         }
-      })
+      });
   }
 
   onDeleteCertificate(id: number) {
@@ -114,6 +113,6 @@ export class CertificatesComponent {
             this.translateService.instant('generic_messages.action_close'),
             3000)
         }
-      })
+      });
   }
 }

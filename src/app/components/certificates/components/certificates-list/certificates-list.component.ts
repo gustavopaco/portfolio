@@ -11,6 +11,7 @@ import {
   ConfirmationDialogComponent,
   ConfirmationDialogData
 } from "../../../../shared/external/angular-material/confirmation-dialog/confirmation-dialog.component";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-certificates-list',
@@ -32,7 +33,7 @@ export class CertificatesListComponent {
     const pdfDialogData = {
       url: certificateUrl,
       title: this.translateService.instant('portfolio.certificates')
-    }
+    };
     this.matDialog.open(PdfDialogComponent, {
       width: '80%',
       height: '800px',
@@ -43,14 +44,12 @@ export class CertificatesListComponent {
   deleteCertificate(id: number) {
     const certificate = this.certificates.find(certificate => certificate.id === id);
     const fullFileName = this.fullFileName(certificate!.url);
-
     const confirmationDialogData: ConfirmationDialogData = {
       title: this.translateService.instant('certificates.delete_certificate_title'),
       message: this.translateService.instant('certificates.delete_certificate_message', {certificateName: fullFileName}),
       btnConfirmLabel: this.translateService.instant('certificates.delete_certificate_confirm'),
       btnCancelLabel: this.translateService.instant('certificates.delete_certificate_cancel')
-    }
-
+    };
     const dialofRef = this.matDialog.open(ConfirmationDialogComponent, {
       width: '100%',
       height: 'auto',
@@ -59,16 +58,17 @@ export class CertificatesListComponent {
       disableClose: true,
       data: confirmationDialogData
     });
-
-    dialofRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.onDeleteCertificate.emit(id);
-      }
-    });
+    dialofRef.afterClosed()
+      .pipe(take(1))
+      .subscribe(result => {
+        if (result) {
+          this.onDeleteCertificate.emit(id);
+        }
+      });
   }
 
   decodeUrl(url: string) {
-    let fileName = url.split('_')[1].replace('.pdf', '')
+    let fileName = url.split('_')[1].replace('.pdf', '');
     return decodeURIComponent(fileName);
   }
 

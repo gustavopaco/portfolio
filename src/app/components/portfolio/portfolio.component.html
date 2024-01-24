@@ -17,9 +17,15 @@
             <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
             <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
           </div><!--col-->
-          <div class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex
-          flex-column justify-content-center align-items-center">
-              <img [src]="user?.bio?.avatarUrl ?? 'assets/icons/user.png'" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
+          <div class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex flex-column justify-content-center align-items-center">
+            @if (user?.bio?.avatarUrl) {
+              <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
+            } @else {
+              <div class="no-user-avatar-wrapper">
+                <div class="overlay rounded-circle"></div><!--overlay-->
+                <mat-icon class="d-flex justify-content-center align-items-center position-relative z-1">person</mat-icon>
+              </div><!--no-user-avatar-wrapper-->
+            }
             <div class="row">
               <div class="col-12 d-flex justify-content-center mb-3">
                 <app-social [social]="user?.social" [size]="35"></app-social>

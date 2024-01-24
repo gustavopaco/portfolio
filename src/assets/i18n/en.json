@@ -119,24 +119,40 @@
     "failed_to_load_skills": "Failed to load skills",
     "btn_edit_skill": "Edit",
     "btn_delete_skill": "Delete",
-    "skill_deleted_successfully": "Skill deleted successfully."
-  },
-  "skills_form": {
-    "new_skill": "New Skill",
-    "edit_skill": "Edit Skill",
-    "hint_image_description": "Click on the image to change it",
-    "label_name": "Name",
-    "placeholder_name": "Type the skill name",
-    "label_description": "Description",
-    "placeholder_description": "Type the skill description",
-    "label_rating": "Rating*",
-    "btn_load_image": "Load image",
-    "btn_save": "Save",
-    "btn_cancel": "Cancel",
-    "messages": {
-      "success": "Skill saved successfully.",
-      "failed": "Failed to save skill.",
-      "no_changes": "No changes were made."
+    "skill_deleted_successfully": "Skill deleted successfully.",
+    "form": {
+      "titles": {
+        "new_skill": "New skill",
+        "edit_skill": "Edit skill",
+        "delete_skill": "Delete Skill"
+      },
+      "hints": {
+        "image": "Click on the image to change it"
+      },
+      "labels": {
+        "name": "Name",
+        "description": "Description",
+        "rating": "Rating*"
+      },
+      "placeholders": {
+        "name": "Type the skill name",
+        "description": "Type the skill description"
+      },
+      "field_names": {
+        "image": "Image",
+        "name": "Name",
+        "description": "Description",
+        "rating": "Rating"
+      },
+      "buttons": {
+        "load_image": "Load image"
+      },
+      "messages": {
+        "success": "Skill saved successfully.",
+        "delete": "Are you sure you want to delete \"{{skillName}}\"?",
+        "failed": "Failed to save skill.",
+        "no_changes": "No changes were made."
+      }
     }
   },
   "projects": {
@@ -238,23 +254,31 @@
     "no_resume_title": "No resume found",
     "no_resume_description": "None resume was found. Click the button below to upload your resume.",
     "btn_upload_resume": "Upload resume",
-    "btn_delete_resume": "Delete resume"
+    "btn_delete_resume": "Delete resume",
+    "delete_resume_title": "Delete resume",
+    "delete_resume_message": "Are you sure you want to delete your resume?",
+    "delete_resume_confirm": "Confirm",
+    "delete_resume_cancel": "Cancel",
+    "tooltip_view_resume": "View resume",
+    "saving_resume": "Saving resume...",
+    "delete_resume_success": "Resume deleted successfully.",
+    "remove_old_to_upload_new": "To upload a new resume, please remove the old one first.",
+    "delete_resume_loading": "Deleting resume..."
   },
-
-  "required": "*{{fieldName}} is required.",
-  "mask": "*Invalid {{fieldName}}.",
-  "minlength": "*Minimum {{fieldName}} characters: {{requiredLength}}.",
-  "maxlength": "*Maximum {{fieldName}} characters: {{requiredLength}}.",
-  "email": "*Invalid email.",
-  "emailInUse": "*Email already in use.",
-  "cepInvalido": "*Invalid Zipcode.",
-  "upload": "*Failed to upload file.",
-  "bsDate": "*Invalid date format.",
-  "equalsTo": "*{{fieldName}} and {{fieldNameEqualsTo}} must be equal.",
-  "min": "*{{fieldName}} must be greater or equal to {{min}}.",
-  "max": "*{{fieldName}} must be less or equal to {{max}}.",
-  "deleteSkillTitle": "Delete Skill",
-  "deleteSkillMessage": "Are you sure you want to delete \"{{skillName}}\"?",
+  "validators": {
+    "required": "*{{fieldName}} is required.",
+    "mask": "*Invalid {{fieldName}}.",
+    "minlength": "*Minimum {{fieldName}} characters: {{requiredLength}}.",
+    "maxlength": "*Maximum {{fieldName}} characters: {{requiredLength}}.",
+    "email": "*Invalid email.",
+    "emailInUse": "*Email already in use.",
+    "cepInvalido": "*Invalid Zipcode.",
+    "upload": "*Failed to upload file.",
+    "bsDate": "*Invalid date format.",
+    "equalsTo": "*{{fieldName}} and {{fieldNameEqualsTo}} must be equal.",
+    "min": "*{{fieldName}} must be greater or equal to {{min}}.",
+    "max": "*{{fieldName}} must be less or equal to {{max}}."
+  },
   "deleteProjectTitle": "Delete Project",
   "deleteProjectMessage": "Are you sure you want to delete \"{{projectName}}\"?",
   "confirmButton": "Confirm",
@@ -278,6 +302,51 @@
     "max_files_exceeded": "Maximum number of {{maxFiles}} files exceeded.",
     "file_size_exceeded": "File {{fileName}} size exceeded. Maximum size: {{fileSize}}.",
     "file_type_not_allowed": "File {{fileName}} type not allowed. Allowed types: {{allowedTypes}}."
+  },
+  "generic": {
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "add": "Add",
+      "remove": "Remove",
+      "upload": "Upload",
+      "upload_all": "Upload all",
+      "remove_all": "Remove all",
+      "edit": "Edit",
+      "view": "View",
+      "options": "Options",
+      "confirm": "Confirm",
+      "yes": "Yes",
+      "no": "No",
+      "login": "Login",
+      "logout": "Logout",
+      "register": "Register",
+      "contact": "Contact",
+      "send": "Send",
+      "ok": "Ok",
+      "failed": "Failed"
+    },
+    "actions": {
+      "saving": "Saving...",
+      "loading": "Loading...",
+      "deleting": "Deleting...",
+      "uploading": "Uploading...",
+      "sending": "Sending...",
+      "confirming": "Confirming...",
+      "yes": "Yes",
+      "no": "No",
+      "ok": "Ok",
+      "failed": "Failed",
+      "close": "Close"
+    },
+    "messages": {
+      "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
+      "failed_to_upload_image": "Failed to upload image. Please try again later."
+    }
   },
   "generic_messages": {
     "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",

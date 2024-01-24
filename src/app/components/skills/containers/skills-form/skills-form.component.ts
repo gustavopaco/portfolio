@@ -88,8 +88,8 @@ export class SkillsFormComponent implements OnInit {
       maxHeight: '600px',
       data: {
         imageChangedEvent: $event,
-        btnConfirmLabel: this.translateService.instant('skills_form.btn_load_image'),
-        btnCancelLabel: this.translateService.instant('skills_form.btn_cancel'),
+        btnConfirmLabel: this.translateService.instant('skills.form.buttons.load_image'),
+        btnCancelLabel: this.translateService.instant('generic.buttons.cancel'),
         returnImageType: 'blob',
         resizeToWidth: 60,
         resizeToHeight: 60,
@@ -129,7 +129,7 @@ export class SkillsFormComponent implements OnInit {
         this.saveSkill();
         return;
       }
-      this.matSnackBarService.warning(this.translateService.instant('skills_form.messages.no_changes'), this.translateService.instant('generic_messages.action_close'),3000, 'center', 'top');
+      this.matSnackBarService.warning(this.translateService.instant('skills.form.messages.no_changes'), this.translateService.instant('generic.actions.close'),3000, 'center', 'top');
       this.matDialogRef.close(false);
     }
   }
@@ -161,7 +161,7 @@ export class SkillsFormComponent implements OnInit {
           this.uploadToAwsS3Bucket(awsCredentials);
         },
         error: (error) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic.actions.close'), 5000);
           this.enableForm();
         }
       });
@@ -174,7 +174,7 @@ export class SkillsFormComponent implements OnInit {
         this.uploadToAwsS3Bucket(credentials);
       })
       .catch(() => {
-        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000);
+        this.matSnackBarService.error(this.translateService.instant('generic.messages.failed_to_delete_stored_image'), this.translateService.instant('generic.actions.close'), 5000);
         this.enableForm();
       });
   }
@@ -187,7 +187,7 @@ export class SkillsFormComponent implements OnInit {
       })
       .catch(() => {
         this.onFailedToUploadImage();
-        this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_upload_image'), this.translateService.instant('generic_messages.action_close'));
+        this.matSnackBarService.error(this.translateService.instant('generic.messages.failed_to_upload_image'), this.translateService.instant('generic.actions.close'));
         this.enableForm();
       });
   }
@@ -200,10 +200,10 @@ export class SkillsFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(this.translateService.instant('skills_form.messages.success'), this.translateService.instant('generic_messages.action_close'));
+          this.matSnackBarService.success(this.translateService.instant('skills.form.messages.success'), this.translateService.instant('generic.actions.close'));
           this.matDialogRef.close(true);
         },
-        error: () => this.matSnackBarService.error(this.translateService.instant('skills_form.messages.failed'), this.translateService.instant('generic_messages.action_close'))
+        error: () => this.matSnackBarService.error(this.translateService.instant('skills.form.messages.failed'), this.translateService.instant('generic.actions.close'))
       })
   }
 
@@ -237,7 +237,7 @@ export class SkillsFormComponent implements OnInit {
 
   matErrorImageMessage(formControlName: string, fieldName: string) {
     if (this.showMatErrorMessage(formControlName)) return this.matErrorMessage(formControlName, fieldName);
-    if (this.data.isFailedToUploadImage) return this.translateService.instant('upload');
+    if (this.data.isFailedToUploadImage) return this.translateService.instant('validators.upload');
     return '';
   }
 

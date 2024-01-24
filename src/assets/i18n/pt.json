@@ -119,24 +119,40 @@
     "failed_to_load_skills": "Falha ao carregar habilidades.",
     "btn_edit_skill": "Editar",
     "btn_delete_skill": "Deletar",
-    "skill_deleted_successfully": "Habilidade deletada com sucesso!"
-  },
-  "skills_form": {
-    "new_skill": "Nova habilidade",
-    "edit_skill": "Editar habilidade",
-    "hint_image_description": "Clique na imagem para alterar.",
-    "label_name": "Nome",
-    "placeholder_name": "Digite o nome da habilidade",
-    "label_description": "Descrição",
-    "placeholder_description": "Digite a descrição da habilidade",
-    "label_rating": "Avaliação*",
-    "btn_load_image": "Carregar imagem",
-    "btn_save": "Salvar",
-    "btn_cancel": "Cancelar",
-    "messages": {
-      "success": "Habilidade salva com sucesso!",
-      "failed": "Erro ao salvar habilidade!",
-      "no_changes": "Nenhuma alteração foi feita."
+    "skill_deleted_successfully": "Habilidade deletada com sucesso!",
+    "form": {
+      "titles": {
+        "new_skill": "Nova habilidade",
+        "edit_skill": "Editar habilidade",
+        "delete_skill": "Deletar habilidade"
+      },
+      "hints": {
+        "image": "Clique na imagem para alterar."
+      },
+      "labels": {
+        "name": "Nome",
+        "description": "Descrição",
+        "rating": "Avaliação*"
+      },
+      "placeholders": {
+        "name": "Digite o nome da habilidade",
+        "description": "Digite a descrição da habilidade"
+      },
+      "field_names": {
+        "image": "Imagem",
+        "name": "Nome",
+        "description": "Descrição",
+        "rating": "Avaliação"
+      },
+      "buttons": {
+        "load_image": "Carregar imagem"
+      },
+      "messages": {
+        "success": "Habilidade salva com sucesso!",
+        "delete": "Deseja realmente deletar \"{{skillName}}\"?",
+        "failed": "Erro ao salvar habilidade!",
+        "no_changes": "Nenhuma alteração foi feita."
+      }
     }
   },
   "projects": {
@@ -255,22 +271,31 @@
     "no_resume_title": "Nenhum currículo foi encontrado.",
     "no_resume_description": "Nenhum currículo foi encontrado. Clique no botão abaixo para carregar seu currículo.",
     "btn_upload_resume": "Carregar currículo",
-    "btn_delete_resume": "Deletar currículo"
+    "btn_delete_resume": "Deletar currículo",
+    "delete_resume_title": "Deletar currículo",
+    "delete_resume_message": "Deseja realmente deletar seu currículo?",
+    "delete_resume_confirm": "Deletar",
+    "delete_resume_cancel": "Cancelar",
+    "tooltip_view_resume": "Ver currículo",
+    "saving_resume": "Salvando currículo...",
+    "delete_resume_success": "Currículo deletado com sucesso!",
+    "remove_old_to_upload_new": "Você deve remover o currículo atual para carregar um novo.",
+    "delete_resume_loading": "Deletando currículo..."
   },
-  "required": "*{{fieldName}} obrigatório.",
-  "mask": "*{{fieldName}} inválido.",
-  "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",
-  "maxlength": "*{{fieldName}} máximo de caracteres: {{requiredLength}}.",
-  "email": "*E-mail inválido.",
-  "emailInUse": "*E-mail já existe.",
-  "cepInvalido": "*CEP inválido.",
-  "upload": "*Erro ao fazer upload.",
-  "bsDate": "*Formato de data inválido.",
-  "equalsTo": "*{{fieldName}} e {{fieldNameEqualsTo}}, devem ser iguais.",
-  "min": "*{{fieldName}} deve ser maior ou igual a {{min}}.",
-  "max": "*{{fieldName}} deve ser menor ou igual a {{max}}.",
-  "deleteSkillTitle": "Deletar habilidade",
-  "deleteSkillMessage": "Deseja realmente deletar \"{{skillName}}\"?",
+  "validators": {
+    "required": "*{{fieldName}} obrigatório.",
+    "mask": "*{{fieldName}} inválido.",
+    "minlength": "*{{fieldName}} mínimo de caracteres: {{requiredLength}}.",
+    "maxlength": "*{{fieldName}} máximo de caracteres: {{requiredLength}}.",
+    "email": "*E-mail inválido.",
+    "emailInUse": "*E-mail já existe.",
+    "cepInvalido": "*CEP inválido.",
+    "upload": "*Erro ao fazer upload.",
+    "bsDate": "*Formato de data inválido.",
+    "equalsTo": "*{{fieldName}} e {{fieldNameEqualsTo}}, devem ser iguais.",
+    "min": "*{{fieldName}} deve ser maior ou igual a {{min}}.",
+    "max": "*{{fieldName}} deve ser menor ou igual a {{max}}."
+  },
   "deleteProjectTitle": "Deletar projeto",
   "deleteProjectMessage": "Deseja realmente deletar \"{{projectName}}\"?",
   "confirmButton": "Confirmar",
@@ -294,6 +319,51 @@
     "max_files_exceeded": "Número máximo de arquivos excedido. Máximo: {{maxFiles}}.",
     "file_size_exceeded": "Arquivo {{fileName}} excedeu o tamanho máximo. Máximo: {{fileSize}}.",
     "file_type_not_allowed": "Formato do arquivo {{fileName}} não permitido. Formatos permitidos: {{allowedTypes}}."
+  },
+  "generic": {
+    "buttons": {
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "delete": "Deletar",
+      "close": "Fechar",
+      "back": "Voltar",
+      "next": "Próximo",
+      "add": "Adicionar",
+      "remove": "Remover",
+      "upload": "Upload",
+      "upload_all": "Carregar todos",
+      "remove_all": "Remover todos",
+      "edit": "Editar",
+      "view": "Ver",
+      "options": "Opções",
+      "confirm": "Confirmar",
+      "yes": "Sim",
+      "no": "Não",
+      "login": "Entrar",
+      "logout": "Sair",
+      "register": "Registrar",
+      "contact": "Contato",
+      "send": "Enviar",
+      "ok": "Ok",
+      "failed": "Falhou"
+    },
+    "actions": {
+      "saving": "Salvando...",
+      "loading": "Carregando...",
+      "deleting": "Deletando...",
+      "uploading": "Fazendo upload...",
+      "sending": "Enviando...",
+      "confirming": "Confirmando...",
+      "yes": "Sim",
+      "no": "Não",
+      "ok": "Ok",
+      "failed": "Falhou",
+      "close": "Fechar"
+    },
+    "messages": {
+      "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
+      "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde."
+    }
   },
   "generic_messages": {
     "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",

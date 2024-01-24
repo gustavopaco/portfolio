@@ -19,7 +19,7 @@
           </div><!--col-->
           <div class="col-lg-5 order-0 order-lg-1 mt-5 mb-3 my-lg-0 d-flex
           flex-column justify-content-center align-items-center">
-            <img [src]="user?.bio?.avatarUrl" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
+              <img [src]="user?.bio?.avatarUrl ?? 'assets/icons/user.png'" alt="User Image" class="rounded-circle mb-3 mb-xl-0">
             <div class="row">
               <div class="col-12 d-flex justify-content-center mb-3">
                 <app-social [social]="user?.social" [size]="35"></app-social>
@@ -41,8 +41,8 @@
     flex-column justify-content-center align-items-center">
       <div class="overlay"></div><!--overlay-->
       <div class="container z-1">
-          <h1 class="text-center text-white mt-5 mt-sm-3 mb-5">{{ 'portfolio.about_me' | translate }}</h1>
-          <h2 class="text-center text-white mx-auto">{{ user?.bio?.testimonial }}</h2>
+        <h1 class="text-center text-white mt-5 mt-sm-3 mb-5">{{ 'portfolio.about_me' | translate }}</h1>
+        <h2 class="text-center text-white mx-auto">{{ user?.bio?.testimonial }}</h2>
       </div><!--container-->
     </section><!--about-me-->
     @if (user?.skills && user!.skills.length > 0) {
@@ -68,7 +68,8 @@
               <h1 class="text-center text-muted">{{ 'portfolio.certificates' | translate }}</h1>
             </div><!--col-->
             <div class="col-12 mb-3 text-center certificate__wrapper d-flex justify-content-center align-items-center">
-              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()" [disabled]="isPdfDialogOpened">
+              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()"
+                      [disabled]="isPdfDialogOpened">
                 <mat-icon>visibility</mat-icon>
                 {{ 'portfolio.open_certificate' | translate }}
               </button>

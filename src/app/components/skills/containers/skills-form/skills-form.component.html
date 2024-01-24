@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="justify-content-center">{{ (data.newSkill ? 'skills_form.new_skill' : 'skills_form.edit_skill') | translate }}</mat-toolbar>
+<mat-toolbar color="primary" class="justify-content-center">{{ (data.newSkill ? 'skills.form.titles.new_skill' : 'skills.form.titles.edit_skill') | translate }}</mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content  class="d-flex flex-column">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3">
@@ -10,25 +10,25 @@
              alt="Skill Image">
         <input id="skillPicture" type="file" class="d-none" (change)="onFileInputChange($event)">
       </label>
-      <mat-hint>{{ 'skills_form.hint_image_description' | translate }}</mat-hint>
+      <mat-hint>{{ 'skills.form.hints.image' | translate }}</mat-hint>
       <mat-error *ngIf="showMatErrorMessage('tempImage')">
-        {{ matErrorImageMessage('tempImage', 'Skill Image') }}
+        {{ matErrorImageMessage('tempImage', ('skills.form.field_names.image' | translate)) }}
       </mat-error>
     </div><!--Picture-->
     <mat-form-field>
-      <mat-label>{{ 'skills_form.label_name' | translate }}</mat-label>
-      <input matInput formControlName="name" placeholder="{{ 'skills_form.placeholder_name' | translate }}">
-      <mat-error>{{ matErrorMessage('name', 'Name') }}</mat-error>
+      <mat-label>{{ 'skills.form.labels.name' | translate }}</mat-label>
+      <input matInput formControlName="name" placeholder="{{ 'skills.form.placeholders.name' | translate }}">
+      <mat-error>{{ matErrorMessage('name', ('skills.form.field_names.name' | translate)) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>{{ 'skills_form.label_description' | translate }}</mat-label>
-      <textarea matInput formControlName="description" class="resize-none" placeholder="{{ 'skills_form.placeholder_description' | translate }}"></textarea>
+      <mat-label>{{ 'skills.form.labels.description' | translate }}</mat-label>
+      <textarea matInput formControlName="description" class="resize-none" placeholder="{{ 'skills.form.placeholders.description' | translate }}"></textarea>
     </mat-form-field>
     <div class="d-flex flex-column justify-content-center align-items-center">
-      <span>{{ 'skills_form.label_rating' | translate }}</span>
+      <span>{{ 'skills.form.labels.rating' | translate }}</span>
       <app-star-rating [editable]="true" (ratingChange)="onRatingChange($event)" [rating]="data.skillToEdit ? data.skillToEdit.rating : 0"></app-star-rating>
       <mat-error *ngIf="showMatErrorMessage('rating')">
-        {{ matErrorMessage('rating', 'Rating') }}
+        {{ matErrorMessage('rating', ('skills.form.field_names.rating' | translate)) }}
       </mat-error>
     </div><!--Rating-->
   </mat-dialog-content>
@@ -36,7 +36,7 @@
     <button mat-raised-button color="primary" type="submit">
       <mat-icon *ngIf="isDisabledForm"><mat-spinner color="accent" diameter="18"></mat-spinner></mat-icon>
       <mat-icon *ngIf="!isDisabledForm">save</mat-icon>
-      {{ 'skills_form.btn_save' | translate }}</button>
-    <button mat-raised-button color="primary" mat-dialog-close>{{ 'skills_form.btn_cancel' | translate }}</button>
+      {{ 'generic.buttons.save' | translate }}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>{{ 'generic.buttons.cancel' | translate }}</button>
   </mat-dialog-actions>
 </form>

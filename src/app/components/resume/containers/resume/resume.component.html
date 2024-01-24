@@ -1,7 +1,7 @@
 <div class="row">
   @if (resume$ | async; as resume) {
     <div class="col-12 my-5">
-      <app-resume-item [resume]="resume"></app-resume-item>
+      <app-resume-item [resume]="resume" (onDeleteResume)="onDeleteResume($event)"></app-resume-item>
     </div><!--col-->
   } @else if (resumeNotFound$ | async) {
     <div class="col-12 my-5 resume_input d-flex flex-column justify-content-center align-items-center">
@@ -15,6 +15,6 @@
   } @else {
     <div class="col-12 my-4">
       <mat-progress-spinner mode="indeterminate" class="mx-auto"></mat-progress-spinner>
-    </div>
+    </div><!--col-->
   }
 </div><!--row-->

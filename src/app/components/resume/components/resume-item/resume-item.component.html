@@ -1,1 +1,17 @@
-<p>resume-item works!</p>
+<div class="col-12 d-flex flex-column justify-content-center align-items-center">
+  @if (isContentTypePdf(resume!.contentType)) {
+    <img src="assets/icons/pdf-96.png" alt="Resume">
+    <p class="mb-0">{{ fullName(resume.url) }}</p>
+    <div class="btn_actions">
+      <button mat-icon-button color="primary" (click)="openResume()"
+              [matTooltip]="'resume.tooltip_view_resume' | translate">
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteResume()"
+              [matTooltip]="'resume.delete_resume_title' | translate">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div><!--btn_actions-->
+    <p>{{ 'resume.remove_old_to_upload_new' | translate }}</p>
+  }
+</div><!--col-12-->

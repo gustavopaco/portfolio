@@ -75,7 +75,7 @@ export class SkillsComponent implements OnInit {
       .subscribe({
         next: (response) => this.skills = response,
         error: (error) => {
-          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_failed'), 5000);
+          this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic.actions.failed'), 5000);
           this.isFailedToLoadSkills = true;
         }
       })
@@ -139,12 +139,12 @@ export class SkillsComponent implements OnInit {
       maxHeight: '700px',
       disableClose: true,
       data: {
-        title: this.translateService.instant('deleteSkillTitle'),
-        message: this.translateService.instant('deleteSkillMessage', {skillName: this.filterSkillById(skillId).name}),
-        btnConfirmLabel: this.translateService.instant('deleteButton'),
+        title: this.translateService.instant('skills_form.titles.delete_skill'),
+        message: this.translateService.instant('skills_form.messages.delete', {skillName: this.filterSkillById(skillId).name}),
+        btnConfirmLabel: this.translateService.instant('generic.buttons.delete'),
         confirmColor: 'warn',
         confirmIcon: 'delete',
-        btnCancelLabel: this.translateService.instant('cancelButton'),
+        btnCancelLabel: this.translateService.instant('generic.buttons.cancel'),
         cancelColor: 'primary'
       }
     });

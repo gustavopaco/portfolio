@@ -1,8 +1,8 @@
-import {Component, DestroyRef, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {UserService} from "../../../../shared/services/user.service";
-import {catchError, finalize, map, Observable, Subject, switchMap, take, throwError} from "rxjs";
+import {catchError, finalize, map, Observable, Subject, take, throwError} from "rxjs";
 import {Resume} from "../../../../shared/interface/resume";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
@@ -11,10 +11,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ResumeItemComponent} from "../../components/resume-item/resume-item.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {FileUploaderService} from "../../../../shared/external/angular-material/file-uploader/file-uploader.service";
-import {API_UPLOAD, S3_RESUME_FOLDER} from "../../../../shared/constants/api";
-import {HttpParams} from "@angular/common/http";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {LoadingDialogService} from "../../../../shared/external/angular-material/loading-dialog/loading-dialog.service";
 
 @Component({
   selector: 'app-resume',
@@ -27,17 +24,16 @@ export class ResumeComponent {
 
   readonly MAX_FILE_SIZE_MB = 10;
   readonly ALLOWED_MIME_TYPE = 'application/pdf';
+  readonly RESUME_NOT_FOUND = 'RESUME_NOT_FOUND';
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   resume$: Observable<Resume>
-  resumeNotFound$: Subject<boolean> = new Subject<boolean>();
+  resumeNotFound$: Subject<boolean> = new Subject<boolean>()
   resumeErrorMessage: string;
-
-  destroyRef = inject(DestroyRef);
 
   constructor(private userService: UserService,
               private matSnackbarService: MatSnackbarService,
               private translateService: TranslateService,
-              private fileUploadService: FileUploaderService) {
+              private loadingDialogService: LoadingDialogService) {
     this.resume$ = this.getResumeRecord();
     this.resumeErrorMessage = this.setResumeErrorMessage();
   }
@@ -46,13 +42,18 @@ export class ResumeComponent {
     return this.userService.getResumeRecord()
       .pipe(
         take(1),
-        catchError((error: any) => {
-          if (error.status === 404) {
-            this.resumeNotFound$.next(true);
-          } else {
+        map((resume: Resume) => {
+          if (resume === null) {
+            throw new Error(this.RESUME_NOT_FOUND);
+          }
+          return resume;
+        }),
+        catchError((error: Error) => {
+          if (error.message != this.RESUME_NOT_FOUND) {
             this.matSnackbarService.error(HttpValidator.validateResponseErrorMessage(error));
           }
-          this.setResumeErrorMessage(error);
+          this.resumeNotFound$.next(true);
+          this.resumeErrorMessage = this.setResumeErrorMessage(error.message);
           return throwError(() => error);
         })
       );
@@ -62,37 +63,29 @@ export class ResumeComponent {
     const target = $event.target as HTMLInputElement;
     const file = target.files?.item(0);
     if (file && this.isValidMimeType(file) && this.isValidFileSize(file)) {
-      this.uploadFile(file)
+      this.saveResume(file)
+    } else {
+      this.resetFileInput();
     }
   }
 
-  addParamsToRequest() {
-    return new HttpParams()
-      .set('folder', S3_RESUME_FOLDER);
-  }
-
-  uploadFile(file: File) {
-    this.fileUploadService.uploadFile(file, API_UPLOAD, this.addParamsToRequest())
+  saveResume(file: File) {
+    const loadingDialogRef = this.loadingDialogService.openLoadingDialog({
+      message: this.translateService.instant('resume.saving_resume'),
+      mode: 'spinner-text'
+    });
+    this.userService.saveResumeRecord(file)
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        this.fileUploadService.fileUploadHttEventToUploadResult(),
-        map((imageUrl: any) => {
-          return {
-            url: imageUrl,
-            contentType: file.type,
-          }
-        }),
-        switchMap((resume: Partial<Resume>) => this.saveResume(resume)),
-        finalize(() => this.resetFileInput())
+        take(1),
+        finalize(() => {
+          this.resetFileInput();
+          loadingDialogRef.close();
+        })
       )
       .subscribe({
         next: () => this.resume$ = this.getResumeRecord(),
         error: (error: any) => this.matSnackbarService.error(HttpValidator.validateResponseErrorMessage(error))
-      })
-  }
-
-  saveResume(resume: Partial<Resume>) {
-    return this.userService.saveResumeRecord(resume);
+      });
   }
 
   isValidMimeType(file: File) {
@@ -121,10 +114,29 @@ export class ResumeComponent {
     this.fileInput.nativeElement.value = '';
   }
 
-  setResumeErrorMessage(error?: any) {
-    if (error?.status === 404) {
+  setResumeErrorMessage(message?: any) {
+    if (message == this.RESUME_NOT_FOUND) {
       return this.translateService.instant('resume.no_resume_description');
     }
     return this.translateService.instant('resume.failed_to_load_resume_description');
+  }
+
+  onDeleteResume(id: number) {
+    const loadingDialogRef = this.loadingDialogService.openLoadingDialog({
+      message: this.translateService.instant('resume.delete_resume_loading'),
+      mode: 'spinner-text'
+    });
+    this.userService.deleteResumeRecord(id)
+      .pipe(
+        take(1),
+        finalize(() => loadingDialogRef.close())
+      )
+      .subscribe({
+        next: () => {
+          this.matSnackbarService.success(this.translateService.instant('resume.delete_resume_success'));
+          this.resume$ = this.getResumeRecord();
+        },
+        error: (error: any) => this.matSnackbarService.error(HttpValidator.validateResponseErrorMessage(error))
+      });
   }
 }

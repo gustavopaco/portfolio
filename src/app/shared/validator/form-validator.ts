@@ -251,18 +251,18 @@ export class FormValidator {
   static validateSmallI18nGenericInterpolation(translate: TranslateService, formControl: FormControl, fieldName: string, fieldNameEqualsTo?: string): string {
     if (formControl?.errors) {
       const errorMessages: Record<string, string> = {
-        required: translate.instant(`required`, {fieldName}),
-        mask: translate.instant(`mask`, {fieldName}),
-        minlength: translate.instant(`minlength`, {fieldName, requiredLength: formControl.errors['minlength']?.requiredLength,}),
-        maxlength: translate.instant(`maxlength`, {fieldName, requiredLength: formControl.errors['maxlength']?.requiredLength,}),
-        email: translate.instant(`email`),
-        emailInUse: translate.instant(`emailInUse`),
-        cepInvalido: translate.instant(`cepInvalido`),
-        upload: translate.instant(`upload`),
-        bsDate: translate.instant(`bsDate`),
-        equalsTo: translate.instant(`equalsTo`, {fieldName, fieldNameEqualsTo,}),
-        min: translate.instant(`min`, {fieldName, min: formControl.errors['min']?.min,}),
-        max: translate.instant(`max`, {fieldName, max: formControl.errors['max']?.max,}),
+        required: translate.instant(`validators.required`, {fieldName}),
+        mask: translate.instant(`validators.mask`, {fieldName}),
+        minlength: translate.instant(`validators.minlength`, {fieldName, requiredLength: formControl.errors['minlength']?.requiredLength,}),
+        maxlength: translate.instant(`validators.maxlength`, {fieldName, requiredLength: formControl.errors['maxlength']?.requiredLength,}),
+        email: translate.instant(`validators.email`),
+        emailInUse: translate.instant(`validators.emailInUse`),
+        cepInvalido: translate.instant(`validators.cepInvalido`),
+        upload: translate.instant(`validators.upload`),
+        bsDate: translate.instant(`validators.bsDate`),
+        equalsTo: translate.instant(`validators.equalsTo`, {fieldName, fieldNameEqualsTo,}),
+        min: translate.instant(`validators.min`, {fieldName, min: formControl.errors['min']?.min,}),
+        max: translate.instant(`validators.max`, {fieldName, max: formControl.errors['max']?.max,}),
       };
       return FormValidator.loopIntoSmallInterpolationInputErrors(formControl, fieldName, errorMessages);
     }

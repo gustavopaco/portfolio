@@ -11,7 +11,7 @@ import {TranslateModule} from "@ngx-translate/core";
 })
 export class AlertComponent {
 
-  @Input() type: string = 'success';
+  @Input() type: 'success' | 'info' | 'danger' = 'success';
   @Input() message: string = '';
   @Input() i18nMessage?: string;
 }

@@ -35,3 +35,7 @@
 .shape-divider.inverted {
   transform: rotate(180deg);
 }
+
+svg.flip {
+  transform: rotateY(180deg);
+}

@@ -345,6 +345,11 @@
       "failed": "Failed",
       "close": "Close"
     },
+    "loading": {
+      "default": "Loading...",
+      "resume": "Loading resume...",
+      "certificates": "Loading certificates..."
+    },
     "messages": {
       "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
       "failed_to_upload_image": "Failed to upload image. Please try again later."

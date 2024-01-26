@@ -1,8 +1,8 @@
 <mat-dialog-content>
   <swiper-container swiper [config]="swiperConfig" init="false" #swiperRef>
     @for (pdf of data; track $index) {
-      <swiper-slide>
-        <iframe [src]="pdf.safeUrl" [title]="pdf.title"></iframe>
+      <swiper-slide lazy="true">
+        <iframe [src]="pdf.safeUrl" [title]="pdf.title" loading="lazy"></iframe>
       </swiper-slide>
     }
   </swiper-container>

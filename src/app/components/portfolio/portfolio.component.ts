@@ -32,6 +32,7 @@ import {ShapeDividerComponent} from "../../shared/external/angular-material/shap
 import {AuthService} from "../../shared/services/default/auth.service";
 import {MatListModule} from "@angular/material/list";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {LoadingDialogService} from "../../shared/external/angular-material/loading-dialog/loading-dialog.service";
 
 @Component({
   selector: 'app-portfolio',
@@ -54,6 +55,7 @@ export class PortfolioComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
+              private loadingDialogService: LoadingDialogService,
               private translateService: TranslateService,
               private breakpointObserver: BreakpointObserver,
               private socialService: SocialService,
@@ -171,7 +173,7 @@ export class PortfolioComponent implements OnInit {
         title: this.translateService.instant('portfolio.certificates')
       }
     });
-    this.openPdfDialog(pdfDialogData);
+    this.openPdfDialog(pdfDialogData, "certificates");
   }
 
   openResumeDialog() {
@@ -179,22 +181,40 @@ export class PortfolioComponent implements OnInit {
       url: this.user!.resume.url,
       title: this.translateService.instant('portfolio.resume')
     }
-    this.openPdfDialog([pdfDialogData]);
+    this.openPdfDialog([pdfDialogData], "resume");
   }
 
-  openPdfDialog(pdfDialogData: PdfDialogData[]) {
+  openPdfDialog(pdfDialogData: PdfDialogData[], dialogType: 'certificates' | 'resume' = 'certificates') {
     if (!this.isPdfDialogOpened) {
       this.isPdfDialogOpened = true;
-      const pdfDialogRef = this.matDialog.open(PdfDialogComponent, {
-        width: '80%',
-        height: '800px',
-        data: pdfDialogData
-      });
-      pdfDialogRef.afterClosed()
+      const loadingDialogRef = this.openLoadingDialog(dialogType);
+      loadingDialogRef.afterOpened()
         .pipe(take(1))
         .subscribe(() => {
-          this.isPdfDialogOpened = false;
+          const pdfDialogRef = this.matDialog.open(PdfDialogComponent, {
+            width: '80%',
+            height: '800px',
+            data: pdfDialogData,
+          });
+          pdfDialogRef.afterOpened()
+            .pipe(take(1))
+            .subscribe(() => {
+              loadingDialogRef.close();
+            });
+          pdfDialogRef.afterClosed()
+            .pipe(take(1))
+            .subscribe(() => {
+              loadingDialogRef.close();
+              this.isPdfDialogOpened = false;
+            });
         });
     }
+  }
+
+  openLoadingDialog(dialogType: 'certificates' | 'resume' = 'certificates') {
+    return this.loadingDialogService.openLoadingDialog({
+      mode: 'spinner-text',
+      message: dialogType === 'certificates' ? this.translateService.instant('generic.loading.certificates') : this.translateService.instant('generic.loading.resume')
+    })
   }
 }

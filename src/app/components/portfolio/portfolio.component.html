@@ -32,7 +32,7 @@
               @if (user?.resume) {
                 <button mat-raised-button color="accent" type="button" class="mb-3"
                         [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
-                        (click)="openResumeDialog()">
+                        (click)="openResumeDialog()" [disabled]="isPdfDialogOpened">
                   <mat-icon iconPositionEnd>open_in_new</mat-icon>
                   {{ 'portfolio.btn_resume' | translate }}
                 </button>
@@ -50,7 +50,7 @@
             <app-social [social]="user?.social" [size]="35" class="mb-3"></app-social>
             <button mat-raised-button color="accent" type="button" class="mb-3"
                     [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
-                    (click)="openResumeDialog()">
+                    (click)="openResumeDialog()" [disabled]="isPdfDialogOpened">
               <mat-icon iconPositionEnd>open_in_new</mat-icon>
               {{ 'portfolio.btn_resume' | translate }}
             </button>

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" id="nav-toolbar">
+<mat-toolbar color="primary" appSticky offsetMode="bottom" class="sticky-top" [stickyClasses]="['custom-sticky']">
   <mat-toolbar-row>
     <button mat-icon-button class="cursor-pointer" (click)="onSideNav()" *ngIf="!isLgScreen">
       <mat-icon>menu</mat-icon>
@@ -10,8 +10,8 @@
         <mat-icon>language</mat-icon>
       </button>
       <mat-menu #menu="matMenu" hasBackdrop="true" [backdropClass]="'dark-backdrop'">
-        <mat-radio-group [value]="defaultLanguage" class="d-flex flex-column">
-          <mat-radio-button (click)="defineLanguage(lang)" *ngFor="let lang of languages" [value]="lang">{{ lang | language }}</mat-radio-button>
+        <mat-radio-group [value]="currentLanguage" class="d-flex flex-column">
+          <mat-radio-button (click)="changeLanguage(lang)" *ngFor="let lang of languages" [value]="lang">{{ lang | language }}</mat-radio-button>
         </mat-radio-group>
       </mat-menu>
       <ng-container *ngIf="isLgScreen">

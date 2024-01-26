@@ -526,3 +526,7 @@
 .hide-element {
   animation: hideElement 0.3s ease-in-out;
 }
+
+.transition-element {
+  transition: all 0.3s ease-in-out !important;
+}

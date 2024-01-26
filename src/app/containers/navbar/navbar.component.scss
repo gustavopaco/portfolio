@@ -1,5 +1,5 @@
 mat-toolbar, mat-toolbar-row {
-  height: 80px;
+  //height: 80px;
 }
 
 .active-link {
@@ -10,4 +10,12 @@ mat-toolbar, mat-toolbar-row {
 
 ::ng-deep .dark-backdrop {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-sticky {
+  top: 3px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1320px;
+  border-radius: 8px;
 }

@@ -13,11 +13,12 @@ import {MatListModule} from "@angular/material/list";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "../../shared/services/default/auth.service";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {StickyDirective} from "../../shared/diretivas/sticky.directive";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RouterOutlet, FooterComponent, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, RouterLink, RouterLinkActive, TranslateModule],
+  imports: [CommonModule, NavbarComponent, RouterOutlet, FooterComponent, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, RouterLink, RouterLinkActive, TranslateModule, StickyDirective],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
@@ -29,12 +30,18 @@ export class LayoutComponent {
   isUserLoggedIn = false;
 
   isLgScreen: boolean = false;
+  currentLanguage?: string;
 
   constructor(private uiService: UiService,
               private authService: AuthService,
               private translateService: TranslateService,
               private breakPointObserver: BreakpointObserver) {
-    this.translateService.use(this.authService.getDefaultLanguage());
+    this.authService.defaultLanguage$
+      .pipe(takeUntilDestroyed())
+      .subscribe((value: string) => {
+        this.currentLanguage = value;
+        this.translateService.use(value);
+      });
     this.uiService.isShowNavBarEventEmitter
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
@@ -53,7 +60,7 @@ export class LayoutComponent {
           this.hideSideNav();
         }
       });
-     this.isUserLoggedIn = authService.isUserLogged();
+    this.isUserLoggedIn = authService.isUserLogged();
   }
 
   toggleSideNav(sideNav: boolean) {
@@ -66,16 +73,19 @@ export class LayoutComponent {
 
   public layoutClassStyle(): string {
     if (!this.isShowNavbar && !this.isShowFooter) {
-      return 'incomplete-layout';
+      return 'empty-layout';
     }
-    if ((this.isShowNavbar && !this.isShowFooter) || (!this.isShowNavbar && this.isShowFooter)) {
-      return 'parcial-layout';
+    if (this.isShowNavbar && !this.isShowFooter) {
+      return 'navbar-layout';
+    }
+    if (!this.isShowNavbar && this.isShowFooter) {
+      return 'footer-layout';
     }
     return 'complete-layout';
   }
 
   onLogout($event: boolean) {
-   if ($event) this.authService.logout();
+    if ($event) this.authService.logout();
   }
 
   resetMatTab($event: boolean) {
@@ -83,7 +93,6 @@ export class LayoutComponent {
   }
 
   defineLanguage($event: string) {
-    this.authService.saveDefaultLanguage($event);
-    this.translateService.use($event);
+    this.authService.saveCurrentLanguage($event);
   }
 }

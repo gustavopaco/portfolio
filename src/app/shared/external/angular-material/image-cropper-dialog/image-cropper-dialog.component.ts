@@ -67,8 +67,6 @@ export class ImageCropperDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageChangedEvent = this.data.imageChangedEvent;
-    console.log('resizeWidth', this.data.resizeToWidth)
-    console.log('resizeHeight', this.data.resizeToHeight)
   }
 
   onConfirm(): void {

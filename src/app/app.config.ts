@@ -12,8 +12,12 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
 
+export function getLanguageFromLocalStorage() {
+  return localStorage.getItem('defaultLanguage') ?? 'pt';
+}
+
 export const TRANSLATE_CONFIG = {
-  defaultLanguage: 'en',
+  defaultLanguage: getLanguageFromLocalStorage(),
   loader : {
     provide: TranslateLoader,
     useFactory: (createTranslateLoader),

@@ -26,14 +26,18 @@ $custom-warn: mat.define-palette(mat.$red-palette, 500, 300, 700);
 }
 
 .complete-layout {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 144px);
 }
 
-.parcial-complete-layout {
+.navbar-layout {
+  min-height: calc(100vh - 64px);
+}
+
+.footer-layout {
   min-height: calc(100vh - 80px);
 }
 
-.incomplete-layout {
+.empty-layout {
   height: 100vh;
 }
 

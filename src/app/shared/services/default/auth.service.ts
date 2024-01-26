@@ -9,7 +9,7 @@ import {BehaviorSubject, take} from "rxjs";
 })
 export class AuthService {
 
-  private defaultLanguage = new BehaviorSubject<string>('pt');
+  private defaultLanguage = new BehaviorSubject<string>(this.getDefaultLanguage());
 
   constructor(private httpClient: HttpClient, private router: Router) {
   }
@@ -61,7 +61,7 @@ export class AuthService {
     }
   }
 
-  saveDefaultLanguage(language: string): void {
+  saveCurrentLanguage(language: string): void {
     localStorage.setItem("defaultLanguage", language);
     this.defaultLanguage.next(language);
   }

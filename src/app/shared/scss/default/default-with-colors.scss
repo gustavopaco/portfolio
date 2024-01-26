@@ -1,6 +1,6 @@
-@import "color-variables-material";
-@import "color-classes-material";
-@import "animation";
+@import "./color-variables-material";
+@import "./color-classes-material";
+@import "./animation";
 
 
 /*Reset Documento*/
@@ -152,6 +152,18 @@ router-outlet + * {
   }
 }
 
+// Gera classes de largura de 10px a 250px
+@for $i from 1 through 25 {
+  .width-#{$i * 10} {
+    width: #{$i * 10}px !important;
+  }
+}
 
+// Gera classes de altura de 10px a 250px
+@for $i from 1 through 25 {
+  .height-#{$i * 10} {
+    height: #{$i * 10}px !important;
+  }
+}
 
 

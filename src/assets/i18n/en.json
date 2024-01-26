@@ -9,7 +9,9 @@
     "projects": "Projects",
     "courses": "Courses",
     "contact": "Contact",
-    "btn_contact": "Contact me"
+    "resume": "Resume",
+    "btn_contact": "Contact me",
+    "btn_resume": "View Resume"
   },
   "contact_form": {
     "label_name": "Name",

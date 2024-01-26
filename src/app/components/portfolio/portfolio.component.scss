@@ -61,6 +61,9 @@ section.presentation {
         font-size: 120px;
       }
     }
+    @media screen and (max-width: 1200px) {
+      position: relative;
+    }
   }
 
   .fa-brands {

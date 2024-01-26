@@ -6,13 +6,13 @@
 </ng-container>
 <ng-template #userDataLoaded>
   <ng-container *ngIf="isUserBioDataValid; else userBioDataInvalid">
-    <section
-      class="container-fluid presentation position-relative d-flex justify-content-center align-items-center">
+    <section class="container-fluid presentation position-relative d-flex justify-content-center align-items-center">
+      <app-shape-divider shape="waves" [inverted]="false" [hexaColor]="'#673AB7'"
+                         [baseHeight]="0" [svgHeight]="isDesktop ? 80 : 30" class="z-1 transition-element"></app-shape-divider>
       <div class="overlay z-0"></div><!--overlay-->
       <div class="container position-relative z-1">
         <div class="row mb-5">
-          <div
-            class="col-lg-7 order-1 order-lg-0 d-lg-flex d-xl-block flex-lg-column justify-content-lg-center align-items-lg-center">
+          <div class="col-lg-7 order-1 order-lg-0 mb-3 d-lg-flex d-xl-block flex-lg-column justify-content-lg-center align-items-lg-center">
             <h1 class="text-white text-center">{{ user?.bio?.fullName }}</h1>
             <h2 class="text-center text-white fw-lighter">{{ user?.bio?.jobTitle }}</h2>
             <p class="text-center text-white fw-lighter">{{ user?.bio?.presentation }}</p>
@@ -23,28 +23,50 @@
             } @else {
               <div class="no-user-avatar-wrapper">
                 <div class="overlay rounded-circle"></div><!--overlay-->
-                <mat-icon class="d-flex justify-content-center align-items-center position-relative z-1">person</mat-icon>
+                <mat-icon class="d-flex justify-content-center align-items-center position-relative z-1">person
+                </mat-icon>
               </div><!--no-user-avatar-wrapper-->
             }
-            <div class="row">
-              <div class="col-12 d-flex justify-content-center mb-3">
-                <app-social [social]="user?.social" [size]="35"></app-social>
-              </div><!--col-->
-              <div class="col-12 text-center d-none d-lg-block">
-                <button mat-raised-button color="accent" type="button" (click)="scrollToElement('contact')">
-                  <mat-icon>mail</mat-icon>
-                  {{ 'portfolio.btn_contact' | translate }}
+            <div class="col-12 d-none d-lg-flex flex-column align-items-center justify-content-center">
+              <app-social [social]="user?.social" [size]="35" class="mb-3"></app-social>
+              @if (user?.resume) {
+                <button mat-raised-button color="accent" type="button" class="mb-3"
+                        [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
+                        (click)="openResumeDialog()">
+                  <mat-icon iconPositionEnd>open_in_new</mat-icon>
+                  {{ 'portfolio.btn_resume' | translate }}
                 </button>
-              </div><!--col-->
-            </div><!--row-->
+              }
+              <button mat-raised-button color="accent" type="button" class="mb-3"
+                      [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
+                      (click)="scrollToElement('contact')">
+                <mat-icon iconPositionEnd>mail</mat-icon>
+                {{ 'portfolio.btn_contact' | translate }}
+              </button>
+            </div><!--col-->
           </div><!--col-->
+          <div
+            class="col-12 order-2 d-flex d-lg-none flex-column align-items-center justify-content-center text-center">
+            <app-social [social]="user?.social" [size]="35" class="mb-3"></app-social>
+            <button mat-raised-button color="accent" type="button" class="mb-3"
+                    [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
+                    (click)="openResumeDialog()">
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+              {{ 'portfolio.btn_resume' | translate }}
+            </button>
+            <button mat-raised-button color="accent" type="button" class="mb-3"
+                    [ngClass]="isLangEn ? 'width-160 justify-content-between': 'width-140 justify-content-around'"
+                    (click)="scrollToElement('contact')">
+              <mat-icon iconPositionEnd>mail</mat-icon>
+              {{ 'portfolio.btn_contact' | translate }}
+            </button>
+          </div><!--col-12-->
         </div><!--row-->
       </div><!--container-->
       <i class="fa-solid fa-circle-arrow-down fa-bounce text-white fa-2xl cursor-pointer"
          (click)="scrollToElement('about-me')"></i>
     </section><!--presentation-->
-    <section id="about-me" class="about-me container-fluid position-relative d-flex
-    flex-column justify-content-center align-items-center">
+    <section id="about-me" class="about-me container-fluid position-relative d-flex flex-column justify-content-center align-items-center">
       <div class="overlay"></div><!--overlay-->
       <div class="container z-1">
         <h1 class="text-center text-white mt-5 mt-sm-3 mb-5">{{ 'portfolio.about_me' | translate }}</h1>
@@ -74,7 +96,7 @@
               <h1 class="text-center text-muted">{{ 'portfolio.certificates' | translate }}</h1>
             </div><!--col-->
             <div class="col-12 mb-3 text-center certificate__wrapper d-flex justify-content-center align-items-center">
-              <button mat-raised-button color="accent" type="button" (click)="openPdfDialog()"
+              <button mat-raised-button color="accent" type="button" (click)="openCertificatesDialog()"
                       [disabled]="isPdfDialogOpened">
                 <mat-icon>visibility</mat-icon>
                 {{ 'portfolio.open_certificate' | translate }}

@@ -4,6 +4,7 @@ import {Bio} from "./bio";
 import {Social} from "./social";
 import {Course} from "./course";
 import {Certificate} from "./certificate";
+import {Resume} from "./resume";
 
 export interface User {
   id: number;
@@ -13,4 +14,5 @@ export interface User {
   social: Social;
   courses: Course[];
   certificates: Certificate[];
+  resume: Resume;
 }

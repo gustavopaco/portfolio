@@ -23,13 +23,20 @@ import {SocialComponent} from "../social/social.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CoursesListComponent} from "../courses/components/courses-list/courses-list.component";
-import {PdfDialogComponent} from "../../shared/external/angular-material/pdf-dialog/pdf-dialog.component";
+import {
+  PdfDialogComponent,
+  PdfDialogData
+} from "../../shared/external/angular-material/pdf-dialog/pdf-dialog.component";
 import {MatIconModule} from "@angular/material/icon";
+import {ShapeDividerComponent} from "../../shared/external/angular-material/shape-divider/shape-divider.component";
+import {AuthService} from "../../shared/services/default/auth.service";
+import {MatListModule} from "@angular/material/list";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule, MatProgressSpinnerModule, CoursesListComponent, MatIconModule],
+  imports: [CommonModule, MatTooltipModule, SkillsListComponent, ProjectsListComponent, MatDialogModule, ContactFormComponent, TranslateModule, SocialComponent, MatButtonModule, MatProgressSpinnerModule, CoursesListComponent, MatIconModule, ShapeDividerComponent, MatListModule],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
@@ -42,14 +49,29 @@ export class PortfolioComponent implements OnInit {
   isUserBioDataValid = false;
   isPdfDialogOpened = false;
 
+  isLangEn = false;
+  isDesktop = false;
+
   constructor(private userService: UserService,
+              private authService: AuthService,
               private translateService: TranslateService,
+              private breakpointObserver: BreakpointObserver,
               private socialService: SocialService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private matSnackBarService: MatSnackbarService,
               private uiService: UiService,
               private matDialog: MatDialog) {
+    this.authService.defaultLanguage$
+      .pipe(takeUntilDestroyed())
+      .subscribe((value: string) => {
+        this.isLangEn = value === 'en';
+      });
+    this.breakpointObserver.observe(['(min-width: 992px)'])
+      .pipe(takeUntilDestroyed())
+      .subscribe(result => {
+        this.isDesktop = result.matches;
+      });
   }
 
   ngOnInit(): void {
@@ -69,10 +91,14 @@ export class PortfolioComponent implements OnInit {
   }
 
   private loadUserData(nickname: string) {
+    this.authService.adicionarTempExternalApiRequest();
     this.userService.getUserDataRecord(this.paramsToRequest(nickname))
       .pipe(
         take(1),
-        finalize(() => this.isLoadingUserData = false)
+        finalize(() => {
+          this.isLoadingUserData = false;
+          this.authService.removerTempExternalApiRequest();
+        })
       )
       .subscribe({
         next: (user) => {
@@ -138,15 +164,27 @@ export class PortfolioComponent implements OnInit {
     }
   }
 
-  openPdfDialog() {
+  openCertificatesDialog() {
+    const pdfDialogData: PdfDialogData[] = this.user!.certificates.map(certificate => {
+      return {
+        url: certificate.url,
+        title: this.translateService.instant('portfolio.certificates')
+      }
+    });
+    this.openPdfDialog(pdfDialogData);
+  }
+
+  openResumeDialog() {
+    const pdfDialogData: PdfDialogData = {
+      url: this.user!.resume.url,
+      title: this.translateService.instant('portfolio.resume')
+    }
+    this.openPdfDialog([pdfDialogData]);
+  }
+
+  openPdfDialog(pdfDialogData: PdfDialogData[]) {
     if (!this.isPdfDialogOpened) {
       this.isPdfDialogOpened = true;
-      const pdfDialogData = this.user?.certificates.map(certificate => {
-        return {
-          url: certificate.url,
-          title: this.translateService.instant('portfolio.certificates')
-        }
-      });
       const pdfDialogRef = this.matDialog.open(PdfDialogComponent, {
         width: '80%',
         height: '800px',

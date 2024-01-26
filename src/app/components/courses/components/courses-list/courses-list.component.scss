@@ -1,9 +1,11 @@
-mat-icon {
-  font-size: 10px;
-}
-
 h3 {
   @media screen and (max-width: 1200px) {
     font-size: 14px;
   }
+}
+
+.course-name::before {
+  content: '•';
+  display: inline-block;
+  margin-right: 5px;
 }

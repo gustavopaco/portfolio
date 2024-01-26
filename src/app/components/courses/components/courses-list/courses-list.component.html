@@ -1,12 +1,11 @@
 <ng-container *ngFor="let course of courses; index as i">
-  <div class="row mb-3 mb-lg-4">
-    <div class="col-auto offset-md-4 offset-sm-3 offset-2">
-        <h3 class="mb-0">
-          <mat-icon class="d-inline-flex justify-content-start align-items-center">fiber_manual_record</mat-icon>
-          {{ course.name }}
+  <div class="row">
+    <div class="col-12 d-flex flex-column flex-sm-row justify-content-center align-items-center mb-4">
+        <h3 class="mb-0 course-name text-center">
+          {{ course.name }}<span class="d-none d-sm-inline">&nbsp;-&nbsp;</span>
         </h3>
-      <p><span class="fst-italic">{{ course.issuer }}</span> - {{ course.endDate | date : 'MM/YYYY' }}</p>
-    </div>
-  </div>
+      <p class="text-center mb-0 align-text-bottom"><span class="fst-italic">{{ course.issuer }}</span> - {{ course.endDate | date : 'MM/YYYY' }}</p>
+    </div><!--col-auto-->
+  </div><!--row-->
 </ng-container>
 

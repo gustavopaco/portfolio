@@ -51,19 +51,24 @@
     "back_to_top": "Início"
   },
   "auth": {
-    "title": "Entre com suas credenciais",
-    "label_email": "E-mail",
-    "placeholder_email": "Entre com seu e-mail",
-    "label_password": "Senha",
-    "placeholder_password": "Entre com sua senha",
-    "button_login": "Entrar",
-    "field_name": {
-      "email": "E-mail",
-      "password": "Senha"
+    "titles": {
+      "enter_your_credentials": "Entre com suas credenciais"
     },
-    "message": {
-      "success": "Login realizado com sucesso!",
-      "error": "Erro ao realizar login!"
+    "form": {
+      "labels": {
+        "email": "E-mail",
+        "password": "Senha"
+      },
+      "placeholders": {
+        "email": "Entre com seu e-mail",
+        "password": "Entre com sua senha"
+      },
+      "field_names": {
+        "email": "E-mail",
+        "password": "Senha"
+      }
+    },
+    "messages": {
     }
   },
   "profile": {

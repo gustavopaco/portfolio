@@ -59,7 +59,7 @@ export class AuthComponent implements OnInit {
             this.authService.saveNickname(response.body.nickname);
             this.router.navigate(['/profile'])
           },
-          error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translate.instant('auth.message.error'), 5000, 'center', 'top')
+          error: (error: any) => this.matSnakeBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translate.instant('generic.actions.failed'), 5000, 'center', 'top')
         })
     }
   }

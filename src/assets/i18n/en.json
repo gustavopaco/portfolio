@@ -51,19 +51,24 @@
     "back_to_top": "Top"
   },
   "auth": {
-    "title": "Enter your credentials to login",
-    "label_email": "E-mail",
-    "placeholder_email": "Type your e-mail",
-    "label_password": "Password",
-    "placeholder_password": "Type your password",
-    "button_login": "Login",
-    "field_name": {
-      "email": "E-mail",
-      "password": "Password"
+    "titles": {
+      "enter_your_credentials": "Enter your credentials to login"
     },
-    "message": {
-      "success": "Login successful.",
-      "error": "Failed to authenticate."
+    "form": {
+      "labels": {
+        "email": "E-mail",
+        "password": "Password"
+      },
+      "placeholders": {
+        "email": "Type your e-mail",
+        "password": "Type your password"
+      },
+      "field_names": {
+        "email": "E-mail",
+        "password": "Password"
+      }
+    },
+    "messages": {
     }
   },
   "profile": {

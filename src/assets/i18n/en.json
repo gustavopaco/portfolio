@@ -84,39 +84,46 @@
     "mat_tab_tooltip_resume": "Open Resume",
     "title_resume": "Resume"
   },
-  "bio_form": {
-    "toolbar_bio": "Bio",
-    "hint_edit_avatar": "Edit your avatar by clicking at the image.",
-    "hint_add_avatar": "Add your avatar by clicking at the image.",
-    "step_bio": {
-      "title": "Bio information",
-      "on_error": "Bio is required",
-      "label_name": "Full name",
-      "placeholder_name": "Write your full name",
-      "label_job": "Job title",
-      "placeholder_job": "Write your job title",
-      "label_presentation": "Presentation",
-      "placeholder_presentation": "Write a brief presentation about yourself",
-      "label_testimony": "Testimony",
-      "placeholder_testimony": "Write a testimony about yourself"
-    },
-    "step_social": {
-      "title": "Social media",
-      "optional": "Optional"
-    },
-    "step_done": {
-      "title": "Done",
-      "ready_message": "Your bio is ready to be saved!",
-      "not_ready_message": "You must fill all the required fields before saving your bio."
-    },
-    "step_btn_back": "Back",
-    "step_btn_next": "Next",
-    "step_btn_save": "Save",
-    "step_btn_saving": "Saving...",
-    "cropper_avatar_title": "Crop your avatar",
-    "message": {
-      "success": "Bio saved successfully.",
-      "error": "Failed to save bio."
+  "bio": {
+    "form": {
+      "titles": {
+        "bio": "Bio"
+      },
+      "hints": {
+        "edit_avatar": "Edit your avatar by clicking at the image.",
+        "add_avatar": "Add your avatar by clicking at the image."
+      },
+      "steps": {
+        "bio": {
+          "title": "Bio information",
+          "on_error": "Bio is required",
+          "labels": {
+            "name": "Name",
+            "job": "Job title",
+            "presentation": "Presentation",
+            "testimony": "Testimony"
+          },
+          "placeholders": {
+            "name": "Write your name",
+            "job": "Write your job title",
+            "presentation": "Write a brief presentation about yourself",
+            "testimony": "Write a testimony about yourself"
+          }
+        },
+        "social": {
+          "title": "Social media",
+          "optional": "Optional"
+        },
+        "done": {
+          "title": "Done",
+          "ready_to_save": "Your bio is ready to be saved!",
+          "fill_all_fields": "You must fill all the required fields before saving your bio."
+        }
+      },
+      "messages": {
+        "success": "Bio saved successfully.",
+        "error": "Failed to save bio."
+      }
     }
   },
   "skills": {
@@ -309,6 +316,12 @@
     "max_files_exceeded": "Maximum number of {{maxFiles}} files exceeded.",
     "file_size_exceeded": "File {{fileName}} size exceeded. Maximum size: {{fileSize}}.",
     "file_type_not_allowed": "File {{fileName}} type not allowed. Allowed types: {{allowedTypes}}."
+  },
+  "image_cropper": {
+    "titles": {
+      "crop_your_image": "Crop your image",
+      "crop_your_avatar": "Crop your avatar"
+    }
   },
   "generic": {
     "buttons": {

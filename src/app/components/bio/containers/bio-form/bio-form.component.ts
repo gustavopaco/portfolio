@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Bio} from "../../../../shared/interface/bio";
 import {UserService} from "../../../../shared/services/user.service";
 import {CredentialsService} from "../../../../shared/services/credentials.service";
 import {UtilAwsS3Service} from "../../../../shared/services/default/aws/util-aws-s3.service";
 import {MatSnackbarService} from "../../../../shared/external/angular-material/toast-snackbar/mat-snackbar.service";
-import {finalize, map, Observable, take} from "rxjs";
+import {finalize, map, Observable, take, tap} from "rxjs";
 import {AwsConfiguration} from "../../../../shared/interface/aws-configuration";
 import {S3_AVATAR_FOLDER} from "../../../../shared/constants/api";
 import {HttpValidator} from "../../../../shared/validator/http-validator";
@@ -43,7 +43,7 @@ import {SocialService} from "../../../../shared/services/social.service";
     {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}}
   ]
 })
-export class BioFormComponent implements OnInit {
+export class BioFormComponent {
 
   form = this.fb.group({
     bio: this.fb.group({
@@ -66,18 +66,15 @@ export class BioFormComponent implements OnInit {
     })
   });
 
+  userData$: Observable<User>;
+
   bio?: Bio;
   social?: Social;
 
-  isLoadingBio = true;
   isLoadingRequestMatStepperForm = false;
   isLinear = false;
 
   stepperOrientation: Observable<StepperOrientation>
-
-  ngOnInit(): void {
-    this.getBioSocialRecord();
-  }
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -95,6 +92,8 @@ export class BioFormComponent implements OnInit {
         takeUntilDestroyed(),
         map(({matches}) => matches ? 'horizontal' : 'vertical')
       );
+    this.userData$ = this.getBioSocialRecord();
+
   }
 
   private paramsToRequest(): HttpParams {
@@ -102,18 +101,16 @@ export class BioFormComponent implements OnInit {
   }
 
   private getBioSocialRecord(loadingImageOnly: boolean = false) {
-    this.startLoadingBio();
-    this.userService.getUserDataBioSocialRecord(this.paramsToRequest())
+    return this.userService.getUserDataBioSocialRecord(this.paramsToRequest())
       .pipe(
         take(1),
-        finalize(() => this.stopLoadingBio())
-      )
-      .subscribe((user: User) => {
-        this.bio = user.bio;
-        this.social = user.social;
-        this.socialService.emitSocialEvent(user.social);
-        this.loadBioSocialOnForm(user, loadingImageOnly);
-      });
+        tap((user: User) => {
+          this.bio = user.bio;
+          this.social = user.social;
+          this.socialService.emitSocialEvent(user.social);
+          this.loadBioSocialOnForm(user, loadingImageOnly);
+        }),
+      );
   }
 
   private loadBioSocialOnForm(user: User, loadingImageOnly: boolean) {
@@ -152,13 +149,12 @@ export class BioFormComponent implements OnInit {
       data: {
         imageChangedEvent: $event,
         returnImageType: 'blob',
-        title: this.translateService.instant('bio_form.cropper_avatar_title'),
+        title: this.translateService.instant('image_cropper.titles.crop_your_avatar'),
         resizeToWidth: 250,
         resizeToHeight: 250,
         roundCropper: true
       }
     });
-
     dialogRef.afterClosed()
       .pipe(
         take(1),
@@ -194,14 +190,14 @@ export class BioFormComponent implements OnInit {
             this.uploadToAwsS3Bucket(credentials, file);
           }
         },
-        error: (error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic_messages.action_close'), 5000)
+        error: (error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic.actions.close'), 5000)
       })
   }
 
   private deletePreviousImage(credentials: AwsConfiguration, file: File) {
     this.utilAwsS3Service.deleteImageFromAwsS3Bucket(credentials.bucketName, this.avatarUrl?.value!)
       .then(() => this.uploadToAwsS3Bucket(credentials, file))
-      .catch(() => this.matSnackBarService.error(this.translateService.instant('generic_messages.failed_to_delete_stored_image'), this.translateService.instant('generic_messages.action_close'), 5000))
+      .catch(() => this.matSnackBarService.error(this.translateService.instant('generic.messages.failed_to_delete_stored_image'), this.translateService.instant('generic.actions.close'), 5000))
   }
 
   private uploadToAwsS3Bucket(credentials: AwsConfiguration, file: File) {
@@ -210,7 +206,7 @@ export class BioFormComponent implements OnInit {
         this.defineNewImage(imageUrl);
         this.saveBioImageRecord();
       })
-      .catch((error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic_messages.action_close'), 5000))
+      .catch((error: any) => this.matSnackBarService.error(error, this.translateService.instant('generic.actions.close'), 5000))
   }
 
   private defineNewImage(imageUrl: string) {
@@ -222,8 +218,8 @@ export class BioFormComponent implements OnInit {
     this.userService.saveBioRecord(this.bioGroup?.value)
       .pipe(take(1))
       .subscribe({
-        next: () => this.getBioSocialRecord(true),
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
+        next: () => this.userData$ = this.getBioSocialRecord(true),
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic.actions.close'), 5000)
       })
   }
 
@@ -236,18 +232,18 @@ export class BioFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.matSnackBarService.success(this.translateService.instant('bio_form.message.success'), this.translateService.instant('generic_messages.action_close'), 5000);
-          this.getBioSocialRecord();
+          this.matSnackBarService.success(this.translateService.instant('bio.form.messages.success'), this.translateService.instant('generic.actions.close'), 5000);
+          this.userData$ = this.getBioSocialRecord();
         },
-        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic_messages.action_close'), 5000)
+        error: (error: any) => this.matSnackBarService.error(HttpValidator.validateResponseErrorMessage(error), this.translateService.instant('generic.actions.close'), 5000)
       })
   }
 
   setMatStepperDoneMessage() {
     if (this.form.valid) {
-      return this.translateService.instant('bio_form.step_done.ready_message');
+      return this.translateService.instant('bio.form.steps.done.ready_to_save');
     }
-    return this.translateService.instant('bio_form.step_done.not_ready_message');
+    return this.translateService.instant('bio.form.steps.done.fill_all_fields');
   }
 
   existPreviousImage() {
@@ -272,17 +268,9 @@ export class BioFormComponent implements OnInit {
 
   setAddEditAvatarHint() {
     if (this.existPreviousImage()) {
-      return this.translateService.instant("bio_form.hint_edit_avatar");
+      return this.translateService.instant("bio.form.hints.edit_avatar");
     }
-    return this.translateService.instant("bio_form.hint_add_avatar");
-  }
-
-  private startLoadingBio() {
-    this.isLoadingBio = true;
-  }
-
-  private stopLoadingBio() {
-    this.isLoadingBio = false;
+    return this.translateService.instant("bio.form.hints.add_avatar");
   }
 
   private startLoadingMatStepperForm() {

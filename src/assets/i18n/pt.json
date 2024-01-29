@@ -84,39 +84,46 @@
     "mat_tab_tooltip_resume": "Ver currículo",
     "title_resume": "Currículo"
   },
-  "bio_form": {
-    "toolbar_bio": "Biografia",
-    "hint_edit_avatar": "Clique na imagem para editar seu avatar.",
-    "hint_add_avatar": "Clique na imagem para adicionar seu avatar.",
-    "step_bio": {
-      "title": "Dados pessoais",
-      "on_error": "Dados pessoais são obrigatórios.",
-      "label_name": "Nome completo",
-      "placeholder_name": "Digite seu nome",
-      "label_job": "Profissão",
-      "placeholder_job": "Digite sua profissão",
-      "label_presentation": "Apresentação",
-      "placeholder_presentation": "Escreva uma breve apresentação sobre você",
-      "label_testimony": "Testemunho",
-      "placeholder_testimony": "Escreva um testemunho sobre você"
-    },
-    "step_social": {
-      "title": "Redes sociais",
-      "optional": "Opcional"
-    },
-    "step_done": {
-      "title": "Pronto",
-      "ready_message": "Seu perfil está pronto para ser salvo.",
-      "not_ready_message": "Preencha todos os campos obrigatórios para salvar seu perfil."
-    },
-    "step_btn_back": "Voltar",
-    "step_btn_next": "Próximo",
-    "step_btn_save": "Salvar",
-    "step_btn_saving": "Salvando...",
-    "cropper_avatar_title": "Editar avatar",
-    "message": {
-      "success": "Biografia salva com sucesso!",
-      "error": "Erro ao salvar biografia!"
+  "bio": {
+    "form": {
+      "titles": {
+        "bio": "Biografia"
+      },
+      "hints": {
+        "edit_avatar": "Clique na imagem para editar seu avatar.",
+        "add_avatar": "Clique na imagem para adicionar seu avatar."
+      },
+      "steps": {
+        "bio": {
+          "title": "Dados pessoais",
+          "on_error": "Dados pessoais são obrigatórios.",
+          "labels": {
+            "name": "Nome",
+            "job": "Profissão",
+            "presentation": "Apresentação",
+            "testimony": "Testemunho"
+          },
+          "placeholders": {
+            "name": "Digite seu nome",
+            "job": "Digite sua profissão",
+            "presentation": "Escreva uma breve apresentação sobre você",
+            "testimony": "Escreva um testemunho sobre você"
+          }
+        },
+        "social": {
+          "title": "Redes sociais",
+          "optional": "Opcional"
+        },
+        "done": {
+          "title": "Pronto",
+          "ready_to_save": "Seu perfil está pronto para ser salvo.",
+          "fill_all_fields": "Preencha todos os campos obrigatórios para salvar seu perfil."
+        }
+      },
+      "messages": {
+        "success": "Biografia salva com sucesso!",
+        "error": "Erro ao salvar biografia!"
+      }
     }
   },
   "skills": {
@@ -326,6 +333,12 @@
     "max_files_exceeded": "Número máximo de arquivos excedido. Máximo: {{maxFiles}}.",
     "file_size_exceeded": "Arquivo {{fileName}} excedeu o tamanho máximo. Máximo: {{fileSize}}.",
     "file_type_not_allowed": "Formato do arquivo {{fileName}} não permitido. Formatos permitidos: {{allowedTypes}}."
+  },
+  "image_cropper": {
+    "titles": {
+      "crop_your_image": "Recorte sua imagem",
+      "crop_your_avatar": "Recorte seu avatar"
+    }
   },
   "generic": {
     "buttons": {

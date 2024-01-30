@@ -8,11 +8,11 @@
         </div>
         <div class="actions">
           <button mat-icon-button (click)="openCertificate(cert.url)" color="primary"
-                  [matTooltip]="'certificates.view_certificate' | translate">
+                  [matTooltip]="'certificates.list.tooltips.view_certificate' | translate">
             <mat-icon>visibility</mat-icon>
           </button>
           <button mat-icon-button (click)="deleteCertificate(cert.id)" color="warn"
-                  [matTooltip]="'certificates.remove_certificate' | translate">
+                  [matTooltip]="'certificates.list.tooltips.remove_certificate' | translate">
             <mat-icon>delete</mat-icon>
           </button>
         </div><!--actions-->
@@ -20,7 +20,7 @@
     } @empty {
       <div class="col-12 mt-4 mb-3">
         <div class="alert alert-light text-center" role="alert">
-          <strong>{{ 'certificates.no_certificates_title' | translate }}</strong>
+          <strong>{{ 'certificates.list.empty.title' | translate }}</strong>
         </div><!--alert-->
       </div><!--col-->
     }

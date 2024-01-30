@@ -1,55 +1,4 @@
 {
-  "portfolio": {
-    "loading_user_data": "Carregando dados do usuário...",
-    "user_bio_data_missing": "Desculpe, mas estão faltando dados da biografia do usuário. Por favor, faça login e preencha os dados de perfil.",
-    "about_me": "Sobre mim",
-    "certificates": "Certificados",
-    "open_certificate": "Abrir certificados",
-    "skills": "Habilidades",
-    "projects": "Projetos",
-    "courses": "Cursos",
-    "contact": "Contato",
-    "resume": "Currículo",
-    "btn_contact": "Contato",
-    "btn_resume": "Currículo"
-  },
-  "contact_form": {
-    "label_name": "Nome",
-    "placeholder_name": "Digite seu nome",
-    "label_email": "E-mail",
-    "placeholder_email": "Digite seu e-mail",
-    "label_message": "Mensagem",
-    "placeholder_message": "Digite a mensagem",
-    "button_send": "Enviar",
-    "field_name": {
-      "name": "Nome",
-      "email": "E-mail",
-      "message": "Mensagem"
-    },
-    "message": {
-      "success": "Mensagem enviada com sucesso!",
-      "error": "Erro ao enviar mensagem!"
-    }
-  },
-  "error_component": {
-    "404_code_name": "Página não encontrada",
-    "404_code_description": "Desculpe, a página que você está procurando não existe.",
-    "500_code_name": "Erro interno do servidor",
-    "500_code_description": "O servidor encontrou um erro interno ou configuração incorreta e não pôde concluir sua solicitação.",
-    "default_code_name": "Erro inesperado",
-    "default_code_description": "Desculpe, algo deu errado.",
-    "button_back": "Voltar"
-  },
-  "header": {
-    "profile": "Perfil",
-    "logout": "Sair",
-    "login": "Entrar"
-  },
-  "footer": {
-    "all_rights_reserved": "Todos os direitos reservados",
-    "developed_by": "Desenvolvido por Gustavo Paco",
-    "back_to_top": "Início"
-  },
   "auth": {
     "titles": {
       "enter_your_credentials": "Entre com suas credenciais"
@@ -70,19 +19,6 @@
     },
     "messages": {
     }
-  },
-  "profile": {
-    "toolbar_accomplishments": "Conquistas",
-    "mat_tab_tooltip_skills": "Ver habilidades",
-    "title_skills": "Habilidades",
-    "mat_tab_tooltip_projects": "Ver projetos",
-    "title_projects": "Projetos",
-    "mat_tab_tooltip_courses": "Ver cursos",
-    "title_courses": "Cursos",
-    "mat_tab_tooltip_certificates": "Ver certificados",
-    "title_certificates": "Certificados",
-    "mat_tab_tooltip_resume": "Ver currículo",
-    "title_resume": "Currículo"
   },
   "bio": {
     "form": {
@@ -126,48 +62,194 @@
       }
     }
   },
-  "skills": {
-    "add_skill": "Adicionar habilidade",
-    "edit_skill": "Editar habilidade",
-    "no_skills": "Nenhuma habilidade foi encontrada. Clique no botão acima para adicionar uma nova habilidade.",
-    "failed_to_load_skills": "Falha ao carregar habilidades.",
-    "btn_edit_skill": "Editar",
-    "btn_delete_skill": "Deletar",
-    "skill_deleted_successfully": "Habilidade deletada com sucesso!",
-    "form": {
+  "certificates": {
+    "list": {
       "titles": {
-        "new_skill": "Nova habilidade",
-        "edit_skill": "Editar habilidade",
-        "delete_skill": "Deletar habilidade"
+        "delete": "Deletar certificado"
       },
-      "hints": {
-        "image": "Clique na imagem para alterar."
+      "tooltips": {
+        "view_certificate": "Ver certificado",
+        "remove_certificate": "Remover certificado"
       },
-      "labels": {
-        "name": "Nome",
-        "description": "Descrição",
-        "rating": "Avaliação*"
-      },
-      "placeholders": {
-        "name": "Digite o nome da habilidade",
-        "description": "Digite a descrição da habilidade"
-      },
-      "field_names": {
-        "image": "Imagem",
-        "name": "Nome",
-        "description": "Descrição",
-        "rating": "Avaliação"
-      },
-      "buttons": {
-        "load_image": "Carregar imagem"
+      "empty": {
+        "title": "Nenhum certificado foi encontrado.",
+        "description": "Clique no botão abaixo para adicionar um novo certificado."
       },
       "messages": {
-        "success": "Habilidade salva com sucesso!",
-        "delete": "Deseja realmente deletar \"{{skillName}}\"?",
-        "failed": "Erro ao salvar habilidade!",
-        "no_changes": "Nenhuma alteração foi feita."
+        "delete": "Deseja realmente deletar \"{{certificateName}}\"?"
       }
+    },
+    "failed_to_load_certificates_title": "Falha ao carregar certificados",
+    "failed_to_load_certificates_description": "Algo deu errado ao carregar os certificados. Por favor, tente novamente mais tarde.",
+    "no_certificates_title": "Nenhum certificado foi encontrado.",
+    "view_certificate": "Ver certificado",
+    "remove_certificate": "Remover certificado",
+    "delete_certificate_title": "Deletar certificado",
+    "delete_certificate_message": "Deseja realmente deletar o certificado \"{{certificateName}}\"?",
+    "delete_certificate_confirm": "Deletar",
+    "delete_certificate_cancel": "Cancelar"
+  },
+  "contact_form": {
+    "label_name": "Nome",
+    "placeholder_name": "Digite seu nome",
+    "label_email": "E-mail",
+    "placeholder_email": "Digite seu e-mail",
+    "label_message": "Mensagem",
+    "placeholder_message": "Digite a mensagem",
+    "button_send": "Enviar",
+    "field_name": {
+      "name": "Nome",
+      "email": "E-mail",
+      "message": "Mensagem"
+    },
+    "message": {
+      "success": "Mensagem enviada com sucesso!",
+      "error": "Erro ao enviar mensagem!"
     }
+  },
+  "courses": {
+    "failed_to_load_courses_title": "Falha ao carregar cursos",
+    "failed_to_load_courses_description": "Algo deu errado ao carregar os cursos. Por favor, tente novamente mais tarde."
+  },
+  "courses_form": {
+    "no_courses_title": "Nenhum curso foi encontrado.",
+    "no_courses_description": "Clique no botão abaixo para adicionar um novo curso.",
+    "btn_add_course": "Adicionar curso",
+    "btn_save": "Salvar",
+    "label_name": "Nome",
+    "placeholder_name": "Digite o nome do curso",
+    "label_issuer": "Emissor",
+    "placeholder_issuer": "Digite o emissor do curso",
+    "label_endDate": "Data de término",
+    "btn_delete": "Remover",
+    "field_names": {
+      "name": "Nome",
+      "issuer": "Emissor",
+      "endDate": "Data de término"
+    },
+    "messages": {
+      "success": "Cursos salvos com sucesso!",
+      "success_delete": "Curso removido com sucesso!"
+    }
+  },
+  "error_component": {
+    "404_code_name": "Página não encontrada",
+    "404_code_description": "Desculpe, a página que você está procurando não existe.",
+    "500_code_name": "Erro interno do servidor",
+    "500_code_description": "O servidor encontrou um erro interno ou configuração incorreta e não pôde concluir sua solicitação.",
+    "default_code_name": "Erro inesperado",
+    "default_code_description": "Desculpe, algo deu errado.",
+    "button_back": "Voltar"
+  },
+  "file_uploader": {
+    "file_already_selected": "Arquivo {{fileName}} já selecionado.",
+    "upload_file": "Upload de arquivo",
+    "upload_all_files": "Upload de todos os arquivos",
+    "remove_file": "Remover arquivo",
+    "remove_all_files": "Remover todos os arquivos",
+    "uploading_file": "Fazendo upload do arquivo...",
+    "uploading_file_description": "Por favor, aguarde enquanto o arquivo está sendo carregado.",
+    "upload_file_error": "Falha ao fazer upload do arquivo.",
+    "upload_file_error_description": "Ocorreu um erro ao fazer upload do arquivo. Por favor, tente novamente mais tarde.",
+    "upload_file_success": "Upload de arquivo bem sucedido.",
+    "upload_file_success_description": "O arquivo foi carregado com sucesso.",
+    "multiple_files_not_allowed": "Múltiplos arquivos não são permitidos.",
+    "max_files_exceeded": "Número máximo de arquivos excedido. Máximo: {{maxFiles}}.",
+    "file_size_exceeded": "Arquivo {{fileName}} excedeu o tamanho máximo. Máximo: {{fileSize}}.",
+    "file_type_not_allowed": "Formato do arquivo {{fileName}} não permitido. Formatos permitidos: {{allowedTypes}}."
+  },
+  "footer": {
+    "all_rights_reserved": "Todos os direitos reservados",
+    "developed_by": "Desenvolvido por Gustavo Paco",
+    "back_to_top": "Início"
+  },
+  "generic": {
+    "buttons": {
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "delete": "Deletar",
+      "close": "Fechar",
+      "back": "Voltar",
+      "next": "Próximo",
+      "add": "Adicionar",
+      "remove": "Remover",
+      "upload": "Upload",
+      "upload_all": "Carregar todos",
+      "remove_all": "Remover todos",
+      "edit": "Editar",
+      "view": "Ver",
+      "options": "Opções",
+      "confirm": "Confirmar",
+      "yes": "Sim",
+      "no": "Não",
+      "login": "Entrar",
+      "logout": "Sair",
+      "register": "Registrar",
+      "contact": "Contato",
+      "send": "Enviar",
+      "ok": "Ok",
+      "failed": "Falhou"
+    },
+    "actions": {
+      "saving": "Salvando...",
+      "loading": "Carregando...",
+      "deleting": "Deletando...",
+      "uploading": "Fazendo upload...",
+      "sending": "Enviando...",
+      "confirming": "Confirmando...",
+      "yes": "Sim",
+      "no": "Não",
+      "ok": "Ok",
+      "failed": "Falhou",
+      "close": "Fechar"
+    },
+    "loading": {
+      "default": "Carregando...",
+      "resume": "Carregando currículo...",
+      "certificates": "Carregando certificados..."
+    },
+    "messages": {
+      "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
+      "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde."
+    }
+  },
+  "header": {
+    "profile": "Perfil",
+    "logout": "Sair",
+    "login": "Entrar"
+  },
+  "image_cropper": {
+    "titles": {
+      "crop_your_image": "Recorte sua imagem",
+      "crop_your_avatar": "Recorte seu avatar"
+    }
+  },
+  "portfolio": {
+    "loading_user_data": "Carregando dados do usuário...",
+    "user_bio_data_missing": "Desculpe, mas estão faltando dados da biografia do usuário. Por favor, faça login e preencha os dados de perfil.",
+    "about_me": "Sobre mim",
+    "certificates": "Certificados",
+    "open_certificate": "Abrir certificados",
+    "skills": "Habilidades",
+    "projects": "Projetos",
+    "courses": "Cursos",
+    "contact": "Contato",
+    "resume": "Currículo",
+    "btn_contact": "Contato",
+    "btn_resume": "Currículo"
+  },
+  "profile": {
+    "toolbar_accomplishments": "Conquistas",
+    "mat_tab_tooltip_skills": "Ver habilidades",
+    "title_skills": "Habilidades",
+    "mat_tab_tooltip_projects": "Ver projetos",
+    "title_projects": "Projetos",
+    "mat_tab_tooltip_courses": "Ver cursos",
+    "title_courses": "Cursos",
+    "mat_tab_tooltip_certificates": "Ver certificados",
+    "title_certificates": "Certificados",
+    "mat_tab_tooltip_resume": "Ver currículo",
+    "title_resume": "Currículo"
   },
   "projects": {
     "new_project": "Novo projeto",
@@ -243,42 +325,6 @@
       "not_available": "Site não disponível"
     }
   },
-  "courses": {
-    "failed_to_load_courses_title": "Falha ao carregar cursos",
-    "failed_to_load_courses_description": "Algo deu errado ao carregar os cursos. Por favor, tente novamente mais tarde."
-  },
-  "courses_form": {
-    "no_courses_title": "Nenhum curso foi encontrado.",
-    "no_courses_description": "Clique no botão abaixo para adicionar um novo curso.",
-    "btn_add_course": "Adicionar curso",
-    "btn_save": "Salvar",
-    "label_name": "Nome",
-    "placeholder_name": "Digite o nome do curso",
-    "label_issuer": "Emissor",
-    "placeholder_issuer": "Digite o emissor do curso",
-    "label_endDate": "Data de término",
-    "btn_delete": "Remover",
-    "field_names": {
-      "name": "Nome",
-      "issuer": "Emissor",
-      "endDate": "Data de término"
-    },
-    "messages": {
-      "success": "Cursos salvos com sucesso!",
-      "success_delete": "Curso removido com sucesso!"
-    }
-  },
-  "certificates": {
-    "failed_to_load_certificates_title": "Falha ao carregar certificados",
-    "failed_to_load_certificates_description": "Algo deu errado ao carregar os certificados. Por favor, tente novamente mais tarde.",
-    "no_certificates_title": "Nenhum certificado foi encontrado.",
-    "view_certificate": "Ver certificado",
-    "remove_certificate": "Remover certificado",
-    "delete_certificate_title": "Deletar certificado",
-    "delete_certificate_message": "Deseja realmente deletar o certificado \"{{certificateName}}\"?",
-    "delete_certificate_confirm": "Deletar",
-    "delete_certificate_cancel": "Cancelar"
-  },
   "resume": {
     "failed_to_load_resume_title": "Falha ao carregar currículo",
     "failed_to_load_resume_description": "Algo deu errado ao carregar o currículo. Por favor, tente novamente mais tarde.",
@@ -295,6 +341,49 @@
     "delete_resume_success": "Currículo deletado com sucesso!",
     "remove_old_to_upload_new": "Você deve remover o currículo atual para carregar um novo.",
     "delete_resume_loading": "Deletando currículo..."
+  },
+  "skills": {
+    "add_skill": "Adicionar habilidade",
+    "edit_skill": "Editar habilidade",
+    "no_skills": "Nenhuma habilidade foi encontrada. Clique no botão acima para adicionar uma nova habilidade.",
+    "failed_to_load_skills": "Falha ao carregar habilidades.",
+    "btn_edit_skill": "Editar",
+    "btn_delete_skill": "Deletar",
+    "skill_deleted_successfully": "Habilidade deletada com sucesso!",
+    "form": {
+      "titles": {
+        "new_skill": "Nova habilidade",
+        "edit_skill": "Editar habilidade",
+        "delete_skill": "Deletar habilidade"
+      },
+      "hints": {
+        "image": "Clique na imagem para alterar."
+      },
+      "labels": {
+        "name": "Nome",
+        "description": "Descrição",
+        "rating": "Avaliação*"
+      },
+      "placeholders": {
+        "name": "Digite o nome da habilidade",
+        "description": "Digite a descrição da habilidade"
+      },
+      "field_names": {
+        "image": "Imagem",
+        "name": "Nome",
+        "description": "Descrição",
+        "rating": "Avaliação"
+      },
+      "buttons": {
+        "load_image": "Carregar imagem"
+      },
+      "messages": {
+        "success": "Habilidade salva com sucesso!",
+        "delete": "Deseja realmente deletar \"{{skillName}}\"?",
+        "failed": "Erro ao salvar habilidade!",
+        "no_changes": "Nenhuma alteração foi feita."
+      }
+    }
   },
   "validators": {
     "required": "*{{fieldName}} obrigatório.",
@@ -317,79 +406,6 @@
   "deleteButton": "Deletar",
   "editButton": "Editar",
   "saveButton": "Salvar",
-  "file_uploader": {
-    "file_already_selected": "Arquivo {{fileName}} já selecionado.",
-    "upload_file": "Upload de arquivo",
-    "upload_all_files": "Upload de todos os arquivos",
-    "remove_file": "Remover arquivo",
-    "remove_all_files": "Remover todos os arquivos",
-    "uploading_file": "Fazendo upload do arquivo...",
-    "uploading_file_description": "Por favor, aguarde enquanto o arquivo está sendo carregado.",
-    "upload_file_error": "Falha ao fazer upload do arquivo.",
-    "upload_file_error_description": "Ocorreu um erro ao fazer upload do arquivo. Por favor, tente novamente mais tarde.",
-    "upload_file_success": "Upload de arquivo bem sucedido.",
-    "upload_file_success_description": "O arquivo foi carregado com sucesso.",
-    "multiple_files_not_allowed": "Múltiplos arquivos não são permitidos.",
-    "max_files_exceeded": "Número máximo de arquivos excedido. Máximo: {{maxFiles}}.",
-    "file_size_exceeded": "Arquivo {{fileName}} excedeu o tamanho máximo. Máximo: {{fileSize}}.",
-    "file_type_not_allowed": "Formato do arquivo {{fileName}} não permitido. Formatos permitidos: {{allowedTypes}}."
-  },
-  "image_cropper": {
-    "titles": {
-      "crop_your_image": "Recorte sua imagem",
-      "crop_your_avatar": "Recorte seu avatar"
-    }
-  },
-  "generic": {
-    "buttons": {
-      "save": "Salvar",
-      "cancel": "Cancelar",
-      "delete": "Deletar",
-      "close": "Fechar",
-      "back": "Voltar",
-      "next": "Próximo",
-      "add": "Adicionar",
-      "remove": "Remover",
-      "upload": "Upload",
-      "upload_all": "Carregar todos",
-      "remove_all": "Remover todos",
-      "edit": "Editar",
-      "view": "Ver",
-      "options": "Opções",
-      "confirm": "Confirmar",
-      "yes": "Sim",
-      "no": "Não",
-      "login": "Entrar",
-      "logout": "Sair",
-      "register": "Registrar",
-      "contact": "Contato",
-      "send": "Enviar",
-      "ok": "Ok",
-      "failed": "Falhou"
-    },
-    "actions": {
-      "saving": "Salvando...",
-      "loading": "Carregando...",
-      "deleting": "Deletando...",
-      "uploading": "Fazendo upload...",
-      "sending": "Enviando...",
-      "confirming": "Confirmando...",
-      "yes": "Sim",
-      "no": "Não",
-      "ok": "Ok",
-      "failed": "Falhou",
-      "close": "Fechar"
-    },
-    "loading": {
-      "default": "Carregando...",
-      "resume": "Carregando currículo...",
-      "certificates": "Carregando certificados..."
-    },
-    "messages": {
-      "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
-      "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde."
-    }
-  },
   "generic_messages": {
     "failed_to_delete_stored_image": "Falha ao deletar imagem armazenada.",
     "failed_to_upload_image": "Falha ao fazer upload da imagem. Tente novamente mais tarde.",

@@ -1,55 +1,4 @@
 {
-  "portfolio": {
-    "loading_user_data": "Loading user data...",
-    "user_bio_data_missing": "Sorry, but the user bio is missing some required information. Please login and update your profile.",
-    "about_me": "About Me",
-    "skills": "Skills",
-    "certificates": "Certificates",
-    "open_certificate": "Open certificates",
-    "projects": "Projects",
-    "courses": "Courses",
-    "contact": "Contact",
-    "resume": "Resume",
-    "btn_contact": "Contact me",
-    "btn_resume": "View Resume"
-  },
-  "contact_form": {
-    "label_name": "Name",
-    "placeholder_name": "Type your name",
-    "label_email": "E-mail",
-    "placeholder_email": "Type your e-mail",
-    "label_message": "Message",
-    "placeholder_message": "Type your message",
-    "button_send": "Send",
-    "field_name": {
-      "name": "Name",
-      "email": "E-mail",
-      "message": "Message"
-    },
-    "message": {
-      "success": "Message sent successfully.",
-      "error": "Failed to send message."
-    }
-  },
-  "error_component": {
-    "404_code_name": "Page not found",
-    "404_code_description": "Sorry, the page you are looking for could not be found.",
-    "500_code_name": "Internal server error",
-    "500_code_description": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
-    "default_code_name": "Unexpected error",
-    "default_code_description": "Sorry, something went wrong.",
-    "button_back": "Back"
-  },
-  "header": {
-    "profile": "Profile",
-    "logout": "Logout",
-    "login": "Login"
-  },
-  "footer": {
-    "all_rights_reserved": "All rights reserved",
-    "developed_by": "Developed by Gustavo Paco",
-    "back_to_top": "Top"
-  },
   "auth": {
     "titles": {
       "enter_your_credentials": "Enter your credentials to login"
@@ -70,19 +19,6 @@
     },
     "messages": {
     }
-  },
-  "profile": {
-    "toolbar_accomplishments": "Accomplishments",
-    "mat_tab_tooltip_skills": "Open Skills",
-    "title_skills": "Skills",
-    "mat_tab_tooltip_projects": "Open Projects",
-    "title_projects": "Projects",
-    "mat_tab_tooltip_courses": "Open Courses",
-    "title_courses": "Courses",
-    "mat_tab_tooltip_certificates": "Open Certificates",
-    "title_certificates": "Certificates",
-    "mat_tab_tooltip_resume": "Open Resume",
-    "title_resume": "Resume"
   },
   "bio": {
     "form": {
@@ -126,48 +62,194 @@
       }
     }
   },
-  "skills": {
-    "add_skill": "Add Skill",
-    "edit_skill": "Edit Skill",
-    "no_skills": "No skills found! Click the button above to create a new skill.",
-    "failed_to_load_skills": "Failed to load skills",
-    "btn_edit_skill": "Edit",
-    "btn_delete_skill": "Delete",
-    "skill_deleted_successfully": "Skill deleted successfully.",
-    "form": {
+  "certificates": {
+    "list": {
       "titles": {
-        "new_skill": "New skill",
-        "edit_skill": "Edit skill",
-        "delete_skill": "Delete Skill"
+        "delete": "Delete certificate"
       },
-      "hints": {
-        "image": "Click on the image to change it"
+      "tooltips": {
+        "view_certificate": "View certificate",
+        "remove_certificate": "Remove certificate"
       },
-      "labels": {
-        "name": "Name",
-        "description": "Description",
-        "rating": "Rating*"
-      },
-      "placeholders": {
-        "name": "Type the skill name",
-        "description": "Type the skill description"
-      },
-      "field_names": {
-        "image": "Image",
-        "name": "Name",
-        "description": "Description",
-        "rating": "Rating"
-      },
-      "buttons": {
-        "load_image": "Load image"
+      "empty": {
+        "title": "No certificates found",
+        "description": "Click the button below to add a new certificate."
       },
       "messages": {
-        "success": "Skill saved successfully.",
-        "delete": "Are you sure you want to delete \"{{skillName}}\"?",
-        "failed": "Failed to save skill.",
-        "no_changes": "No changes were made."
+        "delete": "Are you sure you want to delete \"{{certificateName}}\"?"
       }
+    },
+    "failed_to_load_certificates_title": "Failed to load certificates",
+    "failed_to_load_certificates_description": "Something went wrong while loading certificates. Please try again later.",
+    "no_certificates_title": "No certificates found",
+    "view_certificate": "View certificate",
+    "remove_certificate": "Remove certificate",
+    "delete_certificate_title": "Delete certificate",
+    "delete_certificate_message": "Are you sure you want to delete \"{{certificateName}}\"?",
+    "delete_certificate_confirm": "Confirm",
+    "delete_certificate_cancel": "Cancel"
+  },
+  "contact_form": {
+    "label_name": "Name",
+    "placeholder_name": "Type your name",
+    "label_email": "E-mail",
+    "placeholder_email": "Type your e-mail",
+    "label_message": "Message",
+    "placeholder_message": "Type your message",
+    "button_send": "Send",
+    "field_name": {
+      "name": "Name",
+      "email": "E-mail",
+      "message": "Message"
+    },
+    "message": {
+      "success": "Message sent successfully.",
+      "error": "Failed to send message."
     }
+  },
+  "courses": {
+    "failed_to_load_courses_title": "Failed to load courses",
+    "failed_to_load_courses_description": "Something went wrong while loading courses. Please try again later."
+  },
+  "courses_form": {
+    "no_courses_title": "No courses found",
+    "no_courses_description": "Click the button below to create a new course.",
+    "btn_add_course": "Add Course",
+    "btn_save": "Save",
+    "label_name": "Name",
+    "placeholder_name": "Type the course name",
+    "label_issuer": "Issuer",
+    "placeholder_issuer": "Type the course issuer",
+    "label_endDate": "End date",
+    "btn_delete": "Remove",
+    "field_names": {
+      "name": "Name",
+      "issuer": "Issuer",
+      "endDate": "End date"
+    },
+    "messages": {
+      "success": "Courses saved successfully.",
+      "success_delete": "Course removed successfully."
+    }
+  },
+  "error_component": {
+    "404_code_name": "Page not found",
+    "404_code_description": "Sorry, the page you are looking for could not be found.",
+    "500_code_name": "Internal server error",
+    "500_code_description": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
+    "default_code_name": "Unexpected error",
+    "default_code_description": "Sorry, something went wrong.",
+    "button_back": "Back"
+  },
+  "file_uploader": {
+    "file_already_selected": "File {{fileName}} already selected.",
+    "upload_file": "Upload file",
+    "upload_all_files": "Upload all files",
+    "remove_file": "Remove file",
+    "remove_all_files": "Remove all files",
+    "uploading_file": "Uploading file...",
+    "uploading_file_description": "Please wait while the file is being uploaded.",
+    "upload_file_error": "Failed to upload file.",
+    "upload_file_error_description": "Something went wrong while uploading the file. Please try again later.",
+    "upload_file_success": "File uploaded successfully.",
+    "upload_file_success_description": "The file was uploaded successfully.",
+    "multiple_files_not_allowed": "Multiple files are not allowed.",
+    "max_files_exceeded": "Maximum number of {{maxFiles}} files exceeded.",
+    "file_size_exceeded": "File {{fileName}} size exceeded. Maximum size: {{fileSize}}.",
+    "file_type_not_allowed": "File {{fileName}} type not allowed. Allowed types: {{allowedTypes}}."
+  },
+  "footer": {
+    "all_rights_reserved": "All rights reserved",
+    "developed_by": "Developed by Gustavo Paco",
+    "back_to_top": "Top"
+  },
+  "generic": {
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "add": "Add",
+      "remove": "Remove",
+      "upload": "Upload",
+      "upload_all": "Upload all",
+      "remove_all": "Remove all",
+      "edit": "Edit",
+      "view": "View",
+      "options": "Options",
+      "confirm": "Confirm",
+      "yes": "Yes",
+      "no": "No",
+      "login": "Login",
+      "logout": "Logout",
+      "register": "Register",
+      "contact": "Contact",
+      "send": "Send",
+      "ok": "Ok",
+      "failed": "Failed"
+    },
+    "actions": {
+      "saving": "Saving...",
+      "loading": "Loading...",
+      "deleting": "Deleting...",
+      "uploading": "Uploading...",
+      "sending": "Sending...",
+      "confirming": "Confirming...",
+      "yes": "Yes",
+      "no": "No",
+      "ok": "Ok",
+      "failed": "Failed",
+      "close": "Close"
+    },
+    "loading": {
+      "default": "Loading...",
+      "resume": "Loading resume...",
+      "certificates": "Loading certificates..."
+    },
+    "messages": {
+      "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
+      "failed_to_upload_image": "Failed to upload image. Please try again later."
+    }
+  },
+  "header": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "image_cropper": {
+    "titles": {
+      "crop_your_image": "Crop your image",
+      "crop_your_avatar": "Crop your avatar"
+    }
+  },
+  "portfolio": {
+    "loading_user_data": "Loading user data...",
+    "user_bio_data_missing": "Sorry, but the user bio is missing some required information. Please login and update your profile.",
+    "about_me": "About Me",
+    "skills": "Skills",
+    "certificates": "Certificates",
+    "open_certificate": "Open certificates",
+    "projects": "Projects",
+    "courses": "Courses",
+    "contact": "Contact",
+    "resume": "Resume",
+    "btn_contact": "Contact me",
+    "btn_resume": "View Resume"
+  },
+  "profile": {
+    "toolbar_accomplishments": "Accomplishments",
+    "mat_tab_tooltip_skills": "Open Skills",
+    "title_skills": "Skills",
+    "mat_tab_tooltip_projects": "Open Projects",
+    "title_projects": "Projects",
+    "mat_tab_tooltip_courses": "Open Courses",
+    "title_courses": "Courses",
+    "mat_tab_tooltip_certificates": "Open Certificates",
+    "title_certificates": "Certificates",
+    "mat_tab_tooltip_resume": "Open Resume",
+    "title_resume": "Resume"
   },
   "projects": {
     "new_project": "New Project",
@@ -226,42 +308,6 @@
       "not_available": "Site not available"
     }
   },
-  "courses": {
-    "failed_to_load_courses_title": "Failed to load courses",
-    "failed_to_load_courses_description": "Something went wrong while loading courses. Please try again later."
-  },
-  "courses_form": {
-    "no_courses_title": "No courses found",
-    "no_courses_description": "Click the button below to create a new course.",
-    "btn_add_course": "Add Course",
-    "btn_save": "Save",
-    "label_name": "Name",
-    "placeholder_name": "Type the course name",
-    "label_issuer": "Issuer",
-    "placeholder_issuer": "Type the course issuer",
-    "label_endDate": "End date",
-    "btn_delete": "Remove",
-    "field_names": {
-      "name": "Name",
-      "issuer": "Issuer",
-      "endDate": "End date"
-    },
-    "messages": {
-      "success": "Courses saved successfully.",
-      "success_delete": "Course removed successfully."
-    }
-  },
-  "certificates": {
-    "failed_to_load_certificates_title": "Failed to load certificates",
-    "failed_to_load_certificates_description": "Something went wrong while loading certificates. Please try again later.",
-    "no_certificates_title": "No certificates found",
-    "view_certificate": "View certificate",
-    "remove_certificate": "Remove certificate",
-    "delete_certificate_title": "Delete certificate",
-    "delete_certificate_message": "Are you sure you want to delete \"{{certificateName}}\"?",
-    "delete_certificate_confirm": "Confirm",
-    "delete_certificate_cancel": "Cancel"
-  },
   "resume": {
     "failed_to_load_resume_title": "Failed to load resume",
     "failed_to_load_resume_description": "Something went wrong while loading resume. Please try again later.",
@@ -278,6 +324,49 @@
     "delete_resume_success": "Resume deleted successfully.",
     "remove_old_to_upload_new": "To upload a new resume, please remove the old one first.",
     "delete_resume_loading": "Deleting resume..."
+  },
+  "skills": {
+    "add_skill": "Add Skill",
+    "edit_skill": "Edit Skill",
+    "no_skills": "No skills found! Click the button above to create a new skill.",
+    "failed_to_load_skills": "Failed to load skills",
+    "btn_edit_skill": "Edit",
+    "btn_delete_skill": "Delete",
+    "skill_deleted_successfully": "Skill deleted successfully.",
+    "form": {
+      "titles": {
+        "new_skill": "New skill",
+        "edit_skill": "Edit skill",
+        "delete_skill": "Delete Skill"
+      },
+      "hints": {
+        "image": "Click on the image to change it"
+      },
+      "labels": {
+        "name": "Name",
+        "description": "Description",
+        "rating": "Rating*"
+      },
+      "placeholders": {
+        "name": "Type the skill name",
+        "description": "Type the skill description"
+      },
+      "field_names": {
+        "image": "Image",
+        "name": "Name",
+        "description": "Description",
+        "rating": "Rating"
+      },
+      "buttons": {
+        "load_image": "Load image"
+      },
+      "messages": {
+        "success": "Skill saved successfully.",
+        "delete": "Are you sure you want to delete \"{{skillName}}\"?",
+        "failed": "Failed to save skill.",
+        "no_changes": "No changes were made."
+      }
+    }
   },
   "validators": {
     "required": "*{{fieldName}} is required.",
@@ -300,79 +389,6 @@
   "deleteButton": "Delete",
   "editButton": "Edit",
   "saveButton": "Save",
-  "file_uploader": {
-    "file_already_selected": "File {{fileName}} already selected.",
-    "upload_file": "Upload file",
-    "upload_all_files": "Upload all files",
-    "remove_file": "Remove file",
-    "remove_all_files": "Remove all files",
-    "uploading_file": "Uploading file...",
-    "uploading_file_description": "Please wait while the file is being uploaded.",
-    "upload_file_error": "Failed to upload file.",
-    "upload_file_error_description": "Something went wrong while uploading the file. Please try again later.",
-    "upload_file_success": "File uploaded successfully.",
-    "upload_file_success_description": "The file was uploaded successfully.",
-    "multiple_files_not_allowed": "Multiple files are not allowed.",
-    "max_files_exceeded": "Maximum number of {{maxFiles}} files exceeded.",
-    "file_size_exceeded": "File {{fileName}} size exceeded. Maximum size: {{fileSize}}.",
-    "file_type_not_allowed": "File {{fileName}} type not allowed. Allowed types: {{allowedTypes}}."
-  },
-  "image_cropper": {
-    "titles": {
-      "crop_your_image": "Crop your image",
-      "crop_your_avatar": "Crop your avatar"
-    }
-  },
-  "generic": {
-    "buttons": {
-      "save": "Save",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "close": "Close",
-      "back": "Back",
-      "next": "Next",
-      "add": "Add",
-      "remove": "Remove",
-      "upload": "Upload",
-      "upload_all": "Upload all",
-      "remove_all": "Remove all",
-      "edit": "Edit",
-      "view": "View",
-      "options": "Options",
-      "confirm": "Confirm",
-      "yes": "Yes",
-      "no": "No",
-      "login": "Login",
-      "logout": "Logout",
-      "register": "Register",
-      "contact": "Contact",
-      "send": "Send",
-      "ok": "Ok",
-      "failed": "Failed"
-    },
-    "actions": {
-      "saving": "Saving...",
-      "loading": "Loading...",
-      "deleting": "Deleting...",
-      "uploading": "Uploading...",
-      "sending": "Sending...",
-      "confirming": "Confirming...",
-      "yes": "Yes",
-      "no": "No",
-      "ok": "Ok",
-      "failed": "Failed",
-      "close": "Close"
-    },
-    "loading": {
-      "default": "Loading...",
-      "resume": "Loading resume...",
-      "certificates": "Loading certificates..."
-    },
-    "messages": {
-      "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
-      "failed_to_upload_image": "Failed to upload image. Please try again later."
-    }
-  },
   "generic_messages": {
     "failed_to_delete_stored_image": "Failed to delete stored image. Please try again later.",
     "failed_to_upload_image": "Failed to upload image. Please try again later.",

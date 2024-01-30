@@ -45,10 +45,10 @@ export class CertificatesListComponent {
     const certificate = this.certificates.find(certificate => certificate.id === id);
     const fullFileName = this.fullFileName(certificate!.url);
     const confirmationDialogData: ConfirmationDialogData = {
-      title: this.translateService.instant('certificates.delete_certificate_title'),
-      message: this.translateService.instant('certificates.delete_certificate_message', {certificateName: fullFileName}),
-      btnConfirmLabel: this.translateService.instant('certificates.delete_certificate_confirm'),
-      btnCancelLabel: this.translateService.instant('certificates.delete_certificate_cancel')
+      title: this.translateService.instant('certificates.list.titles.delete'),
+      message: this.translateService.instant('certificates.list.messages.delete', {certificateName: fullFileName}),
+      btnConfirmLabel: this.translateService.instant('generic.buttons.confirm'),
+      btnCancelLabel: this.translateService.instant('generic.buttons.cancel')
     };
     const dialofRef = this.matDialog.open(ConfirmationDialogComponent, {
       width: '100%',

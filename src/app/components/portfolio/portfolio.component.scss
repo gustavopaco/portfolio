@@ -1,12 +1,9 @@
 section.presentation {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 64px);
   background-image: url("../../../assets/backgrounds/background-landing-page.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  @media screen and (max-width: 992px) {
-    //min-height: 80vh;
-  }
 
   h1 {
     font-size: 55px;
